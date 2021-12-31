@@ -31,19 +31,20 @@ func (s *serviceMidleware) Ctx(r *ghttp.Request) {
 }
 
 // 简单token中间件
-func (s *serviceMidleware)TokenAuth(r *ghttp.Request){
+func (s *serviceMidleware) TokenAuth(r *ghttp.Request) {
 	// 我们这里jwt鉴权取头部信息 Authorization 登录时回返回token信息 这里前端需要把token存储到cookie或者本地localStorage中 不过需要跟后端协商过期时间 可以约定刷新令牌或者重新登录
-	token:=r.Request.Header.Get("Authorization")
-	if token ==""{
-		response.JsonExit(r,1,"未登录或非法访问!")
+	token := r.Request.Header.Get("Authorization")
+	if token == "" {
+		response.JsonExit(r, 1, "未登录或非法访问!")
 	}
-	if token!="" {
+
+	if token != "" {
 		parts := strings.SplitN(token, " ", 2)
 		if !(len(parts) == 2 && parts[0] == "Bearer") {
-			
-		}else if parts[1] == ""{
+
+		} else if parts[1] == "" {
 
 		}
-		return 
+		return
 	}
 }
