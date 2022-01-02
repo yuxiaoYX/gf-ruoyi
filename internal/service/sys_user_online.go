@@ -9,7 +9,6 @@ import (
 
 	"github.com/gogf/gf/v2/database/gdb"
 	"github.com/gogf/gf/v2/frame/g"
-	"github.com/gogf/gf/v2/internal/utils"
 	"github.com/gogf/gf/v2/util/guid"
 )
 
@@ -40,6 +39,9 @@ func (s *sysUserOnline) GetToken(ctx context.Context, token string) (enlineEntit
 
 // 添加在线用户
 func (s *sysUserOnline) Create(ctx context.Context, user_name string) (err error) {
+	// 删除对应用户名的在线用户
+	s.DeleteUserName(ctx, model.SysUserOnlineDeleteInput{UserName: user_name})
+
 	token := guid.S([]byte(user_name))
 	_, err = dao.SysUserOnline.Ctx(ctx).Cache(gdb.CacheOption{Duration: -1, Name: "userToken"}).Data(g.Map{
 		"token":     token,
@@ -52,10 +54,7 @@ func (s *sysUserOnline) Create(ctx context.Context, user_name string) (err error
 }
 
 // 删除指定用户名的在线用户
-func (s *sysUserOnline) deleteUserName(ctx context.Context, in model.SysUserOnlineDeleteInput) (err error) {
-	_, err = dao.SysUserOnline.Ctx(ctx).Where(g.Map{
-		"id":        in.Id,
-		"user_name": in.UserName,
-	}).OmitEmpty().Delete()
+func (s *sysUserOnline) DeleteUserName(ctx context.Context, in model.SysUserOnlineDeleteInput) (err error) {
+	_, err = dao.SysUserOnline.Ctx(ctx).OmitEmpty().Where("id", in.Id).WhereOr("user_name", in.UserName).Delete()
 	return
 }

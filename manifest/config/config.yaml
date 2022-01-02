@@ -16,7 +16,7 @@ database:
     ctxKeys: ["RequestId"]
 
   default:
-    link:   "mysql:root:123456@tcp(127.0.0.1:3306)/gf-ruoyi"
+    link:   "mysql:root:123456@tcp(127.0.0.1:3306)/gf_ruoyi"
     debug:  true
 
 # Logger configurations.

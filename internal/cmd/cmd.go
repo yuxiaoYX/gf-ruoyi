@@ -19,11 +19,15 @@ var (
 		Func: func(ctx context.Context, parser *gcmd.Parser) (err error) {
 			s := g.Server()
 			s.Group("/", func(group *ghttp.RouterGroup) {
-				group.Middleware(service.Middleware.Ctx)
+				group.Middleware(
+					service.Middleware.Ctx,
+					service.Middleware.ResponseHandler,
+				)
 				group.Bind(
 					handler.Hello,
+					handler.SysUser,
 				)
-				group.Middleware(service.Middleware.TokenAuth)
+				// group.Middleware(service.Middleware.TokenAuth)
 			})
 			s.Run()
 			return nil

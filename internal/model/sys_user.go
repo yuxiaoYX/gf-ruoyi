@@ -9,6 +9,6 @@ type SysUserLoginInput struct {
 
 // 用户登录输出
 type SysUserLoginOutput struct {
-	Msg   string // 提示消息
-	Token string // 用户token
+	UserName string // 用户名
+	NickName string // 用户昵称
 }

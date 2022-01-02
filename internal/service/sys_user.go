@@ -14,15 +14,13 @@ var SysUser = serviceUser{}
 
 type serviceUser struct{}
 
-// 执行登录
-func (s *serviceUser) Login(ctx context.Context, in model.SysUserLoginInput) (out *model.SysUserLoginOutput, err error) {
-	var userEntity []*entity.SysUser
+// 登录验证
+func (s *serviceUser) Login(ctx context.Context, in model.SysUserLoginInput) (userEntity []*entity.SysUser, err error) {
+	// var userEntity []*entity.SysUser
 	err = dao.SysUser.Ctx(ctx).Where(g.Map{
 		"user_name": in.UserName,
 		"nick_name": in.NickName,
-	}).Where("password", in.Password).OmitEmpty().Scan(userEntity)
-	if len(userEntity) == 0 {
+	}).Where("password", in.Password).OmitEmpty().Scan(&userEntity)
 
-	}
 	return
 }
