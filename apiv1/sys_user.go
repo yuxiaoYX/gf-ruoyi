@@ -1,14 +1,20 @@
 package apiv1
 
-import "github.com/gogf/gf/v2/frame/g"
+import (
+	"gf-RuoYi/internal/model"
 
-type LoginDoReq struct {
-	g.Meta   `path:"/login" method:"post" summary:"执行登录请求" tags:"登录"`
-	UserName string `dc:"用户名"`
-	NickName string `v:"required-without:UserName" dc:"用户昵称"`
-	Password string `v:"required#请输入密码" dc:"密码"`
+	"github.com/gogf/gf/v2/frame/g"
+)
+
+type SysUserLogoutReq struct {
+	g.Meta `path:"/logout" method:"post" summary:"执行用户注销接口" tags:"个人"`
+}
+type SysUserLogoutRes struct {
 }
 
-type LoginDoRes struct {
-	OK bool `dc:"True if current user is signed in; or else false"`
+type SysUserInfoReq struct {
+	g.Meta `path:"/getInfo" method:"get" summary:"登录成功后获取用户信息" tags:"用户"`
+}
+type SysUserInfoRes struct {
+	User *model.SysUserGetNameOutput `json:"user" dc:"用户信息"`
 }

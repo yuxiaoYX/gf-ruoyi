@@ -18,16 +18,18 @@ var (
 		Brief: "start http server",
 		Func: func(ctx context.Context, parser *gcmd.Parser) (err error) {
 			s := g.Server()
-			s.Group("/", func(group *ghttp.RouterGroup) {
+			s.Group("/api", func(group *ghttp.RouterGroup) {
 				group.Middleware(
 					service.Middleware.Ctx,
 					service.Middleware.ResponseHandler,
 				)
 				group.Bind(
-					handler.Hello,
-					handler.SysUser,
+					handler.Login, // 登录
 				)
-				// group.Middleware(service.Middleware.TokenAuth)
+				group.Middleware(service.Middleware.TokenAuth)
+				group.Bind(
+					handler.SysUser, // 用户管理
+				)
 			})
 			s.Run()
 			return nil

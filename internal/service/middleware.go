@@ -1,7 +1,6 @@
 package service
 
 import (
-	"fmt"
 	"gf-RuoYi/internal/model"
 	"gf-RuoYi/utility/response"
 	"strings"
@@ -61,7 +60,6 @@ func (s *serviceMiddleware) TokenAuth(r *ghttp.Request) {
 // 返回处理中间件
 func (s *serviceMiddleware) ResponseHandler(r *ghttp.Request) {
 	r.Middleware.Next()
-	fmt.Println(r.Response.BufferLength())
 	// 如果已经有返回内容，那么该中间件什么也不做
 	if r.Response.BufferLength() > 0 {
 		return
@@ -73,8 +71,6 @@ func (s *serviceMiddleware) ResponseHandler(r *ghttp.Request) {
 		code gcode.Code = gcode.CodeOK
 	)
 	res, err = r.GetHandlerResponse()
-	fmt.Println(res)
-	fmt.Println(err)
 	if err != nil {
 		code = gerror.Code(err)
 		if code == gcode.CodeNil {
@@ -82,7 +78,7 @@ func (s *serviceMiddleware) ResponseHandler(r *ghttp.Request) {
 		}
 		response.JsonExit(r, code.Code(), err.Error())
 	} else {
-		response.JsonExit(r, code.Code(), "", res)
+		response.JsonExit(r, code.Code(), "操作成功", res)
 		// if r.IsAjaxRequest() {
 		// 	response.JsonExit(r, code.Code(), "", res)
 		// } else {

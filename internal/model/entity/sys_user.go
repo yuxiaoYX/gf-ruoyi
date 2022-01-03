@@ -17,8 +17,9 @@ type SysUser struct {
     Mobile    string      `json:"mobile"    `// 手机号                   
     Avatar    string      `json:"avatar"    `// 用户头像地址             
     Status    string      `json:"status"    `// 用户状态；0:禁用,1:正常  
+    RoleIds   string      `json:"roleIds"   `// 角色id字符串             
     ShopIds   string      `json:"shopIds"   `// 店铺ID字符串             
-    DeptId    int64       `json:"deptId"    `// 部门ID                   
+    DeptId    string      `json:"deptId"    `// 部门ID                   
     Remark    string      `json:"remark"    `// 备注                     
     CreatedAt *gtime.Time `json:"createdAt" `// 创建时间                 
     UpdatedAt *gtime.Time `json:"updatedAt" `// 更新时间                 

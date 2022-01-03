@@ -19,6 +19,7 @@ g.Meta `orm:"dto:true"`
     Mobile interface{} // 手机号                   
     Avatar interface{} // 用户头像地址             
     Status interface{} // 用户状态；0:禁用,1:正常  
+    RoleIds interface{} // 角色id字符串             
     ShopIds interface{} // 店铺ID字符串             
     DeptId interface{} // 部门ID                   
     Remark interface{} // 备注                     

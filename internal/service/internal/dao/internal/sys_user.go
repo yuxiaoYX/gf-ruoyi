@@ -26,6 +26,7 @@ type SysUserColumns struct {
     Mobile     string // 手机号                   
     Avatar     string // 用户头像地址             
     Status     string // 用户状态；0:禁用,1:正常  
+    RoleIds    string // 角色id字符串             
     ShopIds    string // 店铺ID字符串             
     DeptId     string // 部门ID                   
     Remark     string // 备注                     
@@ -43,6 +44,7 @@ var sysUserColumns = SysUserColumns{
             Mobile:    "mobile",      
             Avatar:    "avatar",      
             Status:    "status",      
+            RoleIds:   "role_ids",    
             ShopIds:   "shop_ids",    
             DeptId:    "dept_id",     
             Remark:    "remark",      

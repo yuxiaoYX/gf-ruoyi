@@ -5,11 +5,9 @@ import (
 	"gf-RuoYi/internal/model"
 	"gf-RuoYi/internal/model/entity"
 	"gf-RuoYi/internal/service/internal/dao"
-	"gf-RuoYi/utility/utils"
 
 	"github.com/gogf/gf/v2/database/gdb"
-	"github.com/gogf/gf/v2/frame/g"
-	"github.com/gogf/gf/v2/util/guid"
+	"github.com/gogf/gf/v2/os/glog"
 )
 
 // 在线用户管理
@@ -29,6 +27,7 @@ func (s *sysUserOnline) GetToken(ctx context.Context, token string) (enlineEntit
 	if err != nil {
 		return nil, err
 	}
+	glog.Debug(ctx, entinesEntity)
 	for _, v := range entinesEntity {
 		if token == v.Token {
 			return v, err
@@ -38,23 +37,18 @@ func (s *sysUserOnline) GetToken(ctx context.Context, token string) (enlineEntit
 }
 
 // 添加在线用户
-func (s *sysUserOnline) Create(ctx context.Context, user_name string) (err error) {
+func (s *sysUserOnline) Create(ctx context.Context, in model.SysUserOnlineCreateInput) (err error) {
 	// 删除对应用户名的在线用户
-	s.DeleteUserName(ctx, model.SysUserOnlineDeleteInput{UserName: user_name})
+	s.Delete(ctx, model.SysUserOnlineDeleteInput{UserName: in.UserName})
 
-	token := guid.S([]byte(user_name))
-	_, err = dao.SysUserOnline.Ctx(ctx).Cache(gdb.CacheOption{Duration: -1, Name: "userToken"}).Data(g.Map{
-		"token":     token,
-		"user_name": user_name,
-		"ip":        utils.GetClientIp,
-		"explorer":  "Edge",
-		"os":        "win11",
-	}).Replace()
+	_, err = dao.SysUserOnline.Ctx(ctx).Data(in).Insert()
 	return
 }
 
-// 删除指定用户名的在线用户
-func (s *sysUserOnline) DeleteUserName(ctx context.Context, in model.SysUserOnlineDeleteInput) (err error) {
-	_, err = dao.SysUserOnline.Ctx(ctx).OmitEmpty().Where("id", in.Id).WhereOr("user_name", in.UserName).Delete()
+// 删除指定在线用户,id OR user_name
+func (s *sysUserOnline) Delete(ctx context.Context, in model.SysUserOnlineDeleteInput) (err error) {
+	_, err = dao.SysUserOnline.Ctx(ctx).OmitEmpty().Cache(gdb.CacheOption{
+		Duration: -1, Name: "userToken",
+	}).Where("id", in.Id).WhereOr("user_name", in.UserName).Delete()
 	return
 }
