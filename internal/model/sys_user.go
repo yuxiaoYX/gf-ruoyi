@@ -35,10 +35,9 @@ type SysUserGetNameOutput struct {
 	UpdatedAt *gtime.Time `json:"updatedAt" ` // 更新时间
 }
 
+// 获取登录用户信息，及角色、菜单权限
 type SysUserGetRoleOutput struct {
 	gmeta.Meta `orm:"table:sys_user"`
-	UserId     int                   `json:"userId" `    // 用户ID
-	UserName   string                `json:"userName"  ` // 用户账号
-	User       *SysUserGetNameOutput `json:"user"`
-	UserRole   []*SysUserRoleOutput  `orm:"with:userId"`
+	SysUserGetNameOutput
+	UserRole []*SysUserRoleWithOutput `orm:"with:user_id"`
 }
