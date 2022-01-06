@@ -1,0 +1,357 @@
+2022-01-06 11:51:11.495 [DEBU] {e8c30232f591c716f93424291997cacd} [  2 ms] [default] [rows:0  ] SHOW FULL COLUMNS FROM `sys_user_online` 
+2022-01-06 11:51:11.497 [DEBU] {e8c30232f591c716f93424291997cacd} [  0 ms] [default] [rows:0  ] SELECT `id`,`token`,`user_name`,`ip`,`explorer`,`os`,`created_at` FROM `sys_user_online` 
+2022-01-06 11:53:32.073 [DEBU] {e8c30232f591c716f93424291997cacd} [  2 ms] [default] [rows:0  ] SHOW FULL COLUMNS FROM `sys_user` 
+2022-01-06 11:53:32.075 [DEBU] {e8c30232f591c716f93424291997cacd} [  1 ms] [default] [rows:0  ] SELECT `user_id`,`user_name` FROM `sys_user` WHERE (`user_name`='yuxiao') AND `deleted_at` IS NULL LIMIT 1 
+2022-01-06 11:55:22.524 [DEBU] {287c8fa42f92c716e463dc39db940efd} [  1 ms] [default] [rows:0  ] SHOW FULL COLUMNS FROM `sys_user_online` 
+2022-01-06 11:55:22.527 [DEBU] {287c8fa42f92c716e463dc39db940efd} [  1 ms] [default] [rows:0  ] SELECT `id`,`token`,`user_name`,`ip`,`explorer`,`os`,`created_at` FROM `sys_user_online` 
+2022-01-06 11:55:22.529 [DEBU] {287c8fa42f92c716e463dc39db940efd} [  2 ms] [default] [rows:0  ] SHOW FULL COLUMNS FROM `sys_user` 
+2022-01-06 11:55:22.530 [DEBU] {287c8fa42f92c716e463dc39db940efd} [  0 ms] [default] [rows:0  ] SELECT `user_id`,`user_name` FROM `sys_user` WHERE (`user_name`='yuxiao') AND `deleted_at` IS NULL LIMIT 1 
+2022-01-06 11:56:47.715 [DEBU] {000e197a4392c716bc7d2255ff611a38} [  4 ms] [default] [rows:0  ] SHOW FULL COLUMNS FROM `sys_user_online` 
+2022-01-06 11:56:47.718 [DEBU] {000e197a4392c716bc7d2255ff611a38} [  0 ms] [default] [rows:0  ] SELECT `id`,`token`,`user_name`,`ip`,`explorer`,`os`,`created_at` FROM `sys_user_online` 
+2022-01-06 11:56:47.722 [DEBU] {000e197a4392c716bc7d2255ff611a38} [  3 ms] [default] [rows:0  ] SHOW FULL COLUMNS FROM `sys_user` 
+2022-01-06 11:56:47.723 [DEBU] {000e197a4392c716bc7d2255ff611a38} [  0 ms] [default] [rows:0  ] SELECT `user_id`,`user_name` FROM `sys_user` WHERE (`user_name`='yuxiao') AND `deleted_at` IS NULL LIMIT 1 
+2022-01-06 11:57:09.569 [DEBU] {6499db904892c716da877e0fe6d050a7} [  2 ms] [default] [rows:0  ] SHOW FULL COLUMNS FROM `sys_user_online` 
+2022-01-06 11:57:09.571 [DEBU] {6499db904892c716da877e0fe6d050a7} [  0 ms] [default] [rows:0  ] SELECT `id`,`token`,`user_name`,`ip`,`explorer`,`os`,`created_at` FROM `sys_user_online` 
+2022-01-06 11:57:09.574 [DEBU] {6499db904892c716da877e0fe6d050a7} [  2 ms] [default] [rows:0  ] SHOW FULL COLUMNS FROM `sys_user` 
+2022-01-06 11:57:09.575 [DEBU] {6499db904892c716da877e0fe6d050a7} [  1 ms] [default] [rows:0  ] SELECT `user_id`,`user_name` FROM `sys_user` WHERE (`user_name`='yuxiao') AND `deleted_at` IS NULL LIMIT 1 
+2022-01-06 11:59:09.706 [DEBU] {b40ab0896492c7160e2de22163efecec} [  2 ms] [default] [rows:0  ] SHOW FULL COLUMNS FROM `sys_user_online` 
+2022-01-06 11:59:09.708 [DEBU] {b40ab0896492c7160e2de22163efecec} [  0 ms] [default] [rows:0  ] SELECT `id`,`token`,`user_name`,`ip`,`explorer`,`os`,`created_at` FROM `sys_user_online` 
+2022-01-06 11:59:09.711 [DEBU] {b40ab0896492c7160e2de22163efecec} [  2 ms] [default] [rows:0  ] SHOW FULL COLUMNS FROM `sys_user` 
+2022-01-06 11:59:09.712 [DEBU] {b40ab0896492c7160e2de22163efecec} [  0 ms] [default] [rows:0  ] SELECT `user_id`,`user_name` FROM `sys_user` WHERE (`user_name`='yuxiao') AND `deleted_at` IS NULL LIMIT 1 
+2022-01-06 11:59:09.715 [DEBU] {b40ab0896492c7160e2de22163efecec} [  1 ms] [default] [rows:0  ] SHOW FULL COLUMNS FROM `sys_user_role` 
+2022-01-06 11:59:09.717 [ERRO] {b40ab0896492c7160e2de22163efecec} [  0 ms] [default] [rows:0  ] SELECT `user_id`,`role_id` FROM `sys_user_role` WHERE `userId`=3
+Error: Error 1054: Unknown column 'userId' in 'where clause' 
+Stack:
+1.  github.com/gogf/gf/v2/database/gdb.(*Core).writeSqlToLogger
+    C:/Users/54992/go/pkg/mod/github.com/gogf/gf/v2@v2.0.0-rc/database/gdb/gdb_core.go:661
+2.  github.com/gogf/gf/v2/database/gdb.(*Core).DoCommit
+    C:/Users/54992/go/pkg/mod/github.com/gogf/gf/v2@v2.0.0-rc/database/gdb/gdb_core_underlying.go:193
+3.  github.com/gogf/gf/v2/database/gdb.(*Core).DoQuery
+    C:/Users/54992/go/pkg/mod/github.com/gogf/gf/v2@v2.0.0-rc/database/gdb/gdb_core_underlying.go:58
+4.  github.com/gogf/gf/v2/database/gdb.(*Core).DoGetAll
+    C:/Users/54992/go/pkg/mod/github.com/gogf/gf/v2@v2.0.0-rc/database/gdb/gdb_core.go:149
+5.  github.com/gogf/gf/v2/database/gdb.(*Model).doGetAllBySql
+    C:/Users/54992/go/pkg/mod/github.com/gogf/gf/v2@v2.0.0-rc/database/gdb/gdb_model_select.go:525
+6.  github.com/gogf/gf/v2/database/gdb.(*Model).doGetAll
+    C:/Users/54992/go/pkg/mod/github.com/gogf/gf/v2@v2.0.0-rc/database/gdb/gdb_model_select.go:46
+7.  github.com/gogf/gf/v2/database/gdb.(*Model).All
+    C:/Users/54992/go/pkg/mod/github.com/gogf/gf/v2@v2.0.0-rc/database/gdb/gdb_model_select.go:31
+8.  github.com/gogf/gf/v2/database/gdb.(*Model).doStructs
+    C:/Users/54992/go/pkg/mod/github.com/gogf/gf/v2@v2.0.0-rc/database/gdb/gdb_model_select.go:264
+9.  github.com/gogf/gf/v2/database/gdb.(*Model).Scan
+    C:/Users/54992/go/pkg/mod/github.com/gogf/gf/v2@v2.0.0-rc/database/gdb/gdb_model_select.go:305
+10. github.com/gogf/gf/v2/database/gdb.(*Model).doWithScanStruct
+    C:/Users/54992/go/pkg/mod/github.com/gogf/gf/v2@v2.0.0-rc/database/gdb/gdb_model_with.go:159
+11. github.com/gogf/gf/v2/database/gdb.(*Model).doStruct
+    C:/Users/54992/go/pkg/mod/github.com/gogf/gf/v2@v2.0.0-rc/database/gdb/gdb_model_select.go:227
+12. github.com/gogf/gf/v2/database/gdb.(*Model).Scan
+    C:/Users/54992/go/pkg/mod/github.com/gogf/gf/v2@v2.0.0-rc/database/gdb/gdb_model_select.go:308
+13. gf-RuoYi/internal/service.(*serviceUser).GetById
+    D:/Project/gf-ruoyi/internal/service/sys_user.go:33
+14. gf-RuoYi/internal/handler.(*handlerUser).GetInfo
+    D:/Project/gf-ruoyi/internal/handler/sys_user.go:24
+15. github.com/gogf/gf/v2/net/ghttp.(*middleware).callHandlerFunc.func1
+    C:/Users/54992/go/pkg/mod/github.com/gogf/gf/v2@v2.0.0-rc/net/ghttp/ghttp_request_middleware.go:153
+16. github.com/gogf/gf/v2/net/ghttp.niceCallFunc
+    C:/Users/54992/go/pkg/mod/github.com/gogf/gf/v2@v2.0.0-rc/net/ghttp/ghttp_func.go:52
+17. github.com/gogf/gf/v2/net/ghttp.(*middleware).callHandlerFunc
+    C:/Users/54992/go/pkg/mod/github.com/gogf/gf/v2@v2.0.0-rc/net/ghttp/ghttp_request_middleware.go:128
+18. github.com/gogf/gf/v2/net/ghttp.(*middleware).Next.func1
+    C:/Users/54992/go/pkg/mod/github.com/gogf/gf/v2@v2.0.0-rc/net/ghttp/ghttp_request_middleware.go:74
+19. github.com/gogf/gf/v2/util/gutil.TryCatch
+    C:/Users/54992/go/pkg/mod/github.com/gogf/gf/v2@v2.0.0-rc/util/gutil/gutil.go:55
+20. github.com/gogf/gf/v2/net/ghttp.(*middleware).Next
+    C:/Users/54992/go/pkg/mod/github.com/gogf/gf/v2@v2.0.0-rc/net/ghttp/ghttp_request_middleware.go:48
+21. gf-RuoYi/internal/service.(*serviceMiddleware).TokenAuth
+    D:/Project/gf-ruoyi/internal/service/middleware.go:57
+22. github.com/gogf/gf/v2/net/ghttp.(*middleware).Next.func1.1
+    C:/Users/54992/go/pkg/mod/github.com/gogf/gf/v2@v2.0.0-rc/net/ghttp/ghttp_request_middleware.go:54
+23. github.com/gogf/gf/v2/net/ghttp.niceCallFunc
+    C:/Users/54992/go/pkg/mod/github.com/gogf/gf/v2@v2.0.0-rc/net/ghttp/ghttp_func.go:52
+24. github.com/gogf/gf/v2/net/ghttp.(*middleware).Next.func1
+    C:/Users/54992/go/pkg/mod/github.com/gogf/gf/v2@v2.0.0-rc/net/ghttp/ghttp_request_middleware.go:53
+25. github.com/gogf/gf/v2/util/gutil.TryCatch
+    C:/Users/54992/go/pkg/mod/github.com/gogf/gf/v2@v2.0.0-rc/util/gutil/gutil.go:55
+26. github.com/gogf/gf/v2/net/ghttp.(*middleware).Next
+    C:/Users/54992/go/pkg/mod/github.com/gogf/gf/v2@v2.0.0-rc/net/ghttp/ghttp_request_middleware.go:48
+27. gf-RuoYi/internal/service.(*serviceMiddleware).ResponseHandler
+    D:/Project/gf-ruoyi/internal/service/middleware.go:62
+28. github.com/gogf/gf/v2/net/ghttp.(*middleware).Next.func1.1
+    C:/Users/54992/go/pkg/mod/github.com/gogf/gf/v2@v2.0.0-rc/net/ghttp/ghttp_request_middleware.go:54
+29. github.com/gogf/gf/v2/net/ghttp.niceCallFunc
+    C:/Users/54992/go/pkg/mod/github.com/gogf/gf/v2@v2.0.0-rc/net/ghttp/ghttp_func.go:52
+30. github.com/gogf/gf/v2/net/ghttp.(*middleware).Next.func1
+    C:/Users/54992/go/pkg/mod/github.com/gogf/gf/v2@v2.0.0-rc/net/ghttp/ghttp_request_middleware.go:53
+31. github.com/gogf/gf/v2/util/gutil.TryCatch
+    C:/Users/54992/go/pkg/mod/github.com/gogf/gf/v2@v2.0.0-rc/util/gutil/gutil.go:55
+32. github.com/gogf/gf/v2/net/ghttp.(*middleware).Next
+    C:/Users/54992/go/pkg/mod/github.com/gogf/gf/v2@v2.0.0-rc/net/ghttp/ghttp_request_middleware.go:48
+33. gf-RuoYi/internal/service.(*serviceMiddleware).Ctx
+    D:/Project/gf-ruoyi/internal/service/middleware.go:32
+34. github.com/gogf/gf/v2/net/ghttp.(*middleware).Next.func1.1
+    C:/Users/54992/go/pkg/mod/github.com/gogf/gf/v2@v2.0.0-rc/net/ghttp/ghttp_request_middleware.go:54
+35. github.com/gogf/gf/v2/net/ghttp.niceCallFunc
+    C:/Users/54992/go/pkg/mod/github.com/gogf/gf/v2@v2.0.0-rc/net/ghttp/ghttp_func.go:52
+36. github.com/gogf/gf/v2/net/ghttp.(*middleware).Next.func1
+    C:/Users/54992/go/pkg/mod/github.com/gogf/gf/v2@v2.0.0-rc/net/ghttp/ghttp_request_middleware.go:53
+37. github.com/gogf/gf/v2/util/gutil.TryCatch
+    C:/Users/54992/go/pkg/mod/github.com/gogf/gf/v2@v2.0.0-rc/util/gutil/gutil.go:55
+38. github.com/gogf/gf/v2/net/ghttp.(*middleware).Next
+    C:/Users/54992/go/pkg/mod/github.com/gogf/gf/v2@v2.0.0-rc/net/ghttp/ghttp_request_middleware.go:48
+39. github.com/gogf/gf/v2/net/ghttp.internalMiddlewareServerTracing
+    C:/Users/54992/go/pkg/mod/github.com/gogf/gf/v2@v2.0.0-rc/net/ghttp/ghttp_middleware_tracing.go:78
+40. github.com/gogf/gf/v2/net/ghttp.(*middleware).Next.func1.5
+    C:/Users/54992/go/pkg/mod/github.com/gogf/gf/v2@v2.0.0-rc/net/ghttp/ghttp_request_middleware.go:95
+41. github.com/gogf/gf/v2/net/ghttp.niceCallFunc
+    C:/Users/54992/go/pkg/mod/github.com/gogf/gf/v2@v2.0.0-rc/net/ghttp/ghttp_func.go:52
+42. github.com/gogf/gf/v2/net/ghttp.(*middleware).Next.func1
+    C:/Users/54992/go/pkg/mod/github.com/gogf/gf/v2@v2.0.0-rc/net/ghttp/ghttp_request_middleware.go:94
+43. github.com/gogf/gf/v2/util/gutil.TryCatch
+    C:/Users/54992/go/pkg/mod/github.com/gogf/gf/v2@v2.0.0-rc/util/gutil/gutil.go:55
+44. github.com/gogf/gf/v2/net/ghttp.(*middleware).Next
+    C:/Users/54992/go/pkg/mod/github.com/gogf/gf/v2@v2.0.0-rc/net/ghttp/ghttp_request_middleware.go:48
+45. github.com/gogf/gf/v2/net/ghttp.(*Server).ServeHTTP
+    C:/Users/54992/go/pkg/mod/github.com/gogf/gf/v2@v2.0.0-rc/net/ghttp/ghttp_server_handler.go:121
+ 
+2022-01-06 12:00:02.398 [DEBU] {b8f15ace7092c71692c8b667cb68ed6d} [  2 ms] [default] [rows:0  ] SHOW FULL COLUMNS FROM `sys_user_online` 
+2022-01-06 12:00:02.400 [DEBU] {b8f15ace7092c71692c8b667cb68ed6d} [  1 ms] [default] [rows:0  ] SELECT `id`,`token`,`user_name`,`ip`,`explorer`,`os`,`created_at` FROM `sys_user_online` 
+2022-01-06 12:00:02.402 [DEBU] {b8f15ace7092c71692c8b667cb68ed6d} [  1 ms] [default] [rows:0  ] SHOW FULL COLUMNS FROM `sys_user` 
+2022-01-06 12:00:02.404 [DEBU] {b8f15ace7092c71692c8b667cb68ed6d} [  1 ms] [default] [rows:0  ] SELECT `user_id`,`user_name` FROM `sys_user` WHERE (`user_name`='yuxiao') AND `deleted_at` IS NULL LIMIT 1 
+2022-01-06 12:00:02.407 [DEBU] {b8f15ace7092c71692c8b667cb68ed6d} [  2 ms] [default] [rows:0  ] SHOW FULL COLUMNS FROM `sys_user_role` 
+2022-01-06 12:00:02.408 [ERRO] {b8f15ace7092c71692c8b667cb68ed6d} [  1 ms] [default] [rows:0  ] SELECT `user_id`,`role_id` FROM `sys_user_role` WHERE `userId`=3
+Error: Error 1054: Unknown column 'userId' in 'where clause' 
+Stack:
+1.  github.com/gogf/gf/v2/database/gdb.(*Core).writeSqlToLogger
+    C:/Users/54992/go/pkg/mod/github.com/gogf/gf/v2@v2.0.0-rc/database/gdb/gdb_core.go:661
+2.  github.com/gogf/gf/v2/database/gdb.(*Core).DoCommit
+    C:/Users/54992/go/pkg/mod/github.com/gogf/gf/v2@v2.0.0-rc/database/gdb/gdb_core_underlying.go:193
+3.  github.com/gogf/gf/v2/database/gdb.(*Core).DoQuery
+    C:/Users/54992/go/pkg/mod/github.com/gogf/gf/v2@v2.0.0-rc/database/gdb/gdb_core_underlying.go:58
+4.  github.com/gogf/gf/v2/database/gdb.(*Core).DoGetAll
+    C:/Users/54992/go/pkg/mod/github.com/gogf/gf/v2@v2.0.0-rc/database/gdb/gdb_core.go:149
+5.  github.com/gogf/gf/v2/database/gdb.(*Model).doGetAllBySql
+    C:/Users/54992/go/pkg/mod/github.com/gogf/gf/v2@v2.0.0-rc/database/gdb/gdb_model_select.go:525
+6.  github.com/gogf/gf/v2/database/gdb.(*Model).doGetAll
+    C:/Users/54992/go/pkg/mod/github.com/gogf/gf/v2@v2.0.0-rc/database/gdb/gdb_model_select.go:46
+7.  github.com/gogf/gf/v2/database/gdb.(*Model).All
+    C:/Users/54992/go/pkg/mod/github.com/gogf/gf/v2@v2.0.0-rc/database/gdb/gdb_model_select.go:31
+8.  github.com/gogf/gf/v2/database/gdb.(*Model).doStructs
+    C:/Users/54992/go/pkg/mod/github.com/gogf/gf/v2@v2.0.0-rc/database/gdb/gdb_model_select.go:264
+9.  github.com/gogf/gf/v2/database/gdb.(*Model).Scan
+    C:/Users/54992/go/pkg/mod/github.com/gogf/gf/v2@v2.0.0-rc/database/gdb/gdb_model_select.go:305
+10. github.com/gogf/gf/v2/database/gdb.(*Model).doWithScanStruct
+    C:/Users/54992/go/pkg/mod/github.com/gogf/gf/v2@v2.0.0-rc/database/gdb/gdb_model_with.go:159
+11. github.com/gogf/gf/v2/database/gdb.(*Model).doStruct
+    C:/Users/54992/go/pkg/mod/github.com/gogf/gf/v2@v2.0.0-rc/database/gdb/gdb_model_select.go:227
+12. github.com/gogf/gf/v2/database/gdb.(*Model).Scan
+    C:/Users/54992/go/pkg/mod/github.com/gogf/gf/v2@v2.0.0-rc/database/gdb/gdb_model_select.go:308
+13. gf-RuoYi/internal/service.(*serviceUser).GetById
+    D:/Project/gf-ruoyi/internal/service/sys_user.go:33
+14. gf-RuoYi/internal/handler.(*handlerUser).GetInfo
+    D:/Project/gf-ruoyi/internal/handler/sys_user.go:24
+15. github.com/gogf/gf/v2/net/ghttp.(*middleware).callHandlerFunc.func1
+    C:/Users/54992/go/pkg/mod/github.com/gogf/gf/v2@v2.0.0-rc/net/ghttp/ghttp_request_middleware.go:153
+16. github.com/gogf/gf/v2/net/ghttp.niceCallFunc
+    C:/Users/54992/go/pkg/mod/github.com/gogf/gf/v2@v2.0.0-rc/net/ghttp/ghttp_func.go:52
+17. github.com/gogf/gf/v2/net/ghttp.(*middleware).callHandlerFunc
+    C:/Users/54992/go/pkg/mod/github.com/gogf/gf/v2@v2.0.0-rc/net/ghttp/ghttp_request_middleware.go:128
+18. github.com/gogf/gf/v2/net/ghttp.(*middleware).Next.func1
+    C:/Users/54992/go/pkg/mod/github.com/gogf/gf/v2@v2.0.0-rc/net/ghttp/ghttp_request_middleware.go:74
+19. github.com/gogf/gf/v2/util/gutil.TryCatch
+    C:/Users/54992/go/pkg/mod/github.com/gogf/gf/v2@v2.0.0-rc/util/gutil/gutil.go:55
+20. github.com/gogf/gf/v2/net/ghttp.(*middleware).Next
+    C:/Users/54992/go/pkg/mod/github.com/gogf/gf/v2@v2.0.0-rc/net/ghttp/ghttp_request_middleware.go:48
+21. gf-RuoYi/internal/service.(*serviceMiddleware).TokenAuth
+    D:/Project/gf-ruoyi/internal/service/middleware.go:57
+22. github.com/gogf/gf/v2/net/ghttp.(*middleware).Next.func1.1
+    C:/Users/54992/go/pkg/mod/github.com/gogf/gf/v2@v2.0.0-rc/net/ghttp/ghttp_request_middleware.go:54
+23. github.com/gogf/gf/v2/net/ghttp.niceCallFunc
+    C:/Users/54992/go/pkg/mod/github.com/gogf/gf/v2@v2.0.0-rc/net/ghttp/ghttp_func.go:52
+24. github.com/gogf/gf/v2/net/ghttp.(*middleware).Next.func1
+    C:/Users/54992/go/pkg/mod/github.com/gogf/gf/v2@v2.0.0-rc/net/ghttp/ghttp_request_middleware.go:53
+25. github.com/gogf/gf/v2/util/gutil.TryCatch
+    C:/Users/54992/go/pkg/mod/github.com/gogf/gf/v2@v2.0.0-rc/util/gutil/gutil.go:55
+26. github.com/gogf/gf/v2/net/ghttp.(*middleware).Next
+    C:/Users/54992/go/pkg/mod/github.com/gogf/gf/v2@v2.0.0-rc/net/ghttp/ghttp_request_middleware.go:48
+27. gf-RuoYi/internal/service.(*serviceMiddleware).ResponseHandler
+    D:/Project/gf-ruoyi/internal/service/middleware.go:62
+28. github.com/gogf/gf/v2/net/ghttp.(*middleware).Next.func1.1
+    C:/Users/54992/go/pkg/mod/github.com/gogf/gf/v2@v2.0.0-rc/net/ghttp/ghttp_request_middleware.go:54
+29. github.com/gogf/gf/v2/net/ghttp.niceCallFunc
+    C:/Users/54992/go/pkg/mod/github.com/gogf/gf/v2@v2.0.0-rc/net/ghttp/ghttp_func.go:52
+30. github.com/gogf/gf/v2/net/ghttp.(*middleware).Next.func1
+    C:/Users/54992/go/pkg/mod/github.com/gogf/gf/v2@v2.0.0-rc/net/ghttp/ghttp_request_middleware.go:53
+31. github.com/gogf/gf/v2/util/gutil.TryCatch
+    C:/Users/54992/go/pkg/mod/github.com/gogf/gf/v2@v2.0.0-rc/util/gutil/gutil.go:55
+32. github.com/gogf/gf/v2/net/ghttp.(*middleware).Next
+    C:/Users/54992/go/pkg/mod/github.com/gogf/gf/v2@v2.0.0-rc/net/ghttp/ghttp_request_middleware.go:48
+33. gf-RuoYi/internal/service.(*serviceMiddleware).Ctx
+    D:/Project/gf-ruoyi/internal/service/middleware.go:32
+34. github.com/gogf/gf/v2/net/ghttp.(*middleware).Next.func1.1
+    C:/Users/54992/go/pkg/mod/github.com/gogf/gf/v2@v2.0.0-rc/net/ghttp/ghttp_request_middleware.go:54
+35. github.com/gogf/gf/v2/net/ghttp.niceCallFunc
+    C:/Users/54992/go/pkg/mod/github.com/gogf/gf/v2@v2.0.0-rc/net/ghttp/ghttp_func.go:52
+36. github.com/gogf/gf/v2/net/ghttp.(*middleware).Next.func1
+    C:/Users/54992/go/pkg/mod/github.com/gogf/gf/v2@v2.0.0-rc/net/ghttp/ghttp_request_middleware.go:53
+37. github.com/gogf/gf/v2/util/gutil.TryCatch
+    C:/Users/54992/go/pkg/mod/github.com/gogf/gf/v2@v2.0.0-rc/util/gutil/gutil.go:55
+38. github.com/gogf/gf/v2/net/ghttp.(*middleware).Next
+    C:/Users/54992/go/pkg/mod/github.com/gogf/gf/v2@v2.0.0-rc/net/ghttp/ghttp_request_middleware.go:48
+39. github.com/gogf/gf/v2/net/ghttp.internalMiddlewareServerTracing
+    C:/Users/54992/go/pkg/mod/github.com/gogf/gf/v2@v2.0.0-rc/net/ghttp/ghttp_middleware_tracing.go:78
+40. github.com/gogf/gf/v2/net/ghttp.(*middleware).Next.func1.5
+    C:/Users/54992/go/pkg/mod/github.com/gogf/gf/v2@v2.0.0-rc/net/ghttp/ghttp_request_middleware.go:95
+41. github.com/gogf/gf/v2/net/ghttp.niceCallFunc
+    C:/Users/54992/go/pkg/mod/github.com/gogf/gf/v2@v2.0.0-rc/net/ghttp/ghttp_func.go:52
+42. github.com/gogf/gf/v2/net/ghttp.(*middleware).Next.func1
+    C:/Users/54992/go/pkg/mod/github.com/gogf/gf/v2@v2.0.0-rc/net/ghttp/ghttp_request_middleware.go:94
+43. github.com/gogf/gf/v2/util/gutil.TryCatch
+    C:/Users/54992/go/pkg/mod/github.com/gogf/gf/v2@v2.0.0-rc/util/gutil/gutil.go:55
+44. github.com/gogf/gf/v2/net/ghttp.(*middleware).Next
+    C:/Users/54992/go/pkg/mod/github.com/gogf/gf/v2@v2.0.0-rc/net/ghttp/ghttp_request_middleware.go:48
+45. github.com/gogf/gf/v2/net/ghttp.(*Server).ServeHTTP
+    C:/Users/54992/go/pkg/mod/github.com/gogf/gf/v2@v2.0.0-rc/net/ghttp/ghttp_server_handler.go:121
+ 
+2022-01-06 12:00:33.747 [DEBU] {a45fda1a7892c716074bcd6f386b1616} [  3 ms] [default] [rows:0  ] SHOW FULL COLUMNS FROM `sys_user_online` 
+2022-01-06 12:00:33.749 [DEBU] {a45fda1a7892c716074bcd6f386b1616} [  1 ms] [default] [rows:0  ] SELECT `id`,`token`,`user_name`,`ip`,`explorer`,`os`,`created_at` FROM `sys_user_online` 
+2022-01-06 12:00:33.753 [DEBU] {a45fda1a7892c716074bcd6f386b1616} [  2 ms] [default] [rows:0  ] SHOW FULL COLUMNS FROM `sys_user` 
+2022-01-06 12:00:33.753 [DEBU] {a45fda1a7892c716074bcd6f386b1616} [  0 ms] [default] [rows:0  ] SELECT `user_id`,`user_name` FROM `sys_user` WHERE (`user_name`='yuxiao') AND `deleted_at` IS NULL LIMIT 1 
+2022-01-06 12:00:33.756 [DEBU] {a45fda1a7892c716074bcd6f386b1616} [  2 ms] [default] [rows:0  ] SHOW FULL COLUMNS FROM `sys_user_role` 
+2022-01-06 12:00:33.756 [DEBU] {a45fda1a7892c716074bcd6f386b1616} [  0 ms] [default] [rows:0  ] SELECT `user_id`,`role_id` FROM `sys_user_role` WHERE `user_id`=3 
+2022-01-06 12:01:59.479 [DEBU] {58b5da108c92c71666eb5c518e602e42} [  3 ms] [default] [rows:0  ] SHOW FULL COLUMNS FROM `sys_user_online` 
+2022-01-06 12:01:59.482 [DEBU] {58b5da108c92c71666eb5c518e602e42} [  0 ms] [default] [rows:0  ] SELECT `id`,`token`,`user_name`,`ip`,`explorer`,`os`,`created_at` FROM `sys_user_online` 
+2022-01-06 12:01:59.487 [DEBU] {58b5da108c92c71666eb5c518e602e42} [  3 ms] [default] [rows:0  ] SHOW FULL COLUMNS FROM `sys_user` 
+2022-01-06 12:01:59.489 [DEBU] {58b5da108c92c71666eb5c518e602e42} [  2 ms] [default] [rows:0  ] SELECT * FROM `sys_user` WHERE (`user_name`='yuxiao') AND `deleted_at` IS NULL LIMIT 1 
+2022-01-06 12:02:13.762 [DEBU] {8c6a4a648f92c716c6a3214926d1ea55} [  2 ms] [default] [rows:0  ] SHOW FULL COLUMNS FROM `sys_user_online` 
+2022-01-06 12:02:13.764 [DEBU] {8c6a4a648f92c716c6a3214926d1ea55} [  1 ms] [default] [rows:0  ] SELECT `id`,`token`,`user_name`,`ip`,`explorer`,`os`,`created_at` FROM `sys_user_online` 
+2022-01-06 12:02:13.767 [DEBU] {8c6a4a648f92c716c6a3214926d1ea55} [  1 ms] [default] [rows:0  ] SHOW FULL COLUMNS FROM `sys_user` 
+2022-01-06 12:02:13.768 [DEBU] {8c6a4a648f92c716c6a3214926d1ea55} [  0 ms] [default] [rows:0  ] SELECT `user_id` FROM `sys_user` WHERE (`user_name`='yuxiao') AND `deleted_at` IS NULL LIMIT 1 
+2022-01-06 12:02:13.771 [DEBU] {8c6a4a648f92c716c6a3214926d1ea55} [  2 ms] [default] [rows:0  ] SHOW FULL COLUMNS FROM `sys_user_role` 
+2022-01-06 12:02:13.772 [DEBU] {8c6a4a648f92c716c6a3214926d1ea55} [  0 ms] [default] [rows:0  ] SELECT `user_id`,`role_id` FROM `sys_user_role` WHERE `user_id`=3 
+2022-01-06 12:05:14.480 [DEBU] {4c3bea77b992c716b6df151444c198fb} [  2 ms] [default] [rows:0  ] SHOW FULL COLUMNS FROM `sys_user_online` 
+2022-01-06 12:05:14.483 [DEBU] {4c3bea77b992c716b6df151444c198fb} [  1 ms] [default] [rows:0  ] SELECT `id`,`token`,`user_name`,`ip`,`explorer`,`os`,`created_at` FROM `sys_user_online` 
+2022-01-06 12:05:14.485 [DEBU] {4c3bea77b992c716b6df151444c198fb} [  1 ms] [default] [rows:0  ] SHOW FULL COLUMNS FROM `sys_user` 
+2022-01-06 12:05:14.487 [DEBU] {4c3bea77b992c716b6df151444c198fb} [  1 ms] [default] [rows:0  ] SELECT `user_id` FROM `sys_user` WHERE (`user_name`='yuxiao') AND `deleted_at` IS NULL LIMIT 1 
+2022-01-06 12:05:14.489 [DEBU] {4c3bea77b992c716b6df151444c198fb} [  2 ms] [default] [rows:0  ] SHOW FULL COLUMNS FROM `sys_user_role` 
+2022-01-06 12:05:14.490 [DEBU] {4c3bea77b992c716b6df151444c198fb} [  1 ms] [default] [rows:0  ] SELECT `user_id`,`role_id` FROM `sys_user_role` WHERE `user_id`=3 
+2022-01-06 12:05:14.491 [DEBU] {4c3bea77b992c716b6df151444c198fb} [  0 ms] [default] [rows:0  ] SELECT `user_id`,`user_name`,`nick_name`,`user_id`,`user_name`,`nick_name` FROM `sys_user` WHERE (`user_id` IN(3)) AND `deleted_at` IS NULL 
+2022-01-06 12:09:30.441 [DEBU] {70172f10f592c716bbd9200c06eb767d} [  2 ms] [default] [rows:0  ] SHOW FULL COLUMNS FROM `sys_user_online` 
+2022-01-06 12:09:30.443 [DEBU] {70172f10f592c716bbd9200c06eb767d} [  1 ms] [default] [rows:0  ] SELECT `id`,`token`,`user_name`,`ip`,`explorer`,`os`,`created_at` FROM `sys_user_online` 
+2022-01-06 12:09:30.447 [DEBU] {70172f10f592c716bbd9200c06eb767d} [  3 ms] [default] [rows:0  ] SHOW FULL COLUMNS FROM `sys_user` 
+2022-01-06 12:09:30.449 [DEBU] {70172f10f592c716bbd9200c06eb767d} [  0 ms] [default] [rows:0  ] SELECT `user_id` FROM `sys_user` WHERE (`user_name`='yuxiao') AND `deleted_at` IS NULL LIMIT 1 
+2022-01-06 12:09:30.452 [DEBU] {70172f10f592c716bbd9200c06eb767d} [  2 ms] [default] [rows:0  ] SHOW FULL COLUMNS FROM `sys_user_role` 
+2022-01-06 12:09:30.453 [DEBU] {70172f10f592c716bbd9200c06eb767d} [  0 ms] [default] [rows:0  ] SELECT `user_id`,`role_id` FROM `sys_user_role` WHERE `user_id`=3 
+2022-01-06 12:09:30.455 [DEBU] {70172f10f592c716bbd9200c06eb767d} [  1 ms] [default] [rows:0  ] SHOW FULL COLUMNS FROM `sys_role` 
+2022-01-06 12:09:30.457 [DEBU] {70172f10f592c716bbd9200c06eb767d} [  1 ms] [default] [rows:0  ] SELECT `role_id`,`role_name`,`role_key`,`role_sort`,`status`,`remark`,`created_at`,`updated_at`,`role_id`,`role_name`,`role_key`,`role_sort`,`status`,`remark`,`created_at`,`updated_at` FROM `sys_role` WHERE (`role_id` IN(1)) AND `deleted_at` IS NULL 
+2022-01-06 12:14:16.899 [DEBU] {9c345ac23793c716f7f6a904285980d8} [  3 ms] [default] [rows:0  ] SHOW FULL COLUMNS FROM `sys_user_online` 
+2022-01-06 12:14:16.901 [DEBU] {9c345ac23793c716f7f6a904285980d8} [  0 ms] [default] [rows:0  ] SELECT `id`,`token`,`user_name`,`ip`,`explorer`,`os`,`created_at` FROM `sys_user_online` 
+2022-01-06 12:14:16.905 [DEBU] {9c345ac23793c716f7f6a904285980d8} [  2 ms] [default] [rows:0  ] SHOW FULL COLUMNS FROM `sys_user` 
+2022-01-06 12:14:16.907 [DEBU] {9c345ac23793c716f7f6a904285980d8} [  1 ms] [default] [rows:0  ] SELECT `user_id` FROM `sys_user` WHERE (`user_name`='yuxiao') AND `deleted_at` IS NULL LIMIT 1 
+2022-01-06 12:14:16.910 [DEBU] {9c345ac23793c716f7f6a904285980d8} [  2 ms] [default] [rows:0  ] SHOW FULL COLUMNS FROM `sys_user_role` 
+2022-01-06 12:14:16.911 [DEBU] {9c345ac23793c716f7f6a904285980d8} [  0 ms] [default] [rows:0  ] SELECT `user_id`,`role_id` FROM `sys_user_role` WHERE `user_id`=3 
+2022-01-06 12:14:16.914 [DEBU] {9c345ac23793c716f7f6a904285980d8} [  2 ms] [default] [rows:0  ] SHOW FULL COLUMNS FROM `sys_role` 
+2022-01-06 12:14:16.916 [DEBU] {9c345ac23793c716f7f6a904285980d8} [  1 ms] [default] [rows:0  ] SELECT `role_id`,`role_name`,`role_key`,`role_sort`,`role_id`,`role_name`,`role_key`,`role_sort` FROM `sys_role` WHERE (`role_id` IN(1)) AND `deleted_at` IS NULL 
+2022-01-06 12:14:55.441 [DEBU] {c0b4dbbb4093c716f8f6a9042f6427e8} [  1 ms] [default] [rows:0  ] SELECT `user_id` FROM `sys_user` WHERE (`user_name`='yuxiao') AND `deleted_at` IS NULL LIMIT 1 
+2022-01-06 12:14:55.442 [DEBU] {c0b4dbbb4093c716f8f6a9042f6427e8} [  1 ms] [default] [rows:0  ] SELECT `user_id`,`role_id` FROM `sys_user_role` WHERE `user_id`=0 
+2022-01-06 12:14:55.442 [DEBU] {c0b4dbbb4093c716f8f6a9042f6427e8} [  0 ms] [default] [rows:0  ] SELECT `role_id`,`role_name`,`role_key`,`role_sort`,`role_id`,`role_name`,`role_key`,`role_sort` FROM `sys_role` WHERE (0=1) AND `deleted_at` IS NULL 
+2022-01-06 12:15:07.099 [DEBU] {c48bc4724393c716b3a5142364161324} [  2 ms] [default] [rows:0  ] SHOW FULL COLUMNS FROM `sys_user_online` 
+2022-01-06 12:15:07.102 [DEBU] {c48bc4724393c716b3a5142364161324} [  1 ms] [default] [rows:0  ] SELECT `id`,`token`,`user_name`,`ip`,`explorer`,`os`,`created_at` FROM `sys_user_online` 
+2022-01-06 12:15:07.103 [DEBU] {c48bc4724393c716b3a5142364161324} [  0 ms] [default] [rows:0  ] SHOW FULL COLUMNS FROM `sys_user` 
+2022-01-06 12:15:07.104 [DEBU] {c48bc4724393c716b3a5142364161324} [  0 ms] [default] [rows:0  ] SELECT `user_id` FROM `sys_user` WHERE (`user_name`='yuxiao') AND `deleted_at` IS NULL LIMIT 1 
+2022-01-06 12:15:07.106 [DEBU] {c48bc4724393c716b3a5142364161324} [  1 ms] [default] [rows:0  ] SHOW FULL COLUMNS FROM `sys_user_role` 
+2022-01-06 12:15:07.107 [DEBU] {c48bc4724393c716b3a5142364161324} [  1 ms] [default] [rows:0  ] SELECT `user_id`,`role_id` FROM `sys_user_role` WHERE `user_id`=0 
+2022-01-06 12:15:07.108 [DEBU] {c48bc4724393c716b3a5142364161324} [  0 ms] [default] [rows:0  ] SHOW FULL COLUMNS FROM `sys_role` 
+2022-01-06 12:15:07.109 [DEBU] {c48bc4724393c716b3a5142364161324} [  0 ms] [default] [rows:0  ] SELECT `role_id`,`role_name`,`role_key`,`role_sort`,`role_id`,`role_name`,`role_key`,`role_sort` FROM `sys_role` WHERE (0=1) AND `deleted_at` IS NULL 
+2022-01-06 12:16:36.985 [DEBU] {28d65e605893c716b5a51423ac47127b} [  2 ms] [default] [rows:0  ] SELECT `user_name` FROM `sys_user` WHERE ((`password`='admin') AND (nick_name='admin' or user_name='admin')) AND `deleted_at` IS NULL LIMIT 1 
+2022-01-06 12:16:36.987 [DEBU] {28d65e605893c716b5a51423ac47127b} [  0 ms] [default] [rows:0  ] DELETE FROM `sys_user_online` WHERE `user_name`='admin' 
+2022-01-06 12:16:36.989 [DEBU] {28d65e605893c716b5a51423ac47127b} [  1 ms] [default] [rows:0  ] INSERT INTO `sys_user_online`(`user_name`,`ip`,`explorer`,`os`,`created_at`,`token`) VALUES('admin','127.0.0.1','Chrome','Windows 7','2022-01-06 12:16:36','46kkum0cgyau70u59x4100d6slipy4hf')  
+2022-01-06 12:16:41.969 [DEBU] {48869b895993c716b6a514234f3c7c63} [  0 ms] [default] [rows:0  ] SELECT `id`,`token`,`user_name`,`ip`,`explorer`,`os`,`created_at` FROM `sys_user_online` 
+2022-01-06 12:16:41.972 [DEBU] {48869b895993c716b6a514234f3c7c63} [  1 ms] [default] [rows:0  ] SELECT `user_id` FROM `sys_user` WHERE (`user_name`='yuxiao') AND `deleted_at` IS NULL LIMIT 1 
+2022-01-06 12:16:41.974 [DEBU] {48869b895993c716b6a514234f3c7c63} [  1 ms] [default] [rows:0  ] SELECT `user_id`,`role_id` FROM `sys_user_role` WHERE `user_id`=3 
+2022-01-06 12:16:41.977 [DEBU] {48869b895993c716b6a514234f3c7c63} [  2 ms] [default] [rows:0  ] SELECT `role_id`,`role_name`,`role_key`,`role_sort`,`role_id`,`role_name`,`role_key`,`role_sort` FROM `sys_role` WHERE (`role_id` IN(1)) AND `deleted_at` IS NULL 
+2022-01-06 12:16:48.579 [DEBU] {d41e87135b93c716b7a514237d16b20a} [  0 ms] [default] [rows:0  ] SELECT `user_id` FROM `sys_user` WHERE (`user_name`='yuxiao') AND `deleted_at` IS NULL LIMIT 1 
+2022-01-06 12:16:48.580 [DEBU] {d41e87135b93c716b7a514237d16b20a} [  0 ms] [default] [rows:0  ] SELECT `user_id`,`role_id` FROM `sys_user_role` WHERE `user_id`=3 
+2022-01-06 12:16:48.581 [DEBU] {d41e87135b93c716b7a514237d16b20a} [  0 ms] [default] [rows:0  ] SELECT `role_id`,`role_name`,`role_key`,`role_sort`,`role_id`,`role_name`,`role_key`,`role_sort` FROM `sys_role` WHERE (`role_id` IN(1)) AND `deleted_at` IS NULL 
+2022-01-06 12:16:53.843 [DEBU] {9473414d5c93c716b8a51423547d3677} [  1 ms] [default] [rows:0  ] SELECT `user_name` FROM `sys_user` WHERE ((`password`='admin') AND (nick_name='admin' or user_name='admin')) AND `deleted_at` IS NULL LIMIT 1 
+2022-01-06 12:16:53.845 [DEBU] {9473414d5c93c716b8a51423547d3677} [  1 ms] [default] [rows:0  ] DELETE FROM `sys_user_online` WHERE `user_name`='admin' 
+2022-01-06 12:16:53.845 [DEBU] {9473414d5c93c716b8a51423547d3677} [  0 ms] [default] [rows:0  ] INSERT INTO `sys_user_online`(`created_at`,`token`,`user_name`,`ip`,`explorer`,`os`) VALUES('2022-01-06 12:16:53','46kkum0cgyauermc4e02007d9e492txc','admin','127.0.0.1','Chrome','Windows 7')  
+2022-01-06 12:18:12.861 [DEBU] {e0f7f8b26e93c716b9a514236c40fb0c} [  2 ms] [default] [rows:0  ] SELECT `user_name` FROM `sys_user` WHERE ((`password`='admin') AND (nick_name='admin' or user_name='admin')) AND `deleted_at` IS NULL LIMIT 1 
+2022-01-06 12:18:12.864 [DEBU] {e0f7f8b26e93c716b9a514236c40fb0c} [  2 ms] [default] [rows:0  ] DELETE FROM `sys_user_online` WHERE `user_name`='admin' 
+2022-01-06 12:18:12.866 [DEBU] {e0f7f8b26e93c716b9a514236c40fb0c} [  1 ms] [default] [rows:0  ] INSERT INTO `sys_user_online`(`created_at`,`ip`,`explorer`,`os`,`token`,`user_name`) VALUES('2022-01-06 12:18:12','127.0.0.1','Chrome','Windows 7','46kkum0cgyavf2g5qyo300hoi0k9qyj2','admin')  
+2022-01-06 12:18:24.983 [DEBU] {184fa3857193c716baa51423b12f6850} [  1 ms] [default] [rows:0  ] SELECT `id`,`token`,`user_name`,`ip`,`explorer`,`os`,`created_at` FROM `sys_user_online` 
+2022-01-06 12:18:24.986 [DEBU] {184fa3857193c716baa51423b12f6850} [  1 ms] [default] [rows:0  ] SELECT `user_id` FROM `sys_user` WHERE (`user_name`='admin') AND `deleted_at` IS NULL LIMIT 1 
+2022-01-06 12:18:24.990 [DEBU] {184fa3857193c716baa51423b12f6850} [  3 ms] [default] [rows:0  ] SELECT `user_id`,`role_id` FROM `sys_user_role` WHERE `user_id`=19 
+2022-01-06 12:18:24.993 [DEBU] {184fa3857193c716baa51423b12f6850} [  3 ms] [default] [rows:0  ] SELECT `role_id`,`role_name`,`role_key`,`role_sort`,`role_id`,`role_name`,`role_key`,`role_sort` FROM `sys_role` WHERE (0=1) AND `deleted_at` IS NULL 
+2022-01-06 12:18:56.253 [DEBU] {641c6dcd7893c7166e51c57a2c0e5629} [  1 ms] [default] [rows:0  ] SHOW FULL COLUMNS FROM `sys_user_online` 
+2022-01-06 12:18:56.256 [DEBU] {641c6dcd7893c7166e51c57a2c0e5629} [  1 ms] [default] [rows:0  ] SELECT `id`,`token`,`user_name`,`ip`,`explorer`,`os`,`created_at` FROM `sys_user_online` 
+2022-01-06 12:18:56.257 [DEBU] {641c6dcd7893c7166e51c57a2c0e5629} [  0 ms] [default] [rows:0  ] SHOW FULL COLUMNS FROM `sys_user` 
+2022-01-06 12:18:56.260 [DEBU] {641c6dcd7893c7166e51c57a2c0e5629} [  1 ms] [default] [rows:0  ] SELECT `user_id` FROM `sys_user` WHERE (`user_name`='admin') AND `deleted_at` IS NULL LIMIT 1 
+2022-01-06 12:18:56.264 [DEBU] {641c6dcd7893c7166e51c57a2c0e5629} [  3 ms] [default] [rows:0  ] SHOW FULL COLUMNS FROM `sys_user_role` 
+2022-01-06 12:18:56.266 [DEBU] {641c6dcd7893c7166e51c57a2c0e5629} [  1 ms] [default] [rows:0  ] SELECT `user_id`,`role_id` FROM `sys_user_role` WHERE `user_id`=19 
+2022-01-06 12:18:56.268 [DEBU] {641c6dcd7893c7166e51c57a2c0e5629} [  1 ms] [default] [rows:0  ] SHOW FULL COLUMNS FROM `sys_role` 
+2022-01-06 12:18:56.269 [DEBU] {641c6dcd7893c7166e51c57a2c0e5629} [  0 ms] [default] [rows:0  ] SELECT `role_id`,`role_name`,`role_key`,`role_sort`,`role_id`,`role_name`,`role_key`,`role_sort` FROM `sys_role` WHERE (0=1) AND `deleted_at` IS NULL 
+2022-01-06 14:14:17.435 [DEBU] {ec67fe43c499c7166f51c57abdfe397c} [  2 ms] [default] [rows:0  ] SELECT `user_id` FROM `sys_user` WHERE (`user_name`='admin') AND `deleted_at` IS NULL LIMIT 1 
+2022-01-06 14:14:17.438 [DEBU] {ec67fe43c499c7166f51c57abdfe397c} [  2 ms] [default] [rows:0  ] SELECT `user_id`,`role_id` FROM `sys_user_role` WHERE `user_id`=19 
+2022-01-06 14:14:17.440 [DEBU] {ec67fe43c499c7166f51c57abdfe397c} [  2 ms] [default] [rows:0  ] SELECT `role_id`,`role_name`,`role_key`,`role_sort`,`role_id`,`role_name`,`role_key`,`role_sort` FROM `sys_role` WHERE (`role_id` IN(2)) AND `deleted_at` IS NULL 
+2022-01-06 14:14:20.398 [DEBU] {28049df4c499c7167051c57a3cd097c2} [  1 ms] [default] [rows:0  ] SELECT `user_id` FROM `sys_user` WHERE (`user_name`='admin') AND `deleted_at` IS NULL LIMIT 1 
+2022-01-06 14:14:20.399 [DEBU] {28049df4c499c7167051c57a3cd097c2} [  0 ms] [default] [rows:0  ] SELECT `user_id`,`role_id` FROM `sys_user_role` WHERE `user_id`=19 
+2022-01-06 14:14:20.401 [DEBU] {28049df4c499c7167051c57a3cd097c2} [  0 ms] [default] [rows:0  ] SELECT `role_id`,`role_name`,`role_key`,`role_sort`,`role_id`,`role_name`,`role_key`,`role_sort` FROM `sys_role` WHERE (`role_id` IN(2)) AND `deleted_at` IS NULL 
+2022-01-06 14:14:44.067 [DEBU] {e0adcc76ca99c7168655803204264ad1} [  4 ms] [default] [rows:0  ] SHOW FULL COLUMNS FROM `sys_user_online` 
+2022-01-06 14:14:44.075 [DEBU] {e0adcc76ca99c7168655803204264ad1} [  1 ms] [default] [rows:0  ] SELECT `id`,`token`,`user_name`,`ip`,`explorer`,`os`,`created_at` FROM `sys_user_online` 
+2022-01-06 14:14:44.079 [DEBU] {e0adcc76ca99c7168655803204264ad1} [  1 ms] [default] [rows:0  ] SHOW FULL COLUMNS FROM `sys_user` 
+2022-01-06 14:14:44.081 [DEBU] {e0adcc76ca99c7168655803204264ad1} [  0 ms] [default] [rows:0  ] SELECT `user_id` FROM `sys_user` WHERE (`user_name`='admin') AND `deleted_at` IS NULL LIMIT 1 
+2022-01-06 14:14:44.084 [DEBU] {e0adcc76ca99c7168655803204264ad1} [  2 ms] [default] [rows:0  ] SHOW FULL COLUMNS FROM `sys_user_role` 
+2022-01-06 14:14:44.086 [DEBU] {e0adcc76ca99c7168655803204264ad1} [  1 ms] [default] [rows:0  ] SELECT `user_id`,`role_id` FROM `sys_user_role` WHERE `user_id`=19 
+2022-01-06 14:14:44.090 [DEBU] {e0adcc76ca99c7168655803204264ad1} [  3 ms] [default] [rows:0  ] SHOW FULL COLUMNS FROM `sys_role` 
+2022-01-06 14:14:44.091 [DEBU] {e0adcc76ca99c7168655803204264ad1} [  0 ms] [default] [rows:0  ] SELECT `role_id`,`role_name`,`role_key`,`role_sort`,`role_id`,`role_name`,`role_key`,`role_sort` FROM `sys_role` WHERE (`role_id` IN(2)) AND `deleted_at` IS NULL 
+2022-01-06 14:48:01.626 [DEBU] {54a8228f9b9bc716bdf729678576d773} [  2 ms] [default] [rows:0  ] SHOW FULL COLUMNS FROM `sys_user_online` 
+2022-01-06 14:48:01.628 [DEBU] {54a8228f9b9bc716bdf729678576d773} [  1 ms] [default] [rows:0  ] SELECT `id`,`token`,`user_name`,`ip`,`explorer`,`os`,`created_at` FROM `sys_user_online` 
+2022-01-06 14:48:01.630 [DEBU] {54a8228f9b9bc716bdf729678576d773} [  1 ms] [default] [rows:0  ] SHOW FULL COLUMNS FROM `sys_user` 
+2022-01-06 14:48:01.631 [DEBU] {54a8228f9b9bc716bdf729678576d773} [  0 ms] [default] [rows:0  ] SELECT `user_id`,`user_name`,`nick_name`,`mobile`,`avatar`,`status`,`role_ids`,`shop_ids`,`dept_id`,`remark`,`created_at`,`updated_at` FROM `sys_user` WHERE (`user_name`='admin') AND `deleted_at` IS NULL LIMIT 1 
+2022-01-06 14:48:01.634 [DEBU] {54a8228f9b9bc716bdf729678576d773} [  1 ms] [default] [rows:0  ] SHOW FULL COLUMNS FROM `sys_user_role` 
+2022-01-06 14:48:01.637 [DEBU] {54a8228f9b9bc716bdf729678576d773} [  2 ms] [default] [rows:0  ] SELECT `user_id`,`role_id` FROM `sys_user_role` WHERE `user_id`=19 
+2022-01-06 14:48:01.640 [DEBU] {54a8228f9b9bc716bdf729678576d773} [  2 ms] [default] [rows:0  ] SHOW FULL COLUMNS FROM `sys_role` 
+2022-01-06 14:48:01.642 [DEBU] {54a8228f9b9bc716bdf729678576d773} [  1 ms] [default] [rows:0  ] SELECT `role_id`,`role_name`,`role_key`,`role_sort`,`status`,`remark`,`created_at`,`updated_at`,`role_id`,`role_name`,`role_key`,`role_sort`,`status`,`remark`,`created_at`,`updated_at` FROM `sys_role` WHERE (`role_id` IN(2)) AND `deleted_at` IS NULL 
+2022-01-06 14:55:08.920 [DEBU] {6ca3c50bff9bc7162fe68d7458193c01} [  3 ms] [default] [rows:0  ] SHOW FULL COLUMNS FROM `sys_user_online` 
+2022-01-06 14:55:08.923 [DEBU] {6ca3c50bff9bc7162fe68d7458193c01} [  1 ms] [default] [rows:0  ] SELECT `id`,`token`,`user_name`,`ip`,`explorer`,`os`,`created_at` FROM `sys_user_online` 
+2022-01-06 14:55:08.926 [DEBU] {6ca3c50bff9bc7162fe68d7458193c01} [  1 ms] [default] [rows:0  ] SHOW FULL COLUMNS FROM `sys_user` 
+2022-01-06 14:55:08.927 [DEBU] {6ca3c50bff9bc7162fe68d7458193c01} [  0 ms] [default] [rows:0  ] SELECT `user_id`,`user_name`,`nick_name`,`mobile`,`avatar`,`status`,`role_ids`,`shop_ids`,`dept_id`,`remark`,`created_at`,`updated_at` FROM `sys_user` WHERE (`user_name`='admin') AND `deleted_at` IS NULL LIMIT 1 
+2022-01-06 14:55:08.929 [DEBU] {6ca3c50bff9bc7162fe68d7458193c01} [  0 ms] [default] [rows:0  ] SHOW FULL COLUMNS FROM `sys_user_role` 
+2022-01-06 14:55:08.930 [DEBU] {6ca3c50bff9bc7162fe68d7458193c01} [  0 ms] [default] [rows:0  ] SELECT `user_id`,`role_id` FROM `sys_user_role` WHERE `user_id`=19 
+2022-01-06 14:55:08.932 [DEBU] {6ca3c50bff9bc7162fe68d7458193c01} [  1 ms] [default] [rows:0  ] SHOW FULL COLUMNS FROM `sys_role` 
+2022-01-06 14:55:08.934 [DEBU] {6ca3c50bff9bc7162fe68d7458193c01} [  1 ms] [default] [rows:0  ] SELECT `role_id`,`role_name`,`role_key`,`role_sort`,`status`,`remark`,`created_at`,`updated_at`,`role_id`,`role_name`,`role_key`,`role_sort`,`status`,`remark`,`created_at`,`updated_at` FROM `sys_role` WHERE (`role_id` IN(2)) AND `deleted_at` IS NULL 
+2022-01-06 14:56:16.769 [DEBU] {d881f4d70e9cc716f88635071a0b39f2} [  1 ms] [default] [rows:0  ] SHOW FULL COLUMNS FROM `sys_user_online` 
+2022-01-06 14:56:16.770 [DEBU] {d881f4d70e9cc716f88635071a0b39f2} [  0 ms] [default] [rows:0  ] SELECT `id`,`token`,`user_name`,`ip`,`explorer`,`os`,`created_at` FROM `sys_user_online` 
+2022-01-06 14:56:16.772 [DEBU] {d881f4d70e9cc716f88635071a0b39f2} [  1 ms] [default] [rows:0  ] SHOW FULL COLUMNS FROM `sys_user` 
+2022-01-06 14:56:16.774 [DEBU] {d881f4d70e9cc716f88635071a0b39f2} [  1 ms] [default] [rows:0  ] SELECT `user_id`,`user_name`,`nick_name`,`mobile`,`avatar`,`status`,`role_ids`,`shop_ids`,`dept_id`,`remark`,`created_at`,`updated_at` FROM `sys_user` WHERE (`user_name`='admin') AND `deleted_at` IS NULL LIMIT 1 
+2022-01-06 14:56:16.776 [DEBU] {d881f4d70e9cc716f88635071a0b39f2} [  1 ms] [default] [rows:0  ] SHOW FULL COLUMNS FROM `sys_user_role` 
+2022-01-06 14:56:16.778 [DEBU] {d881f4d70e9cc716f88635071a0b39f2} [  2 ms] [default] [rows:0  ] SELECT `user_id`,`role_id` FROM `sys_user_role` WHERE `user_id`=19 
+2022-01-06 14:56:16.781 [DEBU] {d881f4d70e9cc716f88635071a0b39f2} [  2 ms] [default] [rows:0  ] SHOW FULL COLUMNS FROM `sys_role` 
+2022-01-06 14:56:16.783 [DEBU] {d881f4d70e9cc716f88635071a0b39f2} [  1 ms] [default] [rows:0  ] SELECT `role_id`,`role_name`,`role_key`,`role_sort`,`status`,`remark`,`created_at`,`updated_at`,`role_id`,`role_name`,`role_key`,`role_sort`,`status`,`remark`,`created_at`,`updated_at` FROM `sys_role` WHERE (`role_id` IN(2)) AND `deleted_at` IS NULL 
+2022-01-06 14:57:56.054 [DEBU] {980ee1f5259cc7163954f6088e7b9139} [  1 ms] [default] [rows:0  ] SHOW FULL COLUMNS FROM `sys_user_online` 
+2022-01-06 14:57:56.057 [DEBU] {980ee1f5259cc7163954f6088e7b9139} [  1 ms] [default] [rows:0  ] SELECT `id`,`token`,`user_name`,`ip`,`explorer`,`os`,`created_at` FROM `sys_user_online` 
+2022-01-06 14:57:56.058 [DEBU] {980ee1f5259cc7163954f6088e7b9139} [  0 ms] [default] [rows:0  ] SHOW FULL COLUMNS FROM `sys_user` 
+2022-01-06 14:57:56.060 [DEBU] {980ee1f5259cc7163954f6088e7b9139} [  1 ms] [default] [rows:0  ] SELECT `user_id`,`user_name`,`nick_name`,`mobile`,`avatar`,`status`,`role_ids`,`shop_ids`,`dept_id`,`remark`,`created_at`,`updated_at` FROM `sys_user` WHERE (`user_name`='admin') AND `deleted_at` IS NULL LIMIT 1 
+2022-01-06 14:57:56.063 [DEBU] {980ee1f5259cc7163954f6088e7b9139} [  1 ms] [default] [rows:0  ] SHOW FULL COLUMNS FROM `sys_user_role` 
+2022-01-06 14:57:56.064 [DEBU] {980ee1f5259cc7163954f6088e7b9139} [  1 ms] [default] [rows:0  ] SELECT `user_id`,`role_id` FROM `sys_user_role` WHERE `user_id`=19 
+2022-01-06 14:57:56.067 [DEBU] {980ee1f5259cc7163954f6088e7b9139} [  2 ms] [default] [rows:0  ] SHOW FULL COLUMNS FROM `sys_role` 
+2022-01-06 14:57:56.068 [DEBU] {980ee1f5259cc7163954f6088e7b9139} [  1 ms] [default] [rows:0  ] SELECT `role_id`,`role_name`,`role_key`,`role_sort`,`status`,`remark`,`created_at`,`updated_at`,`role_id`,`role_name`,`role_key`,`role_sort`,`status`,`remark`,`created_at`,`updated_at` FROM `sys_role` WHERE (`role_id` IN(2)) AND `deleted_at` IS NULL 
+2022-01-06 14:58:52.200 [DEBU] {b4346108339cc716bf84c73dd4272578} [  2 ms] [default] [rows:0  ] SHOW FULL COLUMNS FROM `sys_user_online` 
+2022-01-06 14:58:52.205 [DEBU] {b4346108339cc716bf84c73dd4272578} [  0 ms] [default] [rows:0  ] SELECT `id`,`token`,`user_name`,`ip`,`explorer`,`os`,`created_at` FROM `sys_user_online` 
+2022-01-06 14:58:52.208 [DEBU] {b4346108339cc716bf84c73dd4272578} [  1 ms] [default] [rows:0  ] SHOW FULL COLUMNS FROM `sys_user` 
+2022-01-06 14:58:52.209 [DEBU] {b4346108339cc716bf84c73dd4272578} [  0 ms] [default] [rows:0  ] SELECT `user_id`,`user_name`,`nick_name`,`mobile`,`avatar`,`status`,`role_ids`,`shop_ids`,`dept_id`,`remark`,`created_at`,`updated_at` FROM `sys_user` WHERE (`user_name`='admin') AND `deleted_at` IS NULL LIMIT 1 
+2022-01-06 14:58:52.211 [DEBU] {b4346108339cc716bf84c73dd4272578} [  1 ms] [default] [rows:0  ] SHOW FULL COLUMNS FROM `sys_user_role` 
+2022-01-06 14:58:52.212 [DEBU] {b4346108339cc716bf84c73dd4272578} [  0 ms] [default] [rows:0  ] SELECT `user_id`,`role_id` FROM `sys_user_role` WHERE `user_id`=19 
+2022-01-06 14:58:52.215 [DEBU] {b4346108339cc716bf84c73dd4272578} [  2 ms] [default] [rows:0  ] SHOW FULL COLUMNS FROM `sys_role` 
+2022-01-06 14:58:52.216 [DEBU] {b4346108339cc716bf84c73dd4272578} [  1 ms] [default] [rows:0  ] SELECT `role_id`,`role_name`,`role_key`,`role_sort`,`status`,`remark`,`created_at`,`updated_at`,`role_id`,`role_name`,`role_key`,`role_sort`,`status`,`remark`,`created_at`,`updated_at` FROM `sys_role` WHERE (`role_id` IN(2)) AND `deleted_at` IS NULL 
+2022-01-06 14:59:13.067 [DEBU] {e4222be4379cc7163bf2180fac3137d4} [  2 ms] [default] [rows:0  ] SHOW FULL COLUMNS FROM `sys_user_online` 
+2022-01-06 14:59:13.072 [DEBU] {e4222be4379cc7163bf2180fac3137d4} [  1 ms] [default] [rows:0  ] SELECT `id`,`token`,`user_name`,`ip`,`explorer`,`os`,`created_at` FROM `sys_user_online` 
+2022-01-06 14:59:13.076 [DEBU] {e4222be4379cc7163bf2180fac3137d4} [  1 ms] [default] [rows:0  ] SHOW FULL COLUMNS FROM `sys_user` 
+2022-01-06 14:59:13.077 [DEBU] {e4222be4379cc7163bf2180fac3137d4} [  1 ms] [default] [rows:0  ] SELECT `user_id`,`user_name`,`nick_name`,`mobile`,`avatar`,`status`,`role_ids`,`shop_ids`,`dept_id`,`remark`,`created_at`,`updated_at` FROM `sys_user` WHERE (`user_name`='admin') AND `deleted_at` IS NULL LIMIT 1 
+2022-01-06 14:59:13.079 [DEBU] {e4222be4379cc7163bf2180fac3137d4} [  1 ms] [default] [rows:0  ] SHOW FULL COLUMNS FROM `sys_user_role` 
+2022-01-06 14:59:13.079 [DEBU] {e4222be4379cc7163bf2180fac3137d4} [  0 ms] [default] [rows:0  ] SELECT `user_id`,`role_id` FROM `sys_user_role` WHERE `user_id`=19 
+2022-01-06 14:59:13.082 [DEBU] {e4222be4379cc7163bf2180fac3137d4} [  2 ms] [default] [rows:0  ] SHOW FULL COLUMNS FROM `sys_role` 
+2022-01-06 14:59:13.083 [DEBU] {e4222be4379cc7163bf2180fac3137d4} [  1 ms] [default] [rows:0  ] SELECT `role_id`,`role_name`,`role_key`,`role_sort`,`status`,`remark`,`created_at`,`updated_at`,`role_id`,`role_name`,`role_key`,`role_sort`,`status`,`remark`,`created_at`,`updated_at` FROM `sys_role` WHERE (`role_id` IN(2)) AND `deleted_at` IS NULL 
+2022-01-06 15:01:26.336 [DEBU] {f0e19deb569cc7163cf2180f0d2fc4a8} [  1 ms] [default] [rows:0  ] SELECT `user_id`,`user_name`,`nick_name`,`mobile`,`avatar`,`status`,`role_ids`,`shop_ids`,`dept_id`,`remark`,`created_at`,`updated_at` FROM `sys_user` WHERE (`user_name`='admin') AND `deleted_at` IS NULL LIMIT 1 
+2022-01-06 15:01:26.339 [DEBU] {f0e19deb569cc7163cf2180f0d2fc4a8} [  2 ms] [default] [rows:0  ] SELECT `user_id`,`role_id` FROM `sys_user_role` WHERE `user_id`=19 
+2022-01-06 15:01:26.341 [DEBU] {f0e19deb569cc7163cf2180f0d2fc4a8} [  1 ms] [default] [rows:0  ] SELECT `role_id`,`role_name`,`role_key`,`role_sort`,`status`,`remark`,`created_at`,`updated_at`,`role_id`,`role_name`,`role_key`,`role_sort`,`status`,`remark`,`created_at`,`updated_at` FROM `sys_role` WHERE (`role_id` IN(2)) AND `deleted_at` IS NULL 

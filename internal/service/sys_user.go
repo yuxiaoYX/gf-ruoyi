@@ -29,8 +29,8 @@ func (s *serviceUser) Login(ctx context.Context, in model.SysUserLoginInput) (ou
 }
 
 // 获取用户详细信息
-func (s *serviceUser) GetById(ctx context.Context, in model.SysUserGetNameInput) (out *model.SysUserGetRoleOutput, err error) {
-	err = dao.SysUser.Ctx(ctx).Where("user_name", in.UserName).Scan(&out)
+func (s *serviceUser) GetInfo(ctx context.Context, in model.SysUserGetNameInput) (out *model.SysUserGetRoleOutput, err error) {
+	err = dao.SysUser.Ctx(ctx).WithAll().Where("user_name", in.UserName).Scan(&out)
 	glog.Debug(ctx, out)
 	return
 }
