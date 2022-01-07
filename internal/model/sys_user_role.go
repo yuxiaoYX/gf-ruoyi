@@ -1,13 +1,13 @@
 package model
 
-import (
-	"github.com/gogf/gf/v2/util/gmeta"
-)
+// 用户id查询输入
+type SysUserRoleUserIdInput struct {
+	UserId int // 用户ID
+	RoleId int // 角色ID
+}
 
-// with特性，通过userId获取对应的角色信息
-type SysUserRoleWithOutput struct {
-	gmeta.Meta `orm:"table:sys_user_role"`
-	UserId     int                  `json:"userId" ` // 用户ID
-	RoleId     int                  `json:"roleId" ` // 角色ID
-	Roles      []*SysRoleWithOutput `orm:"with:role_id"`
+// 用户id查询输入
+type SysUserRoleUserIdOutput struct {
+	UserId int // 用户ID
+	RoleId int // 角色ID
 }

@@ -7,7 +7,6 @@ import (
 	"gf-RuoYi/internal/service/internal/dao"
 
 	"github.com/gogf/gf/v2/database/gdb"
-	"github.com/gogf/gf/v2/os/glog"
 )
 
 // 在线用户管理
@@ -27,7 +26,6 @@ func (s *sysUserOnline) GetToken(ctx context.Context, token string) (enlineEntit
 	if err != nil {
 		return nil, err
 	}
-	glog.Debug(ctx, entinesEntity)
 	for _, v := range entinesEntity {
 		if token == v.Token {
 			return v, err

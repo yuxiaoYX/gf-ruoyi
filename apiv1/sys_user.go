@@ -16,5 +16,5 @@ type SysUserInfoReq struct {
 	g.Meta `path:"/getInfo" method:"get" summary:"登录成功后获取用户信息" tags:"用户"`
 }
 type SysUserInfoRes struct {
-	User *model.SysUserGetRoleOutput `json:"user" dc:"用户信息"`
+	User *model.SysUserGetInfoOutput `json:"user" dc:"用户信息"`
 }

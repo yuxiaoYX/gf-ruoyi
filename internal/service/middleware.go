@@ -53,7 +53,7 @@ func (s *serviceMiddleware) TokenAuth(r *ghttp.Request) {
 		// return
 	}
 	// 设置username到上下文
-	Context.SetUser(r.Context(), &model.ContextUser{UserName: onlineInfo.UserName})
+	Context.SetUser(r.Context(), &model.ContextUser{UserId: uint(onlineInfo.UserId), UserName: onlineInfo.UserName})
 	r.Middleware.Next()
 }
 

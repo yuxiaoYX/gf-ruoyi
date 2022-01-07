@@ -12,9 +12,9 @@ import (
 
 // SysUserDao is the data access object for table sys_user.
 type SysUserDao struct {
-	Table   string          // Table is the underlying table name of the DAO.
-	Group   string          // Group is the database configuration group name of current DAO.
-	Columns SysUserColumns // Columns contains all the column names of Table for convenient usage.
+	table   string          // table is the underlying table name of the DAO.
+	group   string          // group is the database configuration group name of current DAO.
+	columns SysUserColumns // columns contains all the column names of Table for convenient usage.
 }
 
 // SysUserColumns defines and stores column names for table sys_user.
@@ -56,20 +56,35 @@ var sysUserColumns = SysUserColumns{
 // NewSysUserDao creates and returns a new DAO object for table data access.
 func NewSysUserDao() *SysUserDao {
 	return &SysUserDao{
-		Group:   "default",
-		Table:   "sys_user",
-		Columns: sysUserColumns,
+		group:   "default",
+		table:   "sys_user",
+		columns: sysUserColumns,
 	}
 }
 
 // DB retrieves and returns the underlying raw database management object of current DAO.
 func (dao *SysUserDao) DB() gdb.DB {
-	return g.DB(dao.Group)
+	return g.DB(dao.group)
+}
+
+// Table returns the table name of current dao.
+func (dao *SysUserDao) Table() string {
+	return dao.table
+}
+
+// Columns returns all column names of current dao.
+func (dao *SysUserDao) Columns() SysUserColumns {
+	return dao.columns
+}
+
+// Group returns the configuration group name of database of current dao.
+func (dao *SysUserDao) Group() string {
+	return dao.group
 }
 
 // Ctx creates and returns the Model for current DAO, It automatically sets the context for current operation.
 func (dao *SysUserDao) Ctx(ctx context.Context) *gdb.Model {
-	return dao.DB().Model(dao.Table).Safe().Ctx(ctx)
+	return dao.DB().Model(dao.table).Safe().Ctx(ctx)
 }
 
 // Transaction wraps the transaction logic using function f.

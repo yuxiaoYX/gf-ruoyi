@@ -21,6 +21,6 @@ func (h *handlerUser) Logout(ctx context.Context, req *apiv1.SysUserLogoutReq) (
 // 获取登录的用户信息、角色权限、菜单等
 func (h *handlerUser) GetInfo(ctx context.Context, req *apiv1.SysUserInfoReq) (res *apiv1.SysUserInfoRes, err error) {
 	res = &apiv1.SysUserInfoRes{}
-	res.User, err = service.SysUser.GetInfo(ctx, model.SysUserGetNameInput{UserName: service.Context.Get(ctx).User.UserName})
+	res.User, err = service.SysUser.GetInfo(ctx, model.SysUserGetInfoInput{UserId: service.Context.Get(ctx).User.UserId})
 	return
 }

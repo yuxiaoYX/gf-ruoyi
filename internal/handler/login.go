@@ -34,6 +34,7 @@ func (h *handlerLogin) Login(ctx context.Context, req *apiv1.LoginDoReq) (res *a
 	explorer, _ := ua.Browser()
 	service.SysUserOnline.Create(ctx, model.SysUserOnlineCreateInput{
 		Token:    token,
+		UserId:   int(out.UserId),
 		UserName: out.UserName,
 		Ip:       utils.GetClientIp(r),
 		Os:       ua.OS(),

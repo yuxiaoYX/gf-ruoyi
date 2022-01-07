@@ -8,9 +8,9 @@ import(
 "github.com/gogf/gf/v2/frame/g"
 )
 
-// SysUserRoleForDao is the golang structure of table sys_user_role for DAO operations like Where/Data.
+// SysUserRole is the golang structure of table sys_user_role for DAO operations like Where/Data.
 type SysUserRole struct {
-g.Meta `orm:"dto:true"`
+g.Meta `orm:"table:sys_user_role, dto:true"`
     UserId interface{} // 用户ID  
     RoleId interface{} // 角色ID  
 }

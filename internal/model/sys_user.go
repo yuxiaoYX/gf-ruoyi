@@ -13,14 +13,16 @@ type SysUserLoginInput struct {
 
 // 用户登录输出
 type SysUserLoginOutput struct {
+	UserId   uint   // 用户ID
 	UserName string // 用户名
 }
 
 // 获取用户信息
-type SysUserGetNameInput struct {
-	UserName string // 用户名
+type SysUserGetInfoInput struct {
+	UserId uint // 用户ID
 }
-type SysUserGetNameOutput struct {
+
+type SysUserInfo struct {
 	UserId    uint        `json:"userId"    ` // 用户ID
 	UserName  string      `json:"userName"  ` // 用户账号
 	NickName  string      `json:"nickName"  ` // 用户昵称
@@ -36,8 +38,8 @@ type SysUserGetNameOutput struct {
 }
 
 // 获取登录用户信息，及角色、菜单权限
-type SysUserGetRoleOutput struct {
+type SysUserGetInfoOutput struct {
 	gmeta.Meta `orm:"table:sys_user"`
-	SysUserGetNameOutput
-	UserRole []*SysUserRoleWithOutput `orm:"with:user_id"`
+	SysUserInfo
+	Roles []*SysUserRoleUserIdOutput
 }

@@ -9,9 +9,9 @@ import(
 "github.com/gogf/gf/v2/os/gtime"
 )
 
-// SysRoleForDao is the golang structure of table sys_role for DAO operations like Where/Data.
+// SysRole is the golang structure of table sys_role for DAO operations like Where/Data.
 type SysRole struct {
-g.Meta `orm:"dto:true"`
+g.Meta `orm:"table:sys_role, dto:true"`
     RoleId interface{} // 角色ID                    
     RoleName interface{} // 角色名称                  
     RoleKey interface{} // 权限字符                  

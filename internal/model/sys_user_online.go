@@ -3,6 +3,7 @@ package model
 // 添加在线用户输入参数
 type SysUserOnlineCreateInput struct {
 	Token    string // 用户token
+	UserId   int    // 用户id
 	UserName string // 用户名
 	Ip       string // 登录ip
 	Explorer string // 浏览器

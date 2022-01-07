@@ -9,11 +9,12 @@ import(
 "github.com/gogf/gf/v2/os/gtime"
 )
 
-// SysUserOnlineForDao is the golang structure of table sys_user_online for DAO operations like Where/Data.
+// SysUserOnline is the golang structure of table sys_user_online for DAO operations like Where/Data.
 type SysUserOnline struct {
-g.Meta `orm:"dto:true"`
+g.Meta `orm:"table:sys_user_online, dto:true"`
     Id interface{} //            
     Token interface{} // 用户token  
+    UserId interface{} // 用户id     
     UserName interface{} // 用户名     
     Ip interface{} // 登录ip     
     Explorer interface{} // 浏览器     

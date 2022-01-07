@@ -12,15 +12,16 @@ import (
 
 // SysUserOnlineDao is the data access object for table sys_user_online.
 type SysUserOnlineDao struct {
-	Table   string          // Table is the underlying table name of the DAO.
-	Group   string          // Group is the database configuration group name of current DAO.
-	Columns SysUserOnlineColumns // Columns contains all the column names of Table for convenient usage.
+	table   string          // table is the underlying table name of the DAO.
+	group   string          // group is the database configuration group name of current DAO.
+	columns SysUserOnlineColumns // columns contains all the column names of Table for convenient usage.
 }
 
 // SysUserOnlineColumns defines and stores column names for table sys_user_online.
 type SysUserOnlineColumns struct {
 	Id         string //            
     Token      string // 用户token  
+    UserId     string // 用户id     
     UserName   string // 用户名     
     Ip         string // 登录ip     
     Explorer   string // 浏览器     
@@ -32,6 +33,7 @@ type SysUserOnlineColumns struct {
 var sysUserOnlineColumns = SysUserOnlineColumns{
 	Id:        "id",          
             Token:     "token",       
+            UserId:    "user_id",     
             UserName:  "user_name",   
             Ip:        "ip",          
             Explorer:  "explorer",    
@@ -42,20 +44,35 @@ var sysUserOnlineColumns = SysUserOnlineColumns{
 // NewSysUserOnlineDao creates and returns a new DAO object for table data access.
 func NewSysUserOnlineDao() *SysUserOnlineDao {
 	return &SysUserOnlineDao{
-		Group:   "default",
-		Table:   "sys_user_online",
-		Columns: sysUserOnlineColumns,
+		group:   "default",
+		table:   "sys_user_online",
+		columns: sysUserOnlineColumns,
 	}
 }
 
 // DB retrieves and returns the underlying raw database management object of current DAO.
 func (dao *SysUserOnlineDao) DB() gdb.DB {
-	return g.DB(dao.Group)
+	return g.DB(dao.group)
+}
+
+// Table returns the table name of current dao.
+func (dao *SysUserOnlineDao) Table() string {
+	return dao.table
+}
+
+// Columns returns all column names of current dao.
+func (dao *SysUserOnlineDao) Columns() SysUserOnlineColumns {
+	return dao.columns
+}
+
+// Group returns the configuration group name of database of current dao.
+func (dao *SysUserOnlineDao) Group() string {
+	return dao.group
 }
 
 // Ctx creates and returns the Model for current DAO, It automatically sets the context for current operation.
 func (dao *SysUserOnlineDao) Ctx(ctx context.Context) *gdb.Model {
-	return dao.DB().Model(dao.Table).Safe().Ctx(ctx)
+	return dao.DB().Model(dao.table).Safe().Ctx(ctx)
 }
 
 // Transaction wraps the transaction logic using function f.
