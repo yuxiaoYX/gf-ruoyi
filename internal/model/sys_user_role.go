@@ -1,13 +1,13 @@
 package model
 
 // 用户id查询输入
-type SysUserRoleUserIdInput struct {
+type SysUserRoleGetInput struct {
 	UserId int // 用户ID
 	RoleId int // 角色ID
 }
 
 // 用户id查询输入
-type SysUserRoleUserIdOutput struct {
-	UserId int // 用户ID
-	RoleId int // 角色ID
+type SysUserRoleGetOutput struct {
+	UserId int   // 用户ID
+	RoleId []int // 角色ID
 }

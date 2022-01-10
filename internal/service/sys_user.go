@@ -6,7 +6,6 @@ import (
 	"gf-RuoYi/internal/service/internal/dao"
 
 	"github.com/gogf/gf/v2/errors/gerror"
-	"github.com/gogf/gf/v2/os/glog"
 )
 
 // 用户管理服务
@@ -31,7 +30,10 @@ func (s *serviceUser) Login(ctx context.Context, in model.SysUserLoginInput) (ou
 // 获取用户详细信息,关联对应的角色
 func (s *serviceUser) GetInfo(ctx context.Context, in model.SysUserGetInfoInput) (out *model.SysUserGetInfoOutput, err error) {
 	err = dao.SysUser.Ctx(ctx).Where("user_id", in.UserId).Scan(&out)
-	glog.Debug(ctx, out)
-	SysUserRole.GetByUserId(ctx, &model.SysUserRoleUserIdInput{UserId: 2})
+	if err != nil {
+		return nil, err
+	}
+	SysUserRole.GetByRoleList(ctx, &model.SysUserRoleGetInput{UserId: int(in.UserId)})
+
 	return
 }
