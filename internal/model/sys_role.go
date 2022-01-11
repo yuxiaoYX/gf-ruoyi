@@ -16,3 +16,7 @@ type SysRoleWithOutput struct {
 	CreatedAt  *gtime.Time `json:"createdAt" ` // 创建时间
 	UpdatedAt  *gtime.Time `json:"updatedAt" ` // 更新时间
 }
+
+type SysRoleGetIdsInput struct {
+	RoleIds []int // 角色ID字符串
+}

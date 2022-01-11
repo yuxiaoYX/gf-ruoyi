@@ -41,5 +41,5 @@ type SysUserInfo struct {
 type SysUserGetInfoOutput struct {
 	gmeta.Meta `orm:"table:sys_user"`
 	SysUserInfo
-	Roles []*SysUserRoleGetOutput
+	// Roles []*
 }

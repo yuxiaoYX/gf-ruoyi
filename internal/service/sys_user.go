@@ -33,7 +33,7 @@ func (s *serviceUser) GetInfo(ctx context.Context, in model.SysUserGetInfoInput)
 	if err != nil {
 		return nil, err
 	}
-	SysUserRole.GetByRoleList(ctx, &model.SysUserRoleGetInput{UserId: int(in.UserId)})
-
+	userRoleList, err := SysUserRole.GetByIdList(ctx, model.SysUserRoleListInput{UserId: int(in.UserId)})
+	SysRole.GetIdsList(ctx, model.SysRoleGetIdsInput{RoleIds: userRoleList.RoleIds})
 	return
 }

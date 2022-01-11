@@ -1,0 +1,6 @@
+2022-01-11 15:06:34.848 [DEBU] {b824d0958525c916a3bdbe73ab0b7dca} [ 20 ms] [default] [rows:0  ] SHOW FULL COLUMNS FROM `sys_user_online` 
+2022-01-11 15:06:34.853 [DEBU] {b824d0958525c916a3bdbe73ab0b7dca} [  4 ms] [default] [rows:0  ] SELECT `id`,`token`,`user_id`,`user_name`,`ip`,`explorer`,`os`,`created_at` FROM `sys_user_online` 
+2022-01-11 15:06:34.857 [DEBU] {b824d0958525c916a3bdbe73ab0b7dca} [  3 ms] [default] [rows:0  ] SHOW FULL COLUMNS FROM `sys_user` 
+2022-01-11 15:06:34.861 [DEBU] {b824d0958525c916a3bdbe73ab0b7dca} [  3 ms] [default] [rows:0  ] SELECT `user_id`,`user_name`,`nick_name`,`mobile`,`avatar`,`status`,`role_ids`,`shop_ids`,`dept_id`,`remark`,`created_at`,`updated_at` FROM `sys_user` WHERE (`user_id`=2) AND `deleted_at` IS NULL LIMIT 1 
+2022-01-11 15:06:34.865 [DEBU] {b824d0958525c916a3bdbe73ab0b7dca} [  2 ms] [default] [rows:0  ] SHOW FULL COLUMNS FROM `sys_user_role` 
+2022-01-11 15:06:34.866 [DEBU] {b824d0958525c916a3bdbe73ab0b7dca} [  0 ms] [default] [rows:0  ] SELECT `user_id`,`role_id` FROM `sys_user_role` WHERE `user_id`=2 

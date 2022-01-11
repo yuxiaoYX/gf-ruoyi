@@ -15,11 +15,12 @@ var SysUserRole = sysUserRoleService{}
 type sysUserRoleService struct{}
 
 // 根据用户id查询对应角色id
-func (s *sysUserRoleService) GetByRoleList(ctx context.Context, in *model.SysUserRoleGetInput) (out model.SysUserRoleGetOutput, err error) {
+func (s *sysUserRoleService) GetByIdList(ctx context.Context, in model.SysUserRoleListInput) (out *model.SysUserRoleListOutput, err error) {
 	var userRoleEntity []*entity.SysUserRole
 	err = dao.SysUserRole.Ctx(ctx).OmitEmpty().Where(&in).Scan(&userRoleEntity)
 	for _, v := range userRoleEntity {
-		out.RoleId = append(out.RoleId, v.RoleId)
+		out.UserIds = append(out.UserIds, v.UserId)
+		out.RoleIds = append(out.RoleIds, v.RoleId)
 	}
 	glog.Debug(ctx, out)
 	return
