@@ -27,13 +27,8 @@ func (s *serviceUser) Login(ctx context.Context, in model.SysUserLoginInput) (ou
 	return
 }
 
-// 获取用户详细信息,关联对应的角色
-func (s *serviceUser) GetInfo(ctx context.Context, in model.SysUserGetInfoInput) (out *model.SysUserGetInfoOutput, err error) {
+// 获取用户详细信息
+func (s *serviceUser) GetInfo(ctx context.Context, in model.SysUserGetInfoInput) (out *model.SysUserInfoOutput, err error) {
 	err = dao.SysUser.Ctx(ctx).Where("user_id", in.UserId).Scan(&out)
-	if err != nil {
-		return nil, err
-	}
-	userRoleList, err := SysUserRole.GetByIdList(ctx, model.SysUserRoleListInput{UserId: int(in.UserId)})
-	SysRole.GetIdsList(ctx, model.SysRoleGetIdsInput{RoleIds: userRoleList.RoleIds})
 	return
 }

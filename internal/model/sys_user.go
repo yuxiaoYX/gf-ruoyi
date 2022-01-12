@@ -2,7 +2,6 @@ package model
 
 import (
 	"github.com/gogf/gf/v2/os/gtime"
-	"github.com/gogf/gf/v2/util/gmeta"
 )
 
 // 用户登录输入
@@ -22,7 +21,8 @@ type SysUserGetInfoInput struct {
 	UserId uint // 用户ID
 }
 
-type SysUserInfo struct {
+// 获取用户信息输出
+type SysUserInfoOutput struct {
 	UserId    uint        `json:"userId"    ` // 用户ID
 	UserName  string      `json:"userName"  ` // 用户账号
 	NickName  string      `json:"nickName"  ` // 用户昵称
@@ -35,11 +35,4 @@ type SysUserInfo struct {
 	Remark    string      `json:"remark"    ` // 备注
 	CreatedAt *gtime.Time `json:"createdAt" ` // 创建时间
 	UpdatedAt *gtime.Time `json:"updatedAt" ` // 更新时间
-}
-
-// 获取登录用户信息，及角色、菜单权限
-type SysUserGetInfoOutput struct {
-	gmeta.Meta `orm:"table:sys_user"`
-	SysUserInfo
-	// Roles []*
 }

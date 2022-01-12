@@ -9,6 +9,7 @@ import (
 	"github.com/gogf/gf/v2/errors/gerror"
 	"github.com/gogf/gf/v2/frame/g"
 	"github.com/gogf/gf/v2/net/ghttp"
+	"github.com/gogf/gf/v2/util/gconv"
 )
 
 // 中间件管理服务
@@ -52,8 +53,11 @@ func (s *serviceMiddleware) TokenAuth(r *ghttp.Request) {
 		response.JsonExit(r, 1, "您的帐户异地登陆或令牌失效!")
 		// return
 	}
-	// 设置username到上下文
-	Context.SetUser(r.Context(), &model.ContextUser{UserId: uint(onlineInfo.UserId), UserName: onlineInfo.UserName})
+	// 设置用户信息到上下文
+	userEntity, _ := SysUser.GetInfo(r.Context(), model.SysUserGetInfoInput{UserId: uint(onlineInfo.UserId)})
+	var ctxUser *model.ContextUser
+	gconv.Struct(userEntity, &ctxUser)
+	Context.SetUser(r.Context(), ctxUser)
 	r.Middleware.Next()
 }
 
