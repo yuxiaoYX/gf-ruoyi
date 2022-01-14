@@ -19,13 +19,12 @@ var (
 		Func: func(ctx context.Context, parser *gcmd.Parser) (err error) {
 			s := g.Server()
 			s.Group("/api", func(group *ghttp.RouterGroup) {
+				handler.GfToken.Middleware(ctx, group)
 				group.Middleware(
 					service.Middleware.Ctx,
 					service.Middleware.ResponseHandler,
 				)
-				group.Bind(
-					handler.Login, // 登录
-				)
+
 				group.Middleware(service.Middleware.TokenAuth)
 				group.Bind(
 					handler.SysUser, // 用户管理
