@@ -1,10 +1,12 @@
 package controller
 
 import (
+	"fmt"
+	"gf-ruoyi/internal/service"
 	"gf-ruoyi/utility/response"
 
 	"github.com/goflyfox/gtoken/gtoken"
-	"github.com/gogf/gf/frame/g"
+	"github.com/gogf/gf/v2/frame/g"
 	"github.com/gogf/gf/v2/net/ghttp"
 )
 
@@ -99,6 +101,8 @@ func (c *cAuth) loginAfter(r *ghttp.Request, respData gtoken.Resp) {
 func (c *cAuth) authAfterFunc(r *ghttp.Request, respData gtoken.Resp) {
 	if r.Method == "OPTIONS" || respData.Success() {
 		// 将用户信息写入上下文
+		service.Context().SetData(r.Context(), g.Map{"fs": 111})
+		fmt.Println(service.Context().Get(r.Context()).Data["fs"])
 		r.Middleware.Next()
 	} else {
 		response.JsonExit(r, respData.Code, "用户信息验证失败")
