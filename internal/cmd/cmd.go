@@ -3,6 +3,7 @@ package cmd
 import (
 	"context"
 	"gf-ruoyi/internal/controller"
+	"gf-ruoyi/internal/service"
 
 	"github.com/gogf/gf/v2/frame/g"
 	"github.com/gogf/gf/v2/net/ghttp"
@@ -17,11 +18,13 @@ var (
 		Func: func(ctx context.Context, parser *gcmd.Parser) (err error) {
 			s := g.Server()
 			s.Group("/", func(group *ghttp.RouterGroup) {
-				controller.GfToken.Middleware(ctx, group)
+				// controller.GfToken.Middleware(ctx, group)
+
 				group.Middleware(
-					service
+					service.Middleware().Ctx,
 				)
-				group.Middleware(ghttp.MiddlewareHandlerResponse)
+				group.Bind(controller.Login)
+
 				group.Bind(
 					controller.Hello,
 				)

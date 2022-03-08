@@ -2,12 +2,13 @@ package service
 
 import (
 	"gf-ruoyi/internal/model"
+	"gf-ruoyi/utility/code"
 	"gf-ruoyi/utility/response"
-	"strings"
 
+	"github.com/gogf/gf/v2/errors/gcode"
+	"github.com/gogf/gf/v2/errors/gerror"
 	"github.com/gogf/gf/v2/frame/g"
 	"github.com/gogf/gf/v2/net/ghttp"
-	"github.com/gogf/gf/v2/util/gconv"
 )
 
 type sMiddleware struct{}
@@ -29,30 +30,42 @@ func (s *sMiddleware) Ctx(r *ghttp.Request) {
 	r.Middleware.Next()
 }
 
-// 简单token中间件,重复？？？
-func (s *sMiddleware) TokenAuth(r *ghttp.Request) {
-	// 我们这里jwt鉴权取头部信息 Authorization 登录时回返回token信息 这里前端需要把token存储到cookie或者本地localStorage中 不过需要跟后端协商过期时间 可以约定刷新令牌或者重新登录
-	token := r.Request.Header.Get("Authorization")
-	parts := strings.SplitN(token, " ", 2)
-	if !(len(parts) == 2 && parts[0] == "Bearer") {
-		response.JsonExit(r, 1, "未登录或非法访问!")
-		// return
-	} else if parts[1] == "" {
-		response.JsonExit(r, 1, "未登录或非法访问!")
-		// return
-	}
-	token = parts[1]
+type DefaultHandlerRes struct {
+	Code int         `json:"code"` // 错误码((0:成功, 1:失败, >1:错误码))
+	Msg  string      `json:"msg"`  // 提示信息
+	Data interface{} `json:"data"` // 返回数据(业务接口定义具体数据结构)
+}
 
-	// 验证token是否有效
-	onlineInfo, _ := SysUserOnline.GetToken(r.Context(), token)
-	if onlineInfo == nil {
-		response.JsonExit(r, 1, "您的帐户异地登陆或令牌失效!")
-		// return
-	}
-	// 设置用户信息到上下文
-	userEntity, _ := SysUser.GetInfo(r.Context(), model.SysUserGetInfoInput{UserId: uint(onlineInfo.UserId)})
-	var ctxUser *model.ContextUser
-	gconv.Struct(userEntity, &ctxUser)
-	Context().SetUser(r.Context(), ctxUser)
+// 返回处理中间件
+func (s *sMiddleware) ResponseHandler(r *ghttp.Request) {
 	r.Middleware.Next()
+	// 如果已经有返回内容，那么该中间件什么也不做
+	if r.Response.BufferLength() > 0 {
+		return
+	}
+
+	var (
+		err         error
+		res         interface{}
+		ctx         = r.Context()
+		internalErr error
+	)
+
+	res, err = r.GetHandlerResponse()
+	if err != nil {
+		code := gerror.Code(err)
+		if code == gcode.CodeNil {
+			code = gcode.CodeInternalError
+		}
+		err.Error()
+
+		response.JsonExit(r, code.Code(), err.Error())
+	} else {
+		response.JsonExit(r, code.Code(), "操作成功", res)
+		// if r.IsAjaxRequest() {
+		// 	response.JsonExit(r, code.Code(), "", res)
+		// } else {
+		// 	// 什么都不做，业务API自行处理模板渲染的成功逻辑。
+		// }
+	}
 }
