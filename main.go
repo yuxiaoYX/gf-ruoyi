@@ -1,10 +1,11 @@
 package main
 
 import (
-	_ "oa/internal/packed"
+	_ "gf-ruoyi/internal/packed"
 
 	"github.com/gogf/gf/v2/os/gctx"
-	"oa/internal/cmd"
+
+	"gf-ruoyi/internal/cmd"
 )
 
 func main() {

@@ -18,4 +18,4 @@ cbuild
 main
 output/
 manifest/output/
-logs/
+temp/

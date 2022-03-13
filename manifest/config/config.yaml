@@ -2,8 +2,10 @@ server:
   address:     ":8000"
   openapiPath: "/api.json"
   swaggerPath: "/swagger"
+  errorStack:  false 
 
 logger:
+  path:    "logs/default"
   level : "all"
   stdout: true
 
@@ -25,5 +27,5 @@ gfcli:
   gen: 
     dao:
     - link: "mysql:root:123456@tcp(127.0.0.1:3306)/gf_ruoyi"
-      tables: "sys_user"
+      tables: "sys_user,sys_user_online"
 

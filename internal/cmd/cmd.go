@@ -17,13 +17,14 @@ var (
 		Brief: "start http server",
 		Func: func(ctx context.Context, parser *gcmd.Parser) (err error) {
 			s := g.Server()
-			s.Group("/", func(group *ghttp.RouterGroup) {
-				// controller.GfToken.Middleware(ctx, group)
-
+			s.Group("/api", func(group *ghttp.RouterGroup) {
 				group.Middleware(
 					service.Middleware().Ctx,
+					service.Middleware().ResponseHandler,
 				)
+
 				group.Bind(controller.Login)
+				group.Middleware()
 
 				group.Bind(
 					controller.Hello,

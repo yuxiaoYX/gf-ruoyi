@@ -1,0 +1,31 @@
+2022-03-13 16:03:23.174 [DEBU] {3440e7c405e2db164078d60b116fbafa} [ 32 ms] [default] [rows:14 ] SHOW FULL COLUMNS FROM `sys_user` 
+2022-03-13 16:03:23.183 [DEBU] {3440e7c405e2db164078d60b116fbafa} [  8 ms] [default] [rows:1  ] SELECT `user_id`,`user_name` FROM `sys_user` WHERE ((`password`='admin1') AND (nick_name='admin1' or user_name='admin1')) AND `deleted_at` IS NULL LIMIT 1 
+2022-03-13 16:03:27.569 [DEBU] {6c8dd1cc06e2db164178d60b1c4a121f} [  1 ms] [default] [rows:0  ] SELECT `user_id`,`user_name` FROM `sys_user` WHERE ((`password`='admin1') AND (nick_name='admin12' or user_name='admin12')) AND `deleted_at` IS NULL LIMIT 1 
+2022-03-13 16:05:43.927 [DEBU] {90543e8c26e2db164278d60b9d888f25} [  3 ms] [default] [rows:0  ] SELECT `user_id`,`user_name` FROM `sys_user` WHERE ((`password`='admin1') AND (nick_name='admin12' or user_name='admin12')) AND `deleted_at` IS NULL LIMIT 1 
+2022-03-13 16:06:52.065 [DEBU] {78f5956936e2db168031a15dbfc3ba75} [  3 ms] [default] [rows:14 ] SHOW FULL COLUMNS FROM `sys_user` 
+2022-03-13 16:06:52.066 [DEBU] {78f5956936e2db168031a15dbfc3ba75} [  0 ms] [default] [rows:0  ] SELECT `user_id`,`user_name` FROM `sys_user` WHERE ((`password`='admin1') AND (nick_name='admin12' or user_name='admin12')) AND `deleted_at` IS NULL LIMIT 1 
+2022-03-13 16:09:33.712 [DEBU] {74c0740c5ce2db16837df829bd2870bd} [  3 ms] [default] [rows:14 ] SHOW FULL COLUMNS FROM `sys_user` 
+2022-03-13 16:09:33.713 [DEBU] {74c0740c5ce2db16837df829bd2870bd} [  0 ms] [default] [rows:0  ] SELECT `user_id`,`user_name` FROM `sys_user` WHERE ((`password`='admin1') AND (nick_name='admin12' or user_name='admin12')) AND `deleted_at` IS NULL LIMIT 1 
+2022-03-13 16:12:52.535 [DEBU] {8cd53c578ae2db16835f171fadc67a7d} [  3 ms] [default] [rows:14 ] SHOW FULL COLUMNS FROM `sys_user` 
+2022-03-13 16:12:52.537 [DEBU] {8cd53c578ae2db16835f171fadc67a7d} [  1 ms] [default] [rows:0  ] SELECT `user_id`,`user_name` FROM `sys_user` WHERE ((`password`='admin1') AND (nick_name='admin12' or user_name='admin12')) AND `deleted_at` IS NULL LIMIT 1 
+2022-03-13 16:15:02.714 [DEBU] {18978ba6a8e2db16c3d66b762f585197} [  3 ms] [default] [rows:14 ] SHOW FULL COLUMNS FROM `sys_user` 
+2022-03-13 16:15:02.715 [DEBU] {18978ba6a8e2db16c3d66b762f585197} [  0 ms] [default] [rows:0  ] SELECT `user_id`,`user_name` FROM `sys_user` WHERE ((`password`='admin1') AND (nick_name='admin12' or user_name='admin12')) AND `deleted_at` IS NULL LIMIT 1 
+2022-03-13 16:25:03.812 [DEBU] {bc7ace9a34e3db16f139fa778c7c8762} [  3 ms] [default] [rows:14 ] SHOW FULL COLUMNS FROM `sys_user` 
+2022-03-13 16:25:03.814 [DEBU] {bc7ace9a34e3db16f139fa778c7c8762} [  1 ms] [default] [rows:0  ] SELECT `user_id`,`user_name` FROM `sys_user` WHERE ((`password`='admin1') AND (nick_name='admin12' or user_name='admin12')) AND `deleted_at` IS NULL LIMIT 1 
+2022-03-13 16:26:15.189 [DEBU] {585a173945e3db16038fc57e85d6d9d6} [  4 ms] [default] [rows:14 ] SHOW FULL COLUMNS FROM `sys_user` 
+2022-03-13 16:26:15.191 [DEBU] {585a173945e3db16038fc57e85d6d9d6} [  0 ms] [default] [rows:0  ] SELECT `user_id`,`user_name` FROM `sys_user` WHERE ((`password`='admin1') AND (nick_name='admin12' or user_name='admin12')) AND `deleted_at` IS NULL LIMIT 1 
+2022-03-13 16:29:44.384 [DEBU] {98a12cee75e3db163228e93ca9c05f38} [  3 ms] [default] [rows:14 ] SHOW FULL COLUMNS FROM `sys_user` 
+2022-03-13 16:29:44.386 [DEBU] {98a12cee75e3db163228e93ca9c05f38} [  1 ms] [default] [rows:0  ] SELECT `user_id`,`user_name` FROM `sys_user` WHERE ((`password`='admin1') AND (nick_name='admin12' or user_name='admin12')) AND `deleted_at` IS NULL LIMIT 1 
+2022-03-13 16:31:05.207 [DEBU] {94f29bbf88e3db1602f86a719dd51631} [  3 ms] [default] [rows:14 ] SHOW FULL COLUMNS FROM `sys_user` 
+2022-03-13 16:31:05.209 [DEBU] {94f29bbf88e3db1602f86a719dd51631} [  0 ms] [default] [rows:0  ] SELECT `user_id`,`user_name` FROM `sys_user` WHERE ((`password`='admin1') AND (nick_name='admin12' or user_name='admin12')) AND `deleted_at` IS NULL LIMIT 1 
+2022-03-13 16:32:25.675 [DEBU] {2cd7d27b9be3db16907f867835eb7644} [  2 ms] [default] [rows:14 ] SHOW FULL COLUMNS FROM `sys_user` 
+2022-03-13 16:32:25.678 [DEBU] {2cd7d27b9be3db16907f867835eb7644} [  2 ms] [default] [rows:0  ] SELECT `user_id`,`user_name` FROM `sys_user` WHERE ((`password`='admin1') AND (nick_name='admin12' or user_name='admin12')) AND `deleted_at` IS NULL LIMIT 1 
+2022-03-13 17:10:06.714 [DEBU] {845e4feca9e5db1694baa62d3a132894} [  2 ms] [default] [rows:14 ] SHOW FULL COLUMNS FROM `sys_user` 
+2022-03-13 17:10:06.716 [DEBU] {845e4feca9e5db1694baa62d3a132894} [  0 ms] [default] [rows:0  ] SELECT `user_id`,`user_name` FROM `sys_user` WHERE ((`password`='admin1') AND (nick_name='admin12' or user_name='admin12')) AND `deleted_at` IS NULL LIMIT 1 
+2022-03-13 17:10:59.165 [DEBU] {7cd16f22b6e5db168a7b7c51cbeff637} [  5 ms] [default] [rows:14 ] SHOW FULL COLUMNS FROM `sys_user` 
+2022-03-13 17:10:59.167 [DEBU] {7cd16f22b6e5db168a7b7c51cbeff637} [  0 ms] [default] [rows:0  ] SELECT `user_id`,`user_name` FROM `sys_user` WHERE ((`password`='admin1') AND (nick_name='admin12' or user_name='admin12')) AND `deleted_at` IS NULL LIMIT 1 
+2022-03-13 17:12:08.131 [DEBU] {30774c31c6e5db168d2ea66682ef81b2} [  4 ms] [default] [rows:14 ] SHOW FULL COLUMNS FROM `sys_user` 
+2022-03-13 17:12:08.134 [DEBU] {30774c31c6e5db168d2ea66682ef81b2} [  1 ms] [default] [rows:0  ] SELECT `user_id`,`user_name` FROM `sys_user` WHERE ((`password`='admin1') AND (nick_name='admin12' or user_name='admin12')) AND `deleted_at` IS NULL LIMIT 1 
+2022-03-13 17:18:16.923 [DEBU] {b8c8ee0e1ce6db165de718162fb77f8f} [  3 ms] [default] [rows:14 ] SHOW FULL COLUMNS FROM `sys_user` 
+2022-03-13 17:18:16.925 [DEBU] {b8c8ee0e1ce6db165de718162fb77f8f} [  1 ms] [default] [rows:0  ] SELECT `user_id`,`user_name` FROM `sys_user` WHERE ((`password`='admin1') AND (nick_name='admin12' or user_name='admin12')) AND `deleted_at` IS NULL LIMIT 1 
+2022-03-13 17:18:57.088 [DEBU] {18571a6925e6db165ee718160dedfabf} [  2 ms] [default] [rows:0  ] SELECT `user_id`,`user_name` FROM `sys_user` WHERE ((`password`='admin1') AND (nick_name='admin12' or user_name='admin12')) AND `deleted_at` IS NULL LIMIT 1 

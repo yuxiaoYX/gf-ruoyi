@@ -2,7 +2,7 @@ package controller
 
 import (
 	"context"
-	"gf-ruoyi/apiv1"
+	v1 "gf-ruoyi/api/v1"
 
 	"github.com/gogf/gf/v2/frame/g"
 )
@@ -13,7 +13,7 @@ var (
 
 type cHello struct{}
 
-func (c *cHello) Hello(ctx context.Context, req *apiv1.HelloReq) (res *apiv1.HelloRes, err error) {
+func (c *cHello) Hello(ctx context.Context, req *v1.HelloReq) (res *v1.HelloRes, err error) {
 	g.RequestFromCtx(ctx).Response.Writeln("Hello World!")
 	return
 }

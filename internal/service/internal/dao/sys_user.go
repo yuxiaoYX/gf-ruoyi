@@ -5,7 +5,7 @@
 package dao
 
 import (
-	"oa/internal/service/internal/dao/internal"
+	"gf-ruoyi/internal/service/internal/dao/internal"
 )
 
 // sysUserDao is the data access object for table sys_user.
