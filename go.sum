@@ -25,6 +25,8 @@ github.com/goflyfox/gtoken v1.5.3/go.mod h1:Z77Y5YqGpqze4YJOfS+xZlYrwB6i6xWMWgkW
 github.com/gogf/gf/v2 v2.0.0-rc2/go.mod h1:apktt6TleWtCIwpz63vBqUnw8MX8gWKoZyxgDpXFtgM=
 github.com/gogf/gf/v2 v2.0.3 h1:T/PSaaE+N/czwC3/fYGv6bvbJZsK6Em2DsNNLbyqQ4w=
 github.com/gogf/gf/v2 v2.0.3/go.mod h1:apktt6TleWtCIwpz63vBqUnw8MX8gWKoZyxgDpXFtgM=
+github.com/gogf/gf/v2 v2.0.4 h1:m5F/f2lX+etXhI6rAQCR6szQoHE1ulAYlIvH0UXa2wM=
+github.com/gogf/gf/v2 v2.0.4/go.mod h1:apktt6TleWtCIwpz63vBqUnw8MX8gWKoZyxgDpXFtgM=
 github.com/golang/protobuf v1.2.0/go.mod h1:6lQm79b+lXiMfvg/cZm0SGofjICqVBUtrP5yJMmIC1U=
 github.com/golang/protobuf v1.4.0-rc.1/go.mod h1:ceaxUfeHdC40wWswd/P6IGgMaK3YpKi5j83Wpe3EHw8=
 github.com/golang/protobuf v1.4.0-rc.1.0.20200221234624-67d41d38c208/go.mod h1:xKAWHe0F5eneWXFV3EuXVDTCmh+JuBKY0li0aMyXATA=

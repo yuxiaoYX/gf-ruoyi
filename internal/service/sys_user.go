@@ -11,7 +11,7 @@ import (
 type sUser struct{}
 
 // 用户管理服务
-func User() *sUser {
+func SysUser() *sUser {
 	return &sUser{}
 }
 

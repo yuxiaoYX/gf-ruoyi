@@ -9,3 +9,10 @@ type SysUserOnlineCreateInput struct {
 	Explorer string // 浏览器
 	Os       string // 操作系统
 }
+
+// 删除在线用户
+type SysUserOnlineDeleteInput struct {
+	Id     uint64
+	Token  string // 用户token
+	UserId int    // 用户id
+}

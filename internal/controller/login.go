@@ -20,7 +20,7 @@ type cLogin struct{}
 func (c *cLogin) Login(ctx context.Context, req *v1.LoginDoReq) (res *v1.LoginDoRes, err error) {
 	res = &v1.LoginDoRes{}
 	// service用户名密码验证,并返回token
-	out, err := service.User().Login(ctx, model.SysUserLoginInput{
+	out, err := service.SysUser().Login(ctx, model.SysUserLoginInput{
 		UserName: req.UserName,
 		Password: req.Password,
 	})
@@ -33,7 +33,7 @@ func (c *cLogin) Login(ctx context.Context, req *v1.LoginDoReq) (res *v1.LoginDo
 	userAgent := r.Header.Get("User-Agent")
 	ua := user_agent.New(userAgent)
 	explorer, _ := ua.Browser()
-	service.UserOnline().Create(ctx, model.SysUserOnlineCreateInput{
+	service.SysUserOnline().Create(ctx, model.SysUserOnlineCreateInput{
 		Token:    token,
 		UserId:   int(out.UserId),
 		UserName: out.UserName,
@@ -41,6 +41,7 @@ func (c *cLogin) Login(ctx context.Context, req *v1.LoginDoReq) (res *v1.LoginDo
 		Os:       ua.OS(),
 		Explorer: explorer,
 	})
+
 	res.Token = token
 	return
 }
