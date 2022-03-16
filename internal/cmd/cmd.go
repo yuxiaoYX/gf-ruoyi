@@ -24,10 +24,11 @@ var (
 				)
 
 				group.Bind(controller.Login)
-				group.Middleware()
+				group.Middleware(service.Middleware().TokenAuth)
 
 				group.Bind(
 					controller.Hello,
+					controller.SysUser,
 				)
 			})
 			s.Run()

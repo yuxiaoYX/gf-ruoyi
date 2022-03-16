@@ -28,9 +28,3 @@ func (s *sUser) Login(ctx context.Context, in model.SysUserLoginInput) (out *mod
 	}
 	return
 }
-
-// // 获取用户详细信息
-// func (s *sUser) GetInfo(ctx context.Context, in model.SysUserGetInfoInput) (out *model.SysUserInfoOutput, err error) {
-// 	err = dao.SysUser.Ctx(ctx).Where("user_id", in.UserId).Scan(&out)
-// 	return
-// }
