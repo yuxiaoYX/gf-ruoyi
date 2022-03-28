@@ -32,7 +32,7 @@ func (s *sMiddleware) TokenAuth(r *ghttp.Request) {
 			gerror.New("未登录或非法访问")
 		}
 		token := parts[1]
-
+		// 设置token到上下文信息中
 		Context().SetData(r.Context(), g.Map{"token": token})
 	}
 
