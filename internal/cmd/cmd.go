@@ -24,7 +24,9 @@ var (
 				)
 
 				group.Bind(controller.Login)
-				group.Middleware(service.Middleware().TokenAuth)
+				group.Middleware(
+					service.Middleware().TokenAuth,
+				)
 
 				group.Bind(
 					controller.Hello,
