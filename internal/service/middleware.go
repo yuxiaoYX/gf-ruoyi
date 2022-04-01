@@ -1,7 +1,6 @@
 package service
 
 import (
-	"fmt"
 	"gf-ruoyi/internal/model"
 	"gf-ruoyi/utility/response"
 	"strings"
@@ -10,6 +9,7 @@ import (
 	"github.com/gogf/gf/v2/errors/gerror"
 	"github.com/gogf/gf/v2/frame/g"
 	"github.com/gogf/gf/v2/net/ghttp"
+	"github.com/gogf/gf/v2/util/gconv"
 )
 
 type sMiddleware struct{}
@@ -22,16 +22,13 @@ func Middleware() *sMiddleware {
 // 简单token中间件
 func (s *sMiddleware) TokenAuth(r *ghttp.Request) {
 	// 获取token，如果token有时效，可以做刷新令牌
-
 	authHeader := r.Request.Header.Get("Authorization")
 	if authHeader != "" {
 		parts := strings.SplitN(authHeader, " ", 2)
 		if !(len(parts) == 2 && parts[0] == "Bearer") {
-			// response.JsonExit(r, 1, "未登录或非法访问!")
-			gerror.New("未登录或非法访问!")
+			response.JsonExit(r, 1, "未登录或非法访问!")
 		} else if parts[1] == "" {
-			// response.JsonExit(r, 1, "未登录或非法访问!")
-			gerror.New("未登录或非法访问")
+			response.JsonExit(r, 1, "未登录或非法访问!")
 		}
 		token := parts[1]
 		// 设置token到上下文信息中
@@ -39,13 +36,15 @@ func (s *sMiddleware) TokenAuth(r *ghttp.Request) {
 		// 验证token是否有效
 		onlineInfo, _ := SysUserOnline().GetToken(r.Context(), token)
 		if onlineInfo == nil {
-			// response.JsonExit(r, 1, "您的帐户异地登陆或令牌失效!")
-			// gcode.New(11, "您的帐户异地登陆或令牌失效", "222")
-			fmt.Println("您的帐户异地登陆或令牌失效")
-			gerror.NewCode(gcode.New(10000, "", nil), "您的帐户异地登陆或令牌失效")
+			response.JsonExit(r, 1, "您的帐户异地登陆或令牌失效!")
+			// r.SetError(gerror.New("您的帐户异地登陆或令牌失效!"))
 		}
+		// 设置用户信息到上下文
+		userEntity, _ := SysUser().GetOne(r.Context(), model.SysUserOneInput{UserId: uint(onlineInfo.UserId)})
+		var ctxUser *model.ContextUser
+		gconv.Struct(userEntity, &ctxUser)
+		Context().SetUser(r.Context(), ctxUser)
 	}
-
 	r.Middleware.Next()
 }
 
@@ -75,10 +74,6 @@ func (s *sMiddleware) ResponseHandler(r *ghttp.Request) {
 		code gcode.Code = gcode.CodeOK
 	)
 
-	fmt.Println("1111111111111")
-	fmt.Println(err)
-	g.Log().Debug(r.Context(), err)
-	fmt.Println("22222222222")
 	if err != nil {
 		code := gerror.Code(err)
 		if code == gcode.CodeNil {

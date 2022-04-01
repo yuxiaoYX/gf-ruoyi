@@ -17,7 +17,7 @@ type SysUserOnlineDeleteInput struct {
 	UserId int    // 用户id
 }
 
-// 查询token是否在线返回
+// 查询token是否在线输出
 type SysUserOnlineGetTokenOutput struct {
-	Token string
+	UserId int // 用户id
 }
