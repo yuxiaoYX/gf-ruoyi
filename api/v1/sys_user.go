@@ -5,11 +5,16 @@ import (
 	"github.com/gogf/gf/v2/os/gtime"
 )
 
-type SysUserLogoutReq struct {
-	g.Meta `path:"/logout" method:"post" summary:"执行用户注销接口" tags:"用户"`
+// 登录后获取用户信息请求
+type SysUserInfoReq struct {
+	g.Meta `path:"/getInfo" method:"post" summary:"登录后获取用户信息" tags:"用户"`
 }
 
-type SysUserLogoutRes struct{}
+// 登录后获取用户信息响应
+type SysUserInfoRes struct {
+	User  *SysUserOneRes `json:"user"`  // 用户信息
+	Roles []string       `json:"roles"` // 角色权限字符列表
+}
 
 // 获取用户列表请求
 type SysUserListReq struct {

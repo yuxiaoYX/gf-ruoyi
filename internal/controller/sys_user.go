@@ -14,11 +14,17 @@ var SysUser = cUser{}
 
 type cUser struct{}
 
-// 用户注销登录,删除数据库中的在线用户就可以了
-func (c *cUser) Logout(ctx context.Context, req *v1.SysUserLogoutReq) (res *v1.SysUserLogoutRes, err error) {
-	in := &model.SysUserOnlineDeleteInput{}
-	_ = gconv.Struct(service.Context().Get(ctx).Data, in)
-	err = service.SysUserOnline().Delete(ctx, *in)
+// 登录后获取用户信息
+func (c *cUser) GetInfo(ctx context.Context, req *v1.SysUserInfoReq) (res v1.SysUserInfoRes, err error) {
+	// 获取用户信息
+	userEntity := service.Context().Get(ctx).User
+	gconv.Scan(userEntity, &res.User)
+	// 获取角色权限字符
+	if res.Roles, err = service.SysUserRole().GetRoleKeyList(ctx, userEntity.UserId); err != nil {
+		return
+	}
+	// 获取菜单权限标识
+
 	return
 }
 

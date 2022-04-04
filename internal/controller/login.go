@@ -8,6 +8,7 @@ import (
 	"gf-ruoyi/utility/utils"
 
 	"github.com/gogf/gf/v2/frame/g"
+	"github.com/gogf/gf/v2/util/gconv"
 	"github.com/gogf/gf/v2/util/guid"
 	"github.com/mssola/user_agent"
 )
@@ -43,5 +44,13 @@ func (c *cLogin) Login(ctx context.Context, req *v1.LoginDoReq) (res *v1.LoginDo
 	})
 
 	res.Token = token
+	return
+}
+
+// 用户注销登录,删除数据库中的在线用户就可以了
+func (c *cLogin) Logout(ctx context.Context, req *v1.LogoutReq) (res *v1.LogoutRes, err error) {
+	in := &model.SysUserOnlineDeleteInput{}
+	_ = gconv.Struct(service.Context().Get(ctx).Data, in)
+	err = service.SysUserOnline().Delete(ctx, *in)
 	return
 }

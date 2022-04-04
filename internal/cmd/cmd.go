@@ -31,6 +31,7 @@ var (
 				group.Bind(
 					controller.Hello,
 					controller.SysUser,
+					controller.SysRole,
 				)
 			})
 			s.Run()
