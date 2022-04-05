@@ -1,15 +1,22 @@
 package model
 
+// 根据用户id，获取角色id列表和角色名称列表输出
+type SysUserRoleFieldsOutput struct {
+	RoleId   []uint   // 角色ID
+	RoleName []string // 角色名称
+
+}
+
 // 更新用户绑定的角色输入
 type SysUserRoleUpdateUInput struct {
-	UserId  int   `v:"required|min-length:1#角色id不能为空|角色id不能为空！"`
-	Roleids []int `v:"required|min-length:1#菜单id不能为空|菜单id不能为空！"`
+	UserId  int   // 用户id
+	Roleids []int // 角色id列表
 }
 
 // 更新角色绑定的角色输入
 type SysUserRoleUpdateRInput struct {
-	UserIds []int `v:"required|min-length:1#角色id不能为空|角色id不能为空！"`
-	Roleid  int   `v:"required|min-length:1#菜单id不能为空|菜单id不能为空！"`
+	UserIds []int // 用户id列表
+	RoleId  int   // 角色id
 }
 
 // 删除关联信息输入

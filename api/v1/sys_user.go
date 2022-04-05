@@ -12,8 +12,9 @@ type SysUserInfoReq struct {
 
 // 登录后获取用户信息响应
 type SysUserInfoRes struct {
-	User  *SysUserOneRes `json:"user"`  // 用户信息
-	Roles []string       `json:"roles"` // 角色权限字符列表
+	User        *SysUserOneRes `json:"user"`        // 用户信息
+	Roles       []string       `json:"roles"`       // 角色权限字符列表
+	Permissions []string       `json:"permissions"` // 菜单权限标识
 }
 
 // 获取用户列表请求
@@ -21,7 +22,7 @@ type SysUserListReq struct {
 	g.Meta    `path:"/user/getList" method:"post" summary:"获取用户列表" tags:"用户"`
 	UserName  string `dc:"用户账户"`                                      // 用户账号
 	NickName  string `dc:"用户昵称"`                                      // 用户昵称
-	Status    string `dc:"用户状态；0:禁用,1:正常"`                            // 用户状态；0:禁用,1:正常
+	Status    string `dc:"用户状态；0:正常,1:禁用"`                            // 用户状态；0:正常,1:禁用
 	DeptId    string `dc:"部门id"`                                      // 部门id
 	BeginTime string `dc:"开始时间"`                                      // 开始时间
 	EndTime   string `dc:"结束时间"`                                      // 结束时间
@@ -46,7 +47,7 @@ type SysUserOneRes struct {
 	// Password  string      // 登录密码
 	Mobile    string      // 手机号码
 	Avatar    string      // 用户头像地址
-	Status    string      // 用户状态；0:禁用,1:正常
+	Status    string      // 用户状态；0:正常,1:禁用
 	DeptId    string      // 部门id
 	Remark    string      // 备注
 	CreatedAt *gtime.Time // 创建时间
@@ -62,7 +63,7 @@ type SysUserCreateReq struct {
 	Password string `v:"required|length:6,30#请输入密码！|密码长度为:{min}到{max}位" dc:"登录密码"`    // 登录密码
 	Mobile   string `v:"required|phone#请输入手机号！|手机号格式错误" dc:"手机号码"`                    // 手机号码
 	Avatar   string `dc:"用户头像地址"`                                                     // 用户头像地址
-	Status   string `d:"1" dc:"用户状态；0:禁用,1:正常"`                                       // 用户状态；0:禁用,1:正常
+	Status   string `d:"0" dc:"用户状态；0:正常,1:禁用"`                                       // 用户状态；0:正常,1:禁用
 	DeptId   string `dc:"部门id"`                                                       // 部门id
 	Remark   string `v:"max-length:200#备注最多为200个字符！" dc:"备注"`                         // 备注
 }
@@ -79,7 +80,7 @@ type SysUserUpdateReq struct {
 	Password string `v:"required|length:6,30#请输入密码！|密码长度为:{min}到{max}位" dc:"登录密码"`    // 登录密码
 	Mobile   string `v:"required|phone#请输入手机号！|手机号格式错误" dc:"手机号码"`                    // 手机号码
 	Avatar   string `dc:"用户头像地址"`                                                     // 用户头像地址
-	Status   string `d:"1" dc:"用户状态；0:禁用,1:正常"`                                       // 用户状态；0:禁用,1:正常
+	Status   string `d:"0" dc:"用户状态；0:正常,1:禁用"`                                       // 用户状态；0:正常,1:禁用
 	DeptId   string `dc:"部门id"`                                                       // 部门id
 	Remark   string `v:"max-length:200#备注最多为200个字符！" dc:"备注"`                         // 备注
 }

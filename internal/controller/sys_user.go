@@ -20,11 +20,13 @@ func (c *cUser) GetInfo(ctx context.Context, req *v1.SysUserInfoReq) (res v1.Sys
 	userEntity := service.Context().Get(ctx).User
 	gconv.Scan(userEntity, &res.User)
 	// 获取角色权限字符
-	if res.Roles, err = service.SysUserRole().GetRoleKeyList(ctx, userEntity.UserId); err != nil {
-		return
-	}
-	// 获取菜单权限标识
-
+	res.Roles = service.Context().Get(ctx).Roles.RoleNames
+	// // 获取菜单权限标识
+	// menuFields, err := service.SysRoleMenu().GetFieldList(ctx, gconv.Ints(roleFields.RoleId))
+	// if err != nil {
+	// 	return
+	// }
+	// res.Permissions = menuFields.Perms
 	return
 }
 

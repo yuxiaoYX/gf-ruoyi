@@ -2,6 +2,7 @@ package service
 
 import (
 	"gf-ruoyi/internal/model"
+	"gf-ruoyi/internal/model/entity"
 	"gf-ruoyi/utility/response"
 	"strings"
 
@@ -17,6 +18,18 @@ type sMiddleware struct{}
 // 中间件管理服务
 func Middleware() *sMiddleware {
 	return &sMiddleware{}
+}
+
+// 自定义上下文对象
+func (s *sMiddleware) Ctx(r *ghttp.Request) {
+	// 初始化，务必最开始执行
+	customCtx := &model.Context{
+		// Session: r.Session,
+		Data: make(g.Map),
+	}
+	Context().Init(r, customCtx)
+	// 执行下一步请求逻辑
+	r.Middleware.Next()
 }
 
 // 简单token中间件
@@ -41,22 +54,38 @@ func (s *sMiddleware) TokenAuth(r *ghttp.Request) {
 		}
 		// 设置用户信息到上下文
 		userEntity, _ := SysUser().GetOne(r.Context(), model.SysUserOneInput{UserId: uint(onlineInfo.UserId)})
-		var ctxUser *model.ContextUser
+		var ctxUser *entity.SysUser
 		gconv.Struct(userEntity, &ctxUser)
 		Context().SetUser(r.Context(), ctxUser)
+		// 设置角色字段列表到上下文
+		roleFields, _ := SysUserRole().GetFieldList(r.Context(), userEntity.UserId)
+		var ctxRoles *model.ContextRoles
+		gconv.Struct(roleFields, &ctxRoles)
+		Context().SetRoles(r.Context(), ctxRoles)
+		r.Middleware.Next()
+	} else {
+		response.JsonExit(r, 1, "未登录或非法访问!")
 	}
-	r.Middleware.Next()
 }
 
-// 自定义上下文对象
-func (s *sMiddleware) Ctx(r *ghttp.Request) {
-	// 初始化，务必最开始执行
-	customCtx := &model.Context{
-		// Session: r.Session,
-		Data: make(g.Map),
+// 接口操作权限验证
+func (s *sMiddleware) Permissions(r *ghttp.Request) {
+	ctx := r.Context()
+
+	roleIds := gconv.Ints(Context().Get(ctx).Roles.RoleIds)
+	if len(roleIds) == 0 {
+		response.JsonExit(r, 500, "没有角色权限")
 	}
-	Context().Init(r, customCtx)
-	// 执行下一步请求逻辑
+	// 角色id为1的，拥有全部权限
+	for _, i := range roleIds {
+		if i == 1 {
+			Permissions := []string{"*:*:*"}
+			return
+		}
+	}
+	menuFields, _ := SysRoleMenu().GetFieldList(ctx, roleIds)
+	Permissions := menuFields.Perms
+
 	r.Middleware.Next()
 }
 

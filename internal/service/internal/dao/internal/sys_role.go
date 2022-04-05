@@ -19,14 +19,13 @@ type SysRoleDao struct {
 
 // SysRoleColumns defines and stores column names for table sys_role.
 type SysRoleColumns struct {
-	RoleId     string // 角色ID                    
-    RoleName   string // 角色名称                  
-    RoleKey    string // 权限字符                  
-    RoleSort   string // 显示顺序                  
-    Status     string // 角色状态；0:禁用，1:正常  
-    Remark     string // 备注                      
-    CreatedAt  string // 创建时间                  
-    UpdatedAt  string // 更新时间                  
+	RoleId     string // 角色ID                   
+    RoleName   string // 角色名称                 
+    RoleSort   string // 显示顺序                 
+    Status     string // 角色状态（0正常 1停用）  
+    Remark     string // 备注                     
+    CreatedAt  string // 创建时间                 
+    UpdatedAt  string // 更新时间                 
     DeletedAt  string // 删除时间
 }
 
@@ -34,7 +33,6 @@ type SysRoleColumns struct {
 var sysRoleColumns = SysRoleColumns{
 	RoleId:    "role_id",     
             RoleName:  "role_name",   
-            RoleKey:   "role_key",    
             RoleSort:  "role_sort",   
             Status:    "status",      
             Remark:    "remark",      

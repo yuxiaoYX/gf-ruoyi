@@ -23,7 +23,7 @@ func SysUser() *sUser {
 
 // 登录验证
 func (s *sUser) Login(ctx context.Context, in model.SysUserLoginInput) (out *model.SysUserLoginOutput, err error) {
-	if err = dao.SysUser.Ctx(ctx).Where("password=? AND status=1", in.Password).Where(
+	if err = dao.SysUser.Ctx(ctx).Where("password=? AND status=0", in.Password).Where(
 		"nick_name=? or user_name=?", in.UserName, in.UserName,
 	).Scan(&out); err != nil {
 		return
@@ -89,10 +89,13 @@ func (s *sUser) Update(ctx context.Context, in model.SysUserUpdateInput) (err er
 func (s *sUser) Delete(ctx context.Context, in model.SysUserDeleteInput) (err error) {
 	userIdList := gstr.Split(in.UserIdStr, ",")
 	for _, v := range userIdList {
-		_, err = dao.SysUser.Ctx(ctx).Cache(gdb.CacheOption{
+		if _, err = dao.SysUser.Ctx(ctx).Cache(gdb.CacheOption{
 			Duration: -1,
 			Name:     "userid-" + v,
-		}).Delete("user_id=?", v)
+		}).Delete("user_id=?", v); err != nil {
+			return
+		}
 	}
+	err = SysUserRole().Delete(ctx, model.SysUserRoleDeleteInput{UserIdStr: in.UserIdStr})
 	return
 }

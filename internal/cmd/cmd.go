@@ -26,12 +26,14 @@ var (
 				group.Bind(controller.Login)
 				group.Middleware(
 					service.Middleware().TokenAuth,
+					service.Middleware().Permissions,
 				)
 
 				group.Bind(
 					controller.Hello,
 					controller.SysUser,
 					controller.SysRole,
+					controller.SysMenu,
 				)
 			})
 			s.Run()

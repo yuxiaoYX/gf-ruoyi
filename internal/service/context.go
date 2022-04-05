@@ -4,6 +4,7 @@ import (
 	"context"
 	"gf-ruoyi/internal/consts"
 	"gf-ruoyi/internal/model"
+	"gf-ruoyi/internal/model/entity"
 
 	"github.com/gogf/gf/v2/frame/g"
 	"github.com/gogf/gf/v2/net/ghttp"
@@ -34,8 +35,13 @@ func (s *sContext) Get(ctx context.Context) *model.Context {
 }
 
 // SetUser 将上下文信息设置到上下文请求中，注意是完整覆盖
-func (s *sContext) SetUser(ctx context.Context, ctxUser *model.ContextUser) {
+func (s *sContext) SetUser(ctx context.Context, ctxUser *entity.SysUser) {
 	s.Get(ctx).User = ctxUser
+}
+
+// SetRoles 将上下文信息设置到上下文请求中，注意是完整覆盖
+func (s *sContext) SetRoles(ctx context.Context, ctxRoles *model.ContextRoles) {
+	s.Get(ctx).Roles = ctxRoles
 }
 
 // SetData 将上下文信息设置到上下文请求中，注意是完整覆盖

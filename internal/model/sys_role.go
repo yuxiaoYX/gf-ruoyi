@@ -7,8 +7,7 @@ import (
 // 获取角色列表输入
 type SysRoleListInput struct {
 	RoleName  string // 角色名称
-	RoleKey   string // 权限字符
-	Status    string // 角色状态；0:禁用，1:正常
+	Status    string // 角色状态；0:正常，1:禁用
 	BeginTime string // 开始时间
 	EndTime   string // 结束时间
 	PageNum   int    // 分页码
@@ -30,9 +29,8 @@ type SysRoleOneInput struct {
 type SysRoleOneOutput struct {
 	RoleId    uint        // 角色ID
 	RoleName  string      // 角色名称
-	RoleKey   string      // 权限字符
 	RoleSort  int         // 显示顺序
-	Status    string      // 角色状态；0:禁用，1:正常
+	Status    string      // 角色状态；0:正常，1:禁用
 	Remark    string      // 备注
 	CreatedAt *gtime.Time // 创建时间
 	UpdatedAt *gtime.Time // 更新时间
@@ -42,9 +40,8 @@ type SysRoleOneOutput struct {
 // 新增角色输入
 type SysRoleCreateInput struct {
 	RoleName string // 角色名称
-	RoleKey  string // 权限字符
 	RoleSort int    // 显示顺序
-	Status   string // 角色状态；0:禁用，1:正常
+	Status   string // 角色状态；0:正常，1:禁用
 	Remark   string // 备注
 }
 
@@ -52,9 +49,8 @@ type SysRoleCreateInput struct {
 type SysRoleUpdateInput struct {
 	RoleId   uint   // 角色ID
 	RoleName string // 角色名称
-	RoleKey  string // 权限字符
 	RoleSort int    // 显示顺序
-	Status   string // 角色状态；0:禁用，1:正常
+	Status   string // 角色状态；0:正常，1:禁用
 	Remark   string // 备注
 }
 

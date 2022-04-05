@@ -20,7 +20,7 @@ type SysUserLoginOutput struct {
 type SysUserListInput struct {
 	UserName  string // 用户账号
 	NickName  string // 用户昵称
-	Status    string // 用户状态；0:禁用,1:正常
+	Status    string // 用户状态；0:正常,1:停用
 	DeptId    string // 部门id
 	BeginTime string // 开始时间
 	EndTime   string // 结束时间
@@ -47,7 +47,7 @@ type SysUserOneOutput struct {
 	Password  string      // 登录密码
 	Mobile    string      // 手机号码
 	Avatar    string      // 用户头像地址
-	Status    string      // 用户状态；0:禁用,1:正常
+	Status    string      // 用户状态；0:正常,1:停用
 	DeptId    string      // 部门id
 	Remark    string      // 备注
 	CreatedAt *gtime.Time // 创建时间
@@ -62,7 +62,7 @@ type SysUserCreateInput struct {
 	Password string // 登录密码
 	Mobile   string // 手机号码
 	Avatar   string // 用户头像地址
-	Status   string // 用户状态；0:禁用,1:正常
+	Status   string // 用户状态；0:正常,1:停用
 	DeptId   string // 部门id
 	Remark   string // 备注
 }
@@ -75,7 +75,7 @@ type SysUserUpdateInput struct {
 	Password string // 登录密码
 	Mobile   string // 手机号码
 	Avatar   string // 用户头像地址
-	Status   string // 用户状态；0:禁用,1:正常
+	Status   string // 用户状态；0:正常,1:停用
 	DeptId   string // 部门id
 	Remark   string // 备注
 }

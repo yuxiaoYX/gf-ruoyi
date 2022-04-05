@@ -2,7 +2,6 @@ package service
 
 import (
 	"context"
-	"fmt"
 	"gf-ruoyi/internal/model"
 	"gf-ruoyi/internal/service/internal/dao"
 
@@ -17,26 +16,27 @@ func SysUserRole() *sUserRole {
 	return &sUserRole{}
 }
 
-// 根据用户id，获取角色权限字符列表
-func (s *sUserRole) GetRoleKeyList(ctx context.Context, userId uint) (roleKey []string, err error) {
+// 根据用户id，获取角色id列表和角色权限字符列表
+func (s *sUserRole) GetFieldList(ctx context.Context, userId uint) (out model.SysUserRoleFieldsOutput, err error) {
 	roleEntitys, err := s.GetRoles(ctx, userId)
 	if err != nil {
 		return
 	}
 	for _, v := range roleEntitys {
-		roleKey = append(roleKey, v.RoleKey)
+		out.RoleId = append(out.RoleId, v.RoleId)
+		out.RoleName = append(out.RoleName, v.RoleName)
 	}
-	fmt.Println(roleKey)
 	return
 }
 
 // 获取用户关联角色信息
+// 排除被禁用的角色
 func (s sUserRole) GetRoles(ctx context.Context, userId uint) (out []*model.SysRoleOneOutput, err error) {
 	roleIds, err := dao.SysUserRole.Ctx(ctx).Where("user_id", userId).Array("role_id")
 	if err != nil {
 		return
 	}
-	err = dao.SysRole.Ctx(ctx).Where("role_id IN(?)", roleIds).Scan(&out)
+	err = dao.SysRole.Ctx(ctx).Where("status=0 AND role_id IN(?)", roleIds).Scan(&out)
 	return
 }
 
@@ -74,7 +74,7 @@ func (s sUserRole) UpdateUser(ctx context.Context, in model.SysUserRoleUpdateUIn
 // 更新角色绑定的用户
 func (s sUserRole) UpdateRole(ctx context.Context, in model.SysUserRoleUpdateRInput) (err error) {
 	// 删除用户的所有关联数据
-	if _, err = dao.SysUserRole.Ctx(ctx).Delete("role_id", in.Roleid); err != nil {
+	if _, err = dao.SysUserRole.Ctx(ctx).Delete("role_id", in.RoleId); err != nil {
 		return
 	}
 	if len(in.UserIds) == 0 {
@@ -84,7 +84,7 @@ func (s sUserRole) UpdateRole(ctx context.Context, in model.SysUserRoleUpdateRIn
 	var userRoleWrite []map[string]interface{}
 	for _, v := range in.UserIds {
 		userRoleWrite = append(userRoleWrite, g.Map{
-			"role_id": in.Roleid,
+			"role_id": in.RoleId,
 			"user_id": v,
 		})
 	}

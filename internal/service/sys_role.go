@@ -24,7 +24,6 @@ func SysRole() *sRole {
 func (s *sRole) GetList(ctx context.Context, in model.SysRoleListInput) (out model.SysRoleListOutput, err error) {
 	m := dao.SysRole.Ctx(ctx).OmitEmpty().Where(g.Map{
 		"role_name": in.RoleName,
-		"role_key":  in.RoleKey,
 		"status":    in.Status,
 	})
 	if in.BeginTime != "" && in.EndTime != "" {
@@ -49,7 +48,7 @@ func (s *sRole) GetOne(ctx context.Context, in model.SysRoleOneInput) (out *mode
 
 // 新增角色
 func (s *sRole) Create(ctx context.Context, in model.SysRoleCreateInput) (err error) {
-	roleCount, err := dao.SysRole.Ctx(ctx).Where("role_name=? OR role_key=?", in.RoleName, in.RoleKey).Count()
+	roleCount, err := dao.SysRole.Ctx(ctx).Where("role_name=?", in.RoleName).Count()
 	if err != nil {
 		return err
 	}
@@ -73,10 +72,13 @@ func (s *sRole) Update(ctx context.Context, in model.SysRoleUpdateInput) (err er
 func (s *sRole) Delete(ctx context.Context, in model.SysRoleDeleteInput) (err error) {
 	roleIdList := gstr.Split(in.RoleIdStr, ",")
 	for _, v := range roleIdList {
-		_, err = dao.SysRole.Ctx(ctx).Cache(gdb.CacheOption{
+		if _, err = dao.SysRole.Ctx(ctx).Cache(gdb.CacheOption{
 			Duration: -1,
 			Name:     "roleid-" + v,
-		}).Delete("role_id=?", v)
+		}).Delete("role_id=?", v); err != nil {
+			return
+		}
 	}
+	err = SysUserRole().Delete(ctx, model.SysUserRoleDeleteInput{RoleIdStr: in.RoleIdStr})
 	return
 }
