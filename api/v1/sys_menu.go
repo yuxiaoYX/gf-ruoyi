@@ -38,6 +38,7 @@ type SysMenuOneRes struct {
 	Visible   string // 显示状态（0显示 1隐藏）
 	Status    string // 菜单状态（0正常 1停用）
 	Perms     string // 权限标识
+	IsAuth    string // 是否验证（0是 1否）
 	Icon      string // 菜单图标
 }
 
@@ -56,6 +57,7 @@ type SysMenuCreateReq struct {
 	Visible   string `d:"0" dc:"显示状态（0显示 1隐藏）" `                                          // 显示状态（0显示 1隐藏）
 	Status    string `d:"0" dc:"菜单状态（0正常 1停用）" `                                          // 菜单状态（0正常 1停用）
 	Perms     string `dc:"权限标识" `                                                         // 权限标识
+	IsAuth    string `dc:"是否验证（0是 1否）" `                                                  // 是否验证（0是 1否）
 	Icon      string `dc:"菜单图标" `                                                         // 菜单图标
 }
 
@@ -78,6 +80,7 @@ type SysMenuUpdateReq struct {
 	Visible   string `dc:"显示状态（0显示 1隐藏）" `                                                // 显示状态（0显示 1隐藏）
 	Status    string `dc:"菜单状态（0正常 1停用）" `                                                // 菜单状态（0正常 1停用）
 	Perms     string `dc:"权限标识" `                                                         // 权限标识
+	IsAuth    string `dc:"是否验证（0是 1否）" `                                                  // 是否验证（0是 1否）
 	Icon      string `dc:"菜单图标" `                                                         // 菜单图标
 }
 

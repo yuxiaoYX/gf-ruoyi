@@ -32,6 +32,7 @@ type SysMenuColumns struct {
     Visible    string // 显示状态（0显示 1隐藏）        
     Status     string // 菜单状态（0正常 1停用）        
     Perms      string // 权限标识                       
+    IsAuth     string // 是否验证（0是 1否）            
     Icon       string // 菜单图标                       
     CreatedAt  string // 创建时间                       
     UpdatedAt  string // 更新时间                       
@@ -53,6 +54,7 @@ var sysMenuColumns = SysMenuColumns{
             Visible:   "visible",     
             Status:    "status",      
             Perms:     "perms",       
+            IsAuth:    "is_auth",     
             Icon:      "icon",        
             CreatedAt: "created_at",  
             UpdatedAt: "updated_at",  

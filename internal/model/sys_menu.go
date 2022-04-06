@@ -36,10 +36,12 @@ type SysMenuOneOutput struct {
 	Visible   string      // 显示状态（0显示 1隐藏）
 	Status    string      // 菜单状态（0正常 1停用）
 	Perms     string      // 权限标识
+	IsAuth    string      // 是否验证（0是 1否）
 	Icon      string      // 菜单图标
 	CreatedAt *gtime.Time // 创建时间
 	UpdatedAt *gtime.Time // 更新时间
 	DeletedAt *gtime.Time // 删除时间
+
 }
 
 // 新增菜单输入
@@ -56,6 +58,7 @@ type SysMenuCreateInput struct {
 	Visible   string // 显示状态（0显示 1隐藏）
 	Status    string // 菜单状态（0正常 1停用）
 	Perms     string // 权限标识
+	IsAuth    string // 是否验证（0是 1否）
 	Icon      string // 菜单图标
 }
 
@@ -74,6 +77,7 @@ type SysMenuUpdateInput struct {
 	Visible   string // 显示状态（0显示 1隐藏）
 	Status    string // 菜单状态（0正常 1停用）
 	Perms     string // 权限标识
+	IsAuth    string // 是否验证（0是 1否）
 	Icon      string // 菜单图标
 }
 

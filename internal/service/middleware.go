@@ -1,6 +1,7 @@
 package service
 
 import (
+	"fmt"
 	"gf-ruoyi/internal/model"
 	"gf-ruoyi/internal/model/entity"
 	"gf-ruoyi/utility/response"
@@ -10,6 +11,7 @@ import (
 	"github.com/gogf/gf/v2/errors/gerror"
 	"github.com/gogf/gf/v2/frame/g"
 	"github.com/gogf/gf/v2/net/ghttp"
+	"github.com/gogf/gf/v2/text/gstr"
 	"github.com/gogf/gf/v2/util/gconv"
 )
 
@@ -62,6 +64,7 @@ func (s *sMiddleware) TokenAuth(r *ghttp.Request) {
 		var ctxRoles *model.ContextRoles
 		gconv.Struct(roleFields, &ctxRoles)
 		Context().SetRoles(r.Context(), ctxRoles)
+
 		r.Middleware.Next()
 	} else {
 		response.JsonExit(r, 1, "未登录或非法访问!")
@@ -69,7 +72,7 @@ func (s *sMiddleware) TokenAuth(r *ghttp.Request) {
 }
 
 // 接口操作权限验证
-func (s *sMiddleware) Permissions(r *ghttp.Request) {
+func (s *sMiddleware) Auth(r *ghttp.Request) {
 	ctx := r.Context()
 
 	roleIds := gconv.Ints(Context().Get(ctx).Roles.RoleIds)
@@ -79,12 +82,56 @@ func (s *sMiddleware) Permissions(r *ghttp.Request) {
 	// 角色id为1的，拥有全部权限
 	for _, i := range roleIds {
 		if i == 1 {
-			Permissions := []string{"*:*:*"}
+			r.Middleware.Next()
 			return
 		}
 	}
-	menuFields, _ := SysRoleMenu().GetFieldList(ctx, roleIds)
-	Permissions := menuFields.Perms
+
+	// 获取访问地址对应的菜单信息，status==0启用中的菜单
+	menuEntity, err := SysMenu().GetList(ctx, model.SysMenuListInput{Status: "0"})
+	if err != nil {
+		response.JsonExit(r, 501, "请求数据失败!")
+	}
+	url := gstr.TrimLeft(r.Request.URL.Path, "/")
+	var menu *model.SysMenuOneOutput
+	for _, m := range menuEntity.Rows {
+		ms := gstr.SubStr(m.Perms, 0, gstr.Pos(m.Perms, "?"))
+		if m.Perms == url || ms == url {
+			menu = m
+			break
+		}
+	}
+	g.Log().Info(ctx, menu)
+
+	//只验证存在数据库中的规则
+	if menu != nil {
+		//若存在不需要验证的条件则跳过
+		if menu.IsAuth == "1" {
+			r.Middleware.Next()
+			return
+		}
+		// 验证访问地址的菜单id是否包含在角色绑定的菜单中
+		menuIds, err := SysRoleMenu().GetMenuIds(ctx, roleIds)
+		g.Log().Info(ctx, menuIds)
+		if err != nil {
+			response.JsonExit(r, 501, "请求数据失败!")
+		}
+		hasAccess := false
+		for _, i := range menuIds {
+			fmt.Println(i)
+			fmt.Println(menu.MenuId)
+			if menu.MenuId == i {
+				hasAccess = true
+				break
+			}
+		}
+		if !hasAccess {
+			response.JsonExit(r, 502, "没有访问权限!")
+		}
+
+	} else {
+		response.JsonExit(r, 502, "没有访问权限!")
+	}
 
 	r.Middleware.Next()
 }

@@ -23,6 +23,7 @@ type SysMenu struct {
     Visible   string      `json:"visible"   `// 显示状态（0显示 1隐藏）        
     Status    string      `json:"status"    `// 菜单状态（0正常 1停用）        
     Perms     string      `json:"perms"     `// 权限标识                       
+    IsAuth    string      `json:"isAuth"    `// 是否验证（0是 1否）            
     Icon      string      `json:"icon"      `// 菜单图标                       
     CreatedAt *gtime.Time `json:"createdAt" `// 创建时间                       
     UpdatedAt *gtime.Time `json:"updatedAt" `// 更新时间                       

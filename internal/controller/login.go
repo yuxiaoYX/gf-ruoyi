@@ -54,3 +54,32 @@ func (c *cLogin) Logout(ctx context.Context, req *v1.LogoutReq) (res *v1.LogoutR
 	err = service.SysUserOnline().Delete(ctx, *in)
 	return
 }
+
+// 登录后获取用户信息
+func (c *cLogin) GetInfo(ctx context.Context, req *v1.LoginUserInfoReq) (res v1.LoginUserInfoRes, err error) {
+	// 从上下文，获取用户信息
+	userEntity := service.Context().Get(ctx).User
+	gconv.Scan(userEntity, &res.User)
+	// 从上下文，获取角色权限字符
+	res.Roles = service.Context().Get(ctx).Roles.RoleNames
+	// 获取菜单权限标识
+	roleIds := gconv.Ints(service.Context().Get(ctx).Roles.RoleIds)
+	// 角色id为1的，拥有全部权限
+	for _, i := range roleIds {
+		if i == 1 {
+			res.Permissions = []string{"*/*/*"}
+			return
+		}
+	}
+	// 取非管理员角色的所有权限
+	menuFields, _ := service.SysRoleMenu().GetFieldList(ctx, roleIds)
+	res.Permissions = menuFields.Perms
+	return
+}
+
+// 登录后获取用户路由表
+func (c *cLogin) GetRouters(ctx context.Context, req *v1.LoginUserRouterReq) (res v1.LoginUserRouterRes, err error) {
+	roleIds := gconv.Ints(service.Context().Get(ctx).Roles.RoleIds)
+	res, err = service.SysRoleMenu().GetTreeRoute(ctx, roleIds)
+	return
+}

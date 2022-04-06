@@ -2,8 +2,8 @@ package model
 
 // 根据用户id，获取角色id列表和角色名称列表输出
 type SysUserRoleFieldsOutput struct {
-	RoleId   []uint   // 角色ID
-	RoleName []string // 角色名称
+	RoleIds   []uint   // 角色ID
+	RoleNames []string // 角色名称
 
 }
 

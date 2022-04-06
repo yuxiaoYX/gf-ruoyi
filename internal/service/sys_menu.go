@@ -77,6 +77,5 @@ func (s *sMenu) Delete(ctx context.Context, in model.SysMenuDeleteInput) (err er
 			return
 		}
 	}
-	// err = SysUserMenu().Delete(ctx, model.SysUserMenuDeleteInput{MenuIdStr: in.MenuIdStr})
 	return
 }

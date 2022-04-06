@@ -5,18 +5,6 @@ import (
 	"github.com/gogf/gf/v2/os/gtime"
 )
 
-// 登录后获取用户信息请求
-type SysUserInfoReq struct {
-	g.Meta `path:"/getInfo" method:"post" summary:"登录后获取用户信息" tags:"用户"`
-}
-
-// 登录后获取用户信息响应
-type SysUserInfoRes struct {
-	User        *SysUserOneRes `json:"user"`        // 用户信息
-	Roles       []string       `json:"roles"`       // 角色权限字符列表
-	Permissions []string       `json:"permissions"` // 菜单权限标识
-}
-
 // 获取用户列表请求
 type SysUserListReq struct {
 	g.Meta    `path:"/user/getList" method:"post" summary:"获取用户列表" tags:"用户"`

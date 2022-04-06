@@ -22,15 +22,22 @@ var (
 					service.Middleware().Ctx,
 					service.Middleware().ResponseHandler,
 				)
-
-				group.Bind(controller.Login)
-				group.Middleware(
-					service.Middleware().TokenAuth,
-					service.Middleware().Permissions,
+				// 登录和注销
+				group.Bind(
+					controller.Login.Login,
+					controller.Login.Logout,
 				)
+				// token验证，并把用户信息和角色字段列表保存到上下文中
+				group.Middleware(service.Middleware().TokenAuth)
+				// 登录后获取用户信息和路由
+				group.Bind(
+					controller.Login.GetInfo,
+					controller.Login.GetRouters,
+				)
+				// 权限效验
+				group.Middleware(service.Middleware().Auth)
 
 				group.Bind(
-					controller.Hello,
 					controller.SysUser,
 					controller.SysRole,
 					controller.SysMenu,

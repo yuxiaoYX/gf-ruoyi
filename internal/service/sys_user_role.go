@@ -23,8 +23,8 @@ func (s *sUserRole) GetFieldList(ctx context.Context, userId uint) (out model.Sy
 		return
 	}
 	for _, v := range roleEntitys {
-		out.RoleId = append(out.RoleId, v.RoleId)
-		out.RoleName = append(out.RoleName, v.RoleName)
+		out.RoleIds = append(out.RoleIds, v.RoleId)
+		out.RoleNames = append(out.RoleNames, v.RoleName)
 	}
 	return
 }

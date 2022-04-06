@@ -14,22 +14,6 @@ var SysUser = cUser{}
 
 type cUser struct{}
 
-// 登录后获取用户信息
-func (c *cUser) GetInfo(ctx context.Context, req *v1.SysUserInfoReq) (res v1.SysUserInfoRes, err error) {
-	// 获取用户信息
-	userEntity := service.Context().Get(ctx).User
-	gconv.Scan(userEntity, &res.User)
-	// 获取角色权限字符
-	res.Roles = service.Context().Get(ctx).Roles.RoleNames
-	// // 获取菜单权限标识
-	// menuFields, err := service.SysRoleMenu().GetFieldList(ctx, gconv.Ints(roleFields.RoleId))
-	// if err != nil {
-	// 	return
-	// }
-	// res.Permissions = menuFields.Perms
-	return
-}
-
 // 获取用户列表
 func (c *cUser) GetList(ctx context.Context, req *v1.SysUserListReq) (res *v1.SysUserListRes, err error) {
 	in := &model.SysUserListInput{}
