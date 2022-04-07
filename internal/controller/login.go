@@ -6,6 +6,7 @@ import (
 	"gf-ruoyi/internal/model"
 	"gf-ruoyi/internal/service"
 	"gf-ruoyi/utility/utils"
+	"strings"
 
 	"github.com/gogf/gf/v2/frame/g"
 	"github.com/gogf/gf/v2/util/gconv"
@@ -49,9 +50,18 @@ func (c *cLogin) Login(ctx context.Context, req *v1.LoginDoReq) (res *v1.LoginDo
 
 // 用户注销登录,删除数据库中的在线用户就可以了
 func (c *cLogin) Logout(ctx context.Context, req *v1.LogoutReq) (res *v1.LogoutRes, err error) {
-	in := &model.SysUserOnlineDeleteInput{}
-	_ = gconv.Struct(service.Context().Get(ctx).Data, in)
-	err = service.SysUserOnline().Delete(ctx, *in)
+	r := g.RequestFromCtx(ctx)
+	authHeader := r.Request.Header.Get("Authorization")
+	if authHeader != "" {
+		parts := strings.SplitN(authHeader, " ", 2)
+		if !(len(parts) == 2 && parts[0] == "Bearer") {
+			return
+		} else if parts[1] == "" || parts[1] == "undefined" {
+			return
+		}
+		token := parts[1]
+		err = service.SysUserOnline().Delete(ctx, model.SysUserOnlineDeleteInput{Token: token})
+	}
 	return
 }
 

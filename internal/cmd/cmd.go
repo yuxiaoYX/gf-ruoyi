@@ -20,6 +20,7 @@ var (
 			s.Group("/api", func(group *ghttp.RouterGroup) {
 				group.Middleware(
 					service.Middleware().Ctx,
+					service.Middleware().CORS,
 					service.Middleware().ResponseHandler,
 				)
 				// 登录和注销

@@ -1,7 +1,6 @@
 package service
 
 import (
-	"fmt"
 	"gf-ruoyi/internal/model"
 	"gf-ruoyi/internal/model/entity"
 	"gf-ruoyi/utility/response"
@@ -20,6 +19,12 @@ type sMiddleware struct{}
 // 中间件管理服务
 func Middleware() *sMiddleware {
 	return &sMiddleware{}
+}
+
+// 允许跨域
+func (s *sMiddleware) CORS(r *ghttp.Request) {
+	r.Response.CORSDefault()
+	r.Middleware.Next()
 }
 
 // 自定义上下文对象
@@ -47,7 +52,7 @@ func (s *sMiddleware) TokenAuth(r *ghttp.Request) {
 		}
 		token := parts[1]
 		// 设置token到上下文信息中
-		Context().SetData(r.Context(), g.Map{"token": token})
+		// Context().SetData(r.Context(), g.Map{"token": token})
 		// 验证token是否有效
 		onlineInfo, _ := SysUserOnline().GetToken(r.Context(), token)
 		if onlineInfo == nil {
@@ -64,7 +69,6 @@ func (s *sMiddleware) TokenAuth(r *ghttp.Request) {
 		var ctxRoles *model.ContextRoles
 		gconv.Struct(roleFields, &ctxRoles)
 		Context().SetRoles(r.Context(), ctxRoles)
-
 		r.Middleware.Next()
 	} else {
 		response.JsonExit(r, 1, "未登录或非法访问!")
@@ -112,14 +116,11 @@ func (s *sMiddleware) Auth(r *ghttp.Request) {
 		}
 		// 验证访问地址的菜单id是否包含在角色绑定的菜单中
 		menuIds, err := SysRoleMenu().GetMenuIds(ctx, roleIds)
-		g.Log().Info(ctx, menuIds)
 		if err != nil {
 			response.JsonExit(r, 501, "请求数据失败!")
 		}
 		hasAccess := false
 		for _, i := range menuIds {
-			fmt.Println(i)
-			fmt.Println(menu.MenuId)
 			if menu.MenuId == i {
 				hasAccess = true
 				break
@@ -128,7 +129,6 @@ func (s *sMiddleware) Auth(r *ghttp.Request) {
 		if !hasAccess {
 			response.JsonExit(r, 502, "没有访问权限!")
 		}
-
 	} else {
 		response.JsonExit(r, 502, "没有访问权限!")
 	}

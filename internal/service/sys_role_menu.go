@@ -110,26 +110,26 @@ func (s *sRoleMenu) setMapRouter(ctx context.Context, entity *model.SysMenuOneOu
 		"title": entity.MenuName,
 		"icon":  entity.Icon,
 	}
-	if entity.IsCache == "0" {
+	if entity.IsCache == "1" {
 		metaMap["noCache"] = true
 	} else {
 		metaMap["noCache"] = false
 	}
 	menu["meta"] = metaMap
 
-	menu["hidden"] = !gconv.Bool(entity.Visible)
+	menu["hidden"] = gconv.Bool(entity.Visible)
 
-	if entity.IsFrame == "0" && entity.MenuType == "M" && entity.ParentId == 0 {
+	if entity.IsFrame == "1" && entity.MenuType == "M" && entity.ParentId == 0 {
 		// 主菜单
 		menu["alwaysShow"] = true
 		menu["component"] = "Layout"
 		menu["path"] = "/" + entity.Path
-	} else if entity.IsFrame == "0" && entity.MenuType == "M" {
+	} else if entity.IsFrame == "1" && entity.MenuType == "M" {
 		// 次级菜单
 		menu["alwaysShow"] = true
 		menu["component"] = "ParentView"
 		menu["path"] = "/" + entity.Path
-	} else if entity.IsFrame == "1" {
+	} else if entity.IsFrame == "0" {
 		// 外链
 		menu["alwaysShow"] = false
 		menu["component"] = "Layout"
@@ -139,6 +139,5 @@ func (s *sRoleMenu) setMapRouter(ctx context.Context, entity *model.SysMenuOneOu
 		menu["component"] = entity.Component
 		menu["path"] = entity.Path
 	}
-	g.Log().Info(ctx, menu)
 	return menu
 }
