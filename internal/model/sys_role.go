@@ -1,7 +1,7 @@
 package model
 
 import (
-	"github.com/gogf/gf/v2/os/gtime"
+	"gf-ruoyi/internal/model/entity"
 )
 
 // 获取角色列表输入
@@ -27,14 +27,7 @@ type SysRoleOneInput struct {
 
 // 获取单个角色信息输出
 type SysRoleOneOutput struct {
-	RoleId    uint        // 角色ID
-	RoleName  string      // 角色名称
-	RoleSort  int         // 显示顺序
-	Status    string      // 角色状态；0:正常，1:禁用
-	Remark    string      // 备注
-	CreatedAt *gtime.Time // 创建时间
-	UpdatedAt *gtime.Time // 更新时间
-	DeletedAt *gtime.Time // 删除时间
+	*entity.SysRole
 }
 
 // 新增角色输入

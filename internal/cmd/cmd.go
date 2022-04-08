@@ -37,12 +37,16 @@ var (
 				)
 				// 权限效验
 				group.Middleware(service.Middleware().Auth)
+				group.Group("/system", func(group *ghttp.RouterGroup) {
+					group.Bind(
+						controller.SysUser,
+						controller.SysRole,
+						controller.SysMenu,
+						controller.SysDictType,
+						controller.SysDictData,
+					)
+				})
 
-				group.Bind(
-					controller.SysUser,
-					controller.SysRole,
-					controller.SysMenu,
-				)
 			})
 			s.Run()
 			return nil

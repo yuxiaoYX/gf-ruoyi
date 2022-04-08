@@ -1,6 +1,8 @@
 package v1
 
 import (
+	"gf-ruoyi/internal/model/entity"
+
 	"github.com/gogf/gf/v2/frame/g"
 )
 
@@ -25,21 +27,7 @@ type SysMenuOneReq struct {
 
 // 单个菜单信息响应
 type SysMenuOneRes struct {
-	MenuId    int    // 菜单ID
-	MenuName  string // 菜单名称
-	ParentId  int    // 父菜单ID
-	Sort      int    // 排序标记
-	Path      string // 路由地址
-	Component string // 组件路径
-	IsFrame   string // 是否为外链（0是 1否）
-	IsCache   string // 是否缓存（0缓存 1不缓存）
-	Query     string // 路由参数
-	MenuType  string // 菜单类型（M目录 C菜单 F按钮）
-	Visible   string // 显示状态（0显示 1隐藏）
-	Status    string // 菜单状态（0正常 1停用）
-	Perms     string // 权限标识
-	IsAuth    string // 是否验证（0是 1否）
-	Icon      string // 菜单图标
+	*entity.SysMenu
 }
 
 // 新增菜单请求

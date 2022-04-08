@@ -90,13 +90,12 @@ func (s *sMiddleware) Auth(r *ghttp.Request) {
 			return
 		}
 	}
-
 	// 获取访问地址对应的菜单信息，status==0启用中的菜单
 	menuEntity, err := SysMenu().GetList(ctx, model.SysMenuListInput{Status: "0"})
 	if err != nil {
 		response.JsonExit(r, 501, "请求数据失败!")
 	}
-	url := gstr.TrimLeft(r.Request.URL.Path, "/")
+	url := gstr.TrimLeft(r.Request.URL.Path, "/api")
 	var menu *model.SysMenuOneOutput
 	for _, m := range menuEntity.Rows {
 		ms := gstr.SubStr(m.Perms, 0, gstr.Pos(m.Perms, "?"))
@@ -105,8 +104,6 @@ func (s *sMiddleware) Auth(r *ghttp.Request) {
 			break
 		}
 	}
-	g.Log().Info(ctx, menu)
-
 	//只验证存在数据库中的规则
 	if menu != nil {
 		//若存在不需要验证的条件则跳过

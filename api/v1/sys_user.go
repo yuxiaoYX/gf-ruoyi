@@ -20,8 +20,8 @@ type SysUserListReq struct {
 
 // 获取用户列表响应
 type SysUserListRes struct {
-	Rows  []*SysUserOneRes `json:"rows"`  // 列表
-	Total int              `json:"total"` // 数据总数
+	Rows  []SysUserOneRes `json:"rows1"` // 列表
+	Total int             `json:"total"` // 数据总数
 }
 
 type SysUserOneReq struct {
@@ -29,18 +29,20 @@ type SysUserOneReq struct {
 	UserId uint `json:"userId" v:"required#用户id不能为空" dc:"用户id" ` // 用户ID
 }
 type SysUserOneRes struct {
-	UserId   uint   // 用户ID
-	UserName string // 用户账号
-	NickName string // 用户昵称
-	// Password  string      // 登录密码
-	Mobile    string      // 手机号码
-	Avatar    string      // 用户头像地址
-	Status    string      // 用户状态；0:正常,1:禁用
-	DeptId    string      // 部门id
-	Remark    string      // 备注
-	CreatedAt *gtime.Time // 创建时间
-	UpdatedAt *gtime.Time // 更新时间
-	DeletedAt *gtime.Time // 删除时间
+	UserId   uint   `json:"userId"`     // 用户ID
+	UserName string `json:"userName"  ` // 用户账号
+	NickName string `json:"nickName"  ` // 用户昵称
+	// Password  string      `json:"password"  `// 登录密码
+	Mobile    string      `json:"mobile"    ` // 手机号码
+	Avatar    string      `json:"avatar"    ` // 用户头像地址
+	Status    string      `json:"status"    ` // 用户状态；0:禁用,1:正常
+	DeptId    string      `json:"deptId"    ` // 部门id
+	Remark    string      `json:"remark"    ` // 备注
+	LoginIp   string      `json:"loginIp"   ` // 最后登录IP
+	LoginDate *gtime.Time `json:"loginDate" ` // 最后登录时间
+	CreatedAt *gtime.Time `json:"createdAt" ` // 创建时间
+	UpdatedAt *gtime.Time `json:"updatedAt" ` // 更新时间
+	DeletedAt *gtime.Time `json:"deletedAt" ` // 删除时间
 }
 
 // 新增用户请求

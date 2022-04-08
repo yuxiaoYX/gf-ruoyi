@@ -1,7 +1,7 @@
 package model
 
 import (
-	"github.com/gogf/gf/v2/os/gtime"
+	"gf-ruoyi/internal/model/entity"
 )
 
 // 用户登录输入
@@ -41,18 +41,7 @@ type SysUserOneInput struct {
 
 // 获取单个用户信息输出
 type SysUserOneOutput struct {
-	UserId    uint        // 用户ID
-	UserName  string      // 用户账号
-	NickName  string      // 用户昵称
-	Password  string      // 登录密码
-	Mobile    string      // 手机号码
-	Avatar    string      // 用户头像地址
-	Status    string      // 用户状态；0:正常,1:停用
-	DeptId    string      // 部门id
-	Remark    string      // 备注
-	CreatedAt *gtime.Time // 创建时间
-	UpdatedAt *gtime.Time // 更新时间
-	DeletedAt *gtime.Time // 删除时间
+	*entity.SysUser
 }
 
 // 新增用户输入

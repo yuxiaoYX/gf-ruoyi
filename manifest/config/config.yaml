@@ -27,5 +27,5 @@ gfcli:
   gen: 
     dao:
     - link: "mysql:root:123456@tcp(127.0.0.1:3306)/gf_ruoyi"
-      tables: "sys_menu"
+      tables: "sys_dict_type,sys_dict_data"
 
