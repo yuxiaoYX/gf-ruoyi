@@ -97,7 +97,7 @@ func (s *sMiddleware) Auth(r *ghttp.Request) {
 	}
 	url := gstr.TrimLeft(r.Request.URL.Path, "/api")
 	var menu *model.SysMenuOneOutput
-	for _, m := range menuEntity.Rows {
+	for _, m := range menuEntity {
 		ms := gstr.SubStr(m.Perms, 0, gstr.Pos(m.Perms, "?"))
 		if m.Perms == url || ms == url {
 			menu = m

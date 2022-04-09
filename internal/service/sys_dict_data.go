@@ -25,7 +25,7 @@ func (s *sDictData) GetType(ctx context.Context, dictType string) (out []*model.
 		Duration: time.Hour * 10,
 		Name:     "dictType-" + dictType,
 		Force:    false,
-	}).Where("dict_type", dictType).Scan(&out)
+	}).Where("dict_type", dictType).OrderAsc("dict_sort").Scan(&out)
 	return
 }
 
@@ -39,7 +39,7 @@ func (s *sDictData) GetList(ctx context.Context, in model.SysDictDataListInput) 
 	if in.BeginTime != "" && in.EndTime != "" {
 		m = m.Where("created_at>? and created_at<?", in.BeginTime, in.EndTime)
 	}
-	if err = m.Page(in.PageNum, in.PageSize).Scan(&out.Rows); err != nil {
+	if err = m.Page(in.PageNum, in.PageSize).OrderAsc("dict_sort").Scan(&out.Rows); err != nil {
 		return
 	}
 	out.Total = len(out.Rows)

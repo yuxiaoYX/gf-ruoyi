@@ -20,7 +20,7 @@ type SysDictDataListReq struct {
 	g.Meta    `path:"/dictData/getList" method:"post" summary:"获取字典数据列表" tags:"字典数据"`
 	DictLabel string `v:"max-length:100#字典标签最大长度为{max}位" dc:"字典标签"`                       // 字典标签
 	DictType  string `v:"required|length:1,100#字典类型不能为空！|字典类型长度为:{min}到{max}位" dc:"字典类型"` // 字典类型
-	Status    string `d:"0" dc:"字典数据状态；0:正常,1:停用"`                                        // 状态（0正常 1停用）
+	Status    string `dc:"字典数据状态；0:正常,1:停用"`                                              // 状态（0正常 1停用）
 	PageNum   int    `d:"1" v:"min:0#分页号码错误" dc:"分页号码，默认1"`                               // 分页码
 	PageSize  int    `d:"10" v:"max:100#分页数量最多是100条" dc:"分页数量，最大100"`                     // 分页数量
 }

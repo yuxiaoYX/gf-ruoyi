@@ -29,7 +29,7 @@ func (s *sRole) GetList(ctx context.Context, in model.SysRoleListInput) (out mod
 	if in.BeginTime != "" && in.EndTime != "" {
 		m = m.Where("created_at>? and created_at<?", in.BeginTime, in.EndTime)
 	}
-	if err = m.Page(in.PageNum, in.PageSize).Scan(&out.Rows); err != nil {
+	if err = m.Page(in.PageNum, in.PageSize).OrderAsc("role_sort").Scan(&out.Rows); err != nil {
 		return
 	}
 	out.Total = len(out.Rows)

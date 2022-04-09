@@ -11,7 +11,7 @@ type SysDictTypeListReq struct {
 	g.Meta    `path:"/dictType/getList" method:"post" summary:"获取字典类型列表" tags:"字典类型"`
 	DictName  string `v:"max-length:100#字典名称最大长度为{max}位" dc:"字典名称"`   // 字典名称
 	DictType  string `v:"max-length:100#字典类型最大长度为{max}位" dc:"字典类型"`   // 字典类型
-	Status    string `d:"0" dc:"字典类型状态；0:正常,1:禁用"`                    // 状态（0正常 1停用）
+	Status    string `dc:"字典类型状态；0:正常,1:禁用"`                          // 状态（0正常 1停用）
 	BeginTime string `dc:"开始时间"`                                      // 开始时间
 	EndTime   string `dc:"结束时间"`                                      // 结束时间
 	PageNum   int    `d:"1" v:"min:0#分页号码错误" dc:"分页号码，默认1"`           // 分页码

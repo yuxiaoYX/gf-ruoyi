@@ -32,6 +32,7 @@ func (s *sUserOnline) Delete(ctx context.Context, in model.SysUserOnlineDeleteIn
 
 // 判断token是否在线，返回在线状态信息
 // TODO 查询方式可以改成缓存模式
+// TODO 可以使用用户名或用户id查询数据库是否存在token
 func (s *sUserOnline) GetToken(ctx context.Context, token string) (out *model.SysUserOnlineGetTokenOutput, err error) {
 	dao.SysUserOnline.Ctx(ctx).Where("token", token).Scan(&out)
 	return

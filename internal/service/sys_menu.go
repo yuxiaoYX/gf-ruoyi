@@ -22,15 +22,11 @@ func SysMenu() *sMenu {
 
 // 获取菜单列表
 // TODO OmitEmpty支持特殊字符空值过滤，相关函数可以改写了
-func (s *sMenu) GetList(ctx context.Context, in model.SysMenuListInput) (out model.SysMenuListOutput, err error) {
-	m := dao.SysMenu.Ctx(ctx).OmitEmpty().Where(g.Map{
+func (s *sMenu) GetList(ctx context.Context, in model.SysMenuListInput) (out []*model.SysMenuOneOutput, err error) {
+	err = dao.SysMenu.Ctx(ctx).OmitEmpty().Where(g.Map{
 		"menu_name like ?": "%" + in.MenuName + "%",
 		"status":           in.Status,
-	})
-	if m.Scan(&out.Rows); err != nil {
-		return
-	}
-	out.Total = len(out.Rows)
+	}).Scan(&out)
 	return
 }
 
@@ -41,6 +37,7 @@ func (s *sMenu) GetOne(ctx context.Context, in model.SysMenuOneInput) (out *mode
 		Name:     "menuid-" + gconv.String(in.MenuId),
 		Force:    false,
 	}).Where("menu_id", in.MenuId).Scan(&out)
+	s.Treeselect(ctx)
 	return
 }
 
@@ -58,11 +55,12 @@ func (s *sMenu) Create(ctx context.Context, in model.SysMenuCreateInput) (err er
 }
 
 // 更新菜单,并删除缓存
+// TODO 有BUG删除菜单时，子菜单的缓存并不会删除
 func (s *sMenu) Update(ctx context.Context, in model.SysMenuUpdateInput) (err error) {
 	_, err = dao.SysMenu.Ctx(ctx).OmitEmpty().Cache(gdb.CacheOption{
 		Duration: -1,
 		Name:     "menuid-" + gconv.String(in.MenuId),
-	}).Data(in).Where("menu_id", in.MenuId).Update()
+	}).Data(in).Where("menu_id=? or parent_id=?", in.MenuId, in.MenuId).Update()
 	return
 }
 
@@ -78,4 +76,29 @@ func (s *sMenu) Delete(ctx context.Context, in model.SysMenuDeleteInput) (err er
 		}
 	}
 	return
+}
+
+// 查询菜单下拉树结构
+func (s *sMenu) Treeselect(ctx context.Context) (err error) {
+	menuEntitys, err := s.GetList(ctx, model.SysMenuListInput{Status: "0"})
+	aa, err := s.formTreeRouter(ctx, menuEntitys)
+	g.Log().Info(ctx, aa)
+	return
+}
+
+// 构造树形菜单列表
+func (s *sMenu) formTreeRouter(ctx context.Context, entities []*model.SysMenuOneOutput) (treeRoute []map[string]interface{}, err error) {
+	for _, entity := range entities {
+		if entity.ParentId == 0 && entity.MenuType != "F" {
+			subTree, err := s.formTreeRouter(ctx, entities)
+			if err != nil {
+				return nil, err
+			}
+			children := make(map[string]interface{})
+			children["children"] = subTree
+			treeRoute = append(treeRoute, children)
+		}
+
+	}
+	return treeRoute, err
 }

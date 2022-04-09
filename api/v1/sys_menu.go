@@ -14,10 +14,7 @@ type SysMenuListReq struct {
 }
 
 // 获取菜单列表响应
-type SysMenuListRes struct {
-	Rows  []*SysMenuOneRes `json:"rows"`  // 列表
-	Total int              `json:"total"` // 数据总数
-}
+type SysMenuListRes []map[string]interface{}
 
 // 单个菜单信息请求
 type SysMenuOneReq struct {

@@ -62,6 +62,19 @@ func (s *sDictType) Create(ctx context.Context, in model.SysDictTypeCreateInput)
 
 // 更新字典类型,并删除缓存
 func (s *sDictType) Update(ctx context.Context, in model.SysDictTypeUpdateInput) (err error) {
+	var dictTypeEntity *model.SysDictTypeOneOutput
+	if err = dao.SysDictType.Ctx(ctx).Where("dict_id IN(?)", in.DictId).Scan(&dictTypeEntity); err != nil {
+		return
+	}
+	// 更新字典数据，并清空缓存
+	if _, err = dao.SysDictData.Ctx(ctx).Cache(gdb.CacheOption{
+		Duration: -1,
+		Name:     "dictType-" + dictTypeEntity.DictType,
+	}).Data("dict_type", in.DictType).Where("dict_type", dictTypeEntity.DictType).Update(); err != nil {
+		return
+	}
+
+	// 更新字典类型
 	_, err = dao.SysDictType.Ctx(ctx).OmitEmpty().Cache(gdb.CacheOption{
 		Duration: -1,
 		Name:     "dictId-" + gconv.String(in.DictId),
@@ -71,15 +84,25 @@ func (s *sDictType) Update(ctx context.Context, in model.SysDictTypeUpdateInput)
 
 // 删除字典类型,并删除缓存
 func (s *sDictType) Delete(ctx context.Context, in model.SysDictTypeDeleteInput) (err error) {
-	dictTypeIdList := gstr.Split(in.DictIdStr, ",")
-	for _, v := range dictTypeIdList {
+	var dictTypeList []*model.SysDictTypeOneOutput
+	if err = dao.SysDictType.Ctx(ctx).Where("dict_id IN(?)", gstr.Split(in.DictIdStr, ",")).Scan(&dictTypeList); err != nil {
+		return
+	}
+	for _, v := range dictTypeList {
+		// 删除字典数据
+		if _, err = dao.SysDictData.Ctx(ctx).Cache(gdb.CacheOption{
+			Duration: -1,
+			Name:     "dictType-" + v.DictType,
+		}).Delete("dict_type=?", v.DictType); err != nil {
+			return
+		}
+		// 删除字典类型
 		if _, err = dao.SysDictType.Ctx(ctx).Cache(gdb.CacheOption{
 			Duration: -1,
-			Name:     "dictTypeid-" + v,
+			Name:     "dictId-" + gconv.String(v.DictId),
 		}).Delete("dictType_id=?", v); err != nil {
 			return
 		}
 	}
-
 	return
 }

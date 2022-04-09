@@ -10,12 +10,6 @@ type SysMenuListInput struct {
 	Status   string // 菜单状态（0正常 1停用）
 }
 
-// 获取菜单列表输出
-type SysMenuListOutput struct {
-	Rows  []*SysMenuOneOutput // 列表
-	Total int                 // 数据总数
-}
-
 // 获取单个菜单信息输入
 type SysMenuOneInput struct {
 	MenuId int // 菜单ID

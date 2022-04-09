@@ -15,12 +15,14 @@ var SysMenu = cMenu{}
 type cMenu struct{}
 
 // 获取菜单列表
-func (c *cMenu) GetList(ctx context.Context, req *v1.SysMenuListReq) (res *v1.SysMenuListRes, err error) {
+func (c *cMenu) GetList(ctx context.Context, req *v1.SysMenuListReq) (res v1.SysMenuListRes, err error) {
 	in := &model.SysMenuListInput{}
 	gconv.Scan(req, &in)
 
 	menuRes, err := service.SysMenu().GetList(ctx, *in)
-	gconv.Scan(menuRes, &res)
+	// gconv.Scan(menuRes, res)
+	// g.Log().Info(ctx, res)
+	res = gconv.Maps(menuRes)
 	return
 }
 
