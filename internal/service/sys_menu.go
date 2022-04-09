@@ -5,7 +5,6 @@ import (
 	"errors"
 	"gf-ruoyi/internal/model"
 	"gf-ruoyi/internal/service/internal/dao"
-	"time"
 
 	"github.com/gogf/gf/v2/database/gdb"
 	"github.com/gogf/gf/v2/frame/g"
@@ -23,20 +22,22 @@ func SysMenu() *sMenu {
 // 获取菜单列表
 // TODO OmitEmpty支持特殊字符空值过滤，相关函数可以改写了
 func (s *sMenu) GetList(ctx context.Context, in model.SysMenuListInput) (out []*model.SysMenuOneOutput, err error) {
-	err = dao.SysMenu.Ctx(ctx).OmitEmpty().Where(g.Map{
-		"menu_name like ?": "%" + in.MenuName + "%",
-		"status":           in.Status,
-	}).Scan(&out)
+	m := dao.SysMenu.Ctx(ctx).OmitEmpty().Where("status", in.Status)
+	if in.MenuName != "" {
+		m = m.Where("menu_name like ?", "%"+in.MenuName+"%")
+	}
+	err = m.Scan(&out)
 	return
 }
 
 // 获取菜单详细信息,缓存10小时
 func (s *sMenu) GetOne(ctx context.Context, in model.SysMenuOneInput) (out *model.SysMenuOneOutput, err error) {
-	err = dao.SysMenu.Ctx(ctx).Cache(gdb.CacheOption{
-		Duration: time.Hour * 10,
-		Name:     "menuid-" + gconv.String(in.MenuId),
-		Force:    false,
-	}).Where("menu_id", in.MenuId).Scan(&out)
+	// err = dao.SysMenu.Ctx(ctx).Cache(gdb.CacheOption{
+	// 	Duration: time.Hour * 10,
+	// 	Name:     "menuid-" + gconv.String(in.MenuId),
+	// 	Force:    false,
+	// }).Where("menu_id", in.MenuId).Scan(&out)
+
 	s.Treeselect(ctx)
 	return
 }
@@ -81,24 +82,33 @@ func (s *sMenu) Delete(ctx context.Context, in model.SysMenuDeleteInput) (err er
 // 查询菜单下拉树结构
 func (s *sMenu) Treeselect(ctx context.Context) (err error) {
 	menuEntitys, err := s.GetList(ctx, model.SysMenuListInput{Status: "0"})
-	aa, err := s.formTreeRouter(ctx, menuEntitys)
+	aa := s.formMenuTree(ctx, menuEntitys)
 	g.Log().Info(ctx, aa)
 	return
 }
 
-// 构造树形菜单列表
-func (s *sMenu) formTreeRouter(ctx context.Context, entities []*model.SysMenuOneOutput) (treeRoute []map[string]interface{}, err error) {
-	for _, entity := range entities {
-		if entity.ParentId == 0 && entity.MenuType != "F" {
-			subTree, err := s.formTreeRouter(ctx, entities)
-			if err != nil {
-				return nil, err
-			}
-			children := make(map[string]interface{})
-			children["children"] = subTree
-			treeRoute = append(treeRoute, children)
+// 构造树形菜单列表1
+func (s *sMenu) formMenuTree(ctx context.Context, entities []*model.SysMenuOneOutput) (treeRoute []map[string]interface{}) {
+	for _, m := range entities {
+		if m.ParentId == 0 {
+			menu := make(map[string]interface{})
+			menu["id"] = m.MenuId
+			menu["label"] = m.MenuName
+			menu["children"] = nil
+			treeRoute = append(treeRoute, menu)
 		}
-
 	}
-	return treeRoute, err
+	for _, m := range treeRoute {
+		var n []map[string]interface{}
+		for _, v := range entities {
+			if v.ParentId == m["id"] {
+				menu := make(map[string]interface{})
+				menu["id"] = v.MenuId
+				menu["label"] = v.MenuName
+				n = append(n, menu)
+			}
+		}
+		m["children"] = n
+	}
+	return treeRoute
 }
