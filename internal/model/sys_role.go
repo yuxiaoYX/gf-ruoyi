@@ -36,6 +36,7 @@ type SysRoleCreateInput struct {
 	RoleSort int    // 显示顺序
 	Status   string // 角色状态；0:正常，1:禁用
 	Remark   string // 备注
+	MenuIds  []int  // 菜单选中id列表
 }
 
 // 更新角色信息输入
@@ -45,9 +46,25 @@ type SysRoleUpdateInput struct {
 	RoleSort int    // 显示顺序
 	Status   string // 角色状态；0:正常，1:禁用
 	Remark   string // 备注
+	MenuIds  []int  // 菜单选中id列表
 }
 
 // 删除角色输入
 type SysRoleDeleteInput struct {
-	RoleIdStr string // 需要删除的数据主键，例：1,2,3
+	RoleIdStr []int // 需要删除的数据主键，例：[1,2,3]
+}
+
+// 查询角色已授权用户列表请求
+type SysRoleAllocatedListReq struct {
+	NickName string // 用户昵称
+	Mobile   string // 手机号码
+	RoleId   uint   // 角色ID
+	PageNum  int    // 分页码
+	PageSize int    // 分页数量
+}
+
+// 查询角色已授权用户列表响应
+type SysRoleAllocatedListRes struct {
+	Rows  []*entity.SysUser `json:"rows"`  // 列表
+	Total int               `json:"total"` // 数据总数
 }

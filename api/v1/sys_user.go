@@ -81,7 +81,7 @@ type SysUserUpdateRes struct{}
 // 删除用户请求
 type SysUserDeleteReq struct {
 	g.Meta    `path:"/user/delete" method:"post" summary:"删除用户" tags:"用户"`
-	UserIdStr string `v:"required#用户id不能为空！" dc:"用户id"` // 需要删除的数据主键，例：1,2,3
+	UserIdStr []int `v:"required#用户id不能为空！" dc:"用户id"` // 需要删除的数据主键，例：[1,2,3]
 }
 
 // 删除用户响应

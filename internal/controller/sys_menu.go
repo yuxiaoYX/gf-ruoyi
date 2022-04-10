@@ -58,3 +58,14 @@ func (c *cMenu) Delete(ctx context.Context, req *v1.SysMenuDeleteReq) (res *v1.S
 	err = service.SysMenu().Delete(ctx, *in)
 	return
 }
+
+// 查询菜单下拉树结构
+func (c *cMenu) Treeselect(ctx context.Context, req *v1.SysMenuTreeselectReq) (res v1.SysMenuTreeselectRes, err error) {
+	menuIds, err := service.SysRoleMenu().GetMenuIds(ctx, []int{req.RoleId})
+	if err != nil {
+		return
+	}
+	res.CheckedKeys = menuIds
+	res.Menus, err = service.SysMenu().Treeselect(ctx, menuIds)
+	return
+}

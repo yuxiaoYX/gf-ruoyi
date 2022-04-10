@@ -17,6 +17,27 @@ func SysRoleMenu() *sRoleMenu {
 	return &sRoleMenu{}
 }
 
+// 更新角色绑定的菜单
+func (s sRoleMenu) UpdateMenu(ctx context.Context, in model.SysRoleMenuUpdateRInput) (err error) {
+	// 删除角色的所有关联数据
+	if _, err = dao.SysRoleMenu.Ctx(ctx).Delete("role_id", in.RoleId); err != nil {
+		return
+	}
+	if len(in.MenuIds) == 0 {
+		return
+	}
+	// 添加关联信息
+	var roleMenuWrite []map[string]interface{}
+	for _, v := range in.MenuIds {
+		roleMenuWrite = append(roleMenuWrite, g.Map{
+			"role_id": in.RoleId,
+			"menu_id": v,
+		})
+	}
+	_, err = dao.SysRoleMenu.Ctx(ctx).Data(roleMenuWrite).Save()
+	return
+}
+
 // 根据角色id表，获取菜单字段列表输出
 // 排除被禁用的菜单
 func (s *sRoleMenu) GetFieldList(ctx context.Context, roleIds []int) (out model.SysRoleMenuFieldsOutput, err error) {

@@ -9,7 +9,6 @@ import (
 
 	"github.com/gogf/gf/v2/database/gdb"
 	"github.com/gogf/gf/v2/frame/g"
-	"github.com/gogf/gf/v2/text/gstr"
 	"github.com/gogf/gf/v2/util/gconv"
 )
 
@@ -40,7 +39,7 @@ func (s *sRole) GetList(ctx context.Context, in model.SysRoleListInput) (out mod
 func (s *sRole) GetOne(ctx context.Context, in model.SysRoleOneInput) (out *model.SysRoleOneOutput, err error) {
 	err = dao.SysRole.Ctx(ctx).Cache(gdb.CacheOption{
 		Duration: time.Hour * 10,
-		Name:     "roleid-" + gconv.String(in.RoleId),
+		Name:     "roleId-" + gconv.String(in.RoleId),
 		Force:    false,
 	}).Where("role_id", in.RoleId).Scan(&out)
 	return
@@ -55,30 +54,44 @@ func (s *sRole) Create(ctx context.Context, in model.SysRoleCreateInput) (err er
 	if roleCount > 0 {
 		return errors.New("角色名称或权限字符已存在！")
 	}
-	_, err = dao.SysRole.Ctx(ctx).Insert(in)
+	lastInsertId, err := dao.SysRole.Ctx(ctx).InsertAndGetId(in)
+	if err != nil {
+		return err
+	}
+	// 添加角色和菜单关联信息
+	SysRoleMenu().UpdateMenu(ctx, model.SysRoleMenuUpdateRInput{RoleId: int(lastInsertId), MenuIds: in.MenuIds})
 	return
 }
 
 // 更新角色,并删除缓存
 func (s *sRole) Update(ctx context.Context, in model.SysRoleUpdateInput) (err error) {
-	_, err = dao.SysRole.Ctx(ctx).OmitEmpty().Cache(gdb.CacheOption{
+	if _, err = dao.SysRole.Ctx(ctx).OmitEmpty().Cache(gdb.CacheOption{
 		Duration: -1,
-		Name:     "roleid-" + gconv.String(in.RoleId),
-	}).Data(in).Where("role_id", in.RoleId).Update()
+		Name:     "roleId-" + gconv.String(in.RoleId),
+	}).Data(in).Where("role_id", in.RoleId).Update(); err != nil {
+		return err
+	}
+	// 添加角色和菜单关联信息
+	SysRoleMenu().UpdateMenu(ctx, model.SysRoleMenuUpdateRInput{RoleId: int(in.RoleId), MenuIds: in.MenuIds})
 	return
 }
 
 // 删除角色,并删除缓存
 func (s *sRole) Delete(ctx context.Context, in model.SysRoleDeleteInput) (err error) {
-	roleIdList := gstr.Split(in.RoleIdStr, ",")
-	for _, v := range roleIdList {
+	// roleIdList := gstr.Split(in.RoleIdStr, ",")
+	for _, v := range in.RoleIdStr {
 		if _, err = dao.SysRole.Ctx(ctx).Cache(gdb.CacheOption{
 			Duration: -1,
-			Name:     "roleid-" + v,
+			Name:     "roleId-" + string(rune(v)),
 		}).Delete("role_id=?", v); err != nil {
 			return
 		}
+		// 添加角色和菜单关联信息
+		if err = SysRoleMenu().UpdateMenu(ctx, model.SysRoleMenuUpdateRInput{RoleId: gconv.Int(v)}); err != nil {
+			return err
+		}
 	}
+	// 删除用户和角色关联
 	err = SysUserRole().Delete(ctx, model.SysUserRoleDeleteInput{RoleIdStr: in.RoleIdStr})
 	return
 }

@@ -71,5 +71,5 @@ type SysUserUpdateInput struct {
 
 // 删除用户输入
 type SysUserDeleteInput struct {
-	UserIdStr string // 需要删除的数据主键，例：1,2,3
+	UserIdStr []int // 需要删除的数据主键，例：[1,2,3]
 }

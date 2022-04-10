@@ -10,7 +10,6 @@ import (
 	"github.com/gogf/gf/v2/database/gdb"
 	"github.com/gogf/gf/v2/errors/gerror"
 	"github.com/gogf/gf/v2/frame/g"
-	"github.com/gogf/gf/v2/text/gstr"
 	"github.com/gogf/gf/v2/util/gconv"
 )
 
@@ -57,7 +56,7 @@ func (s *sUser) GetList(ctx context.Context, in model.SysUserListInput) (out mod
 func (s *sUser) GetOne(ctx context.Context, in model.SysUserOneInput) (out *model.SysUserOneOutput, err error) {
 	err = dao.SysUser.Ctx(ctx).Cache(gdb.CacheOption{
 		Duration: time.Hour * 10,
-		Name:     "userid-" + gconv.String(in.UserId),
+		Name:     "userId-" + gconv.String(in.UserId),
 		Force:    false,
 	}).Where("user_id", in.UserId).Scan(&out)
 	return
@@ -80,18 +79,18 @@ func (s *sUser) Create(ctx context.Context, in model.SysUserCreateInput) (err er
 func (s *sUser) Update(ctx context.Context, in model.SysUserUpdateInput) (err error) {
 	_, err = dao.SysUser.Ctx(ctx).OmitEmpty().Cache(gdb.CacheOption{
 		Duration: -1,
-		Name:     "userid-" + gconv.String(in.UserId),
+		Name:     "userId-" + gconv.String(in.UserId),
 	}).Data(in).Where("user_id", in.UserId).Update()
 	return
 }
 
 // 删除用户,并删除缓存
 func (s *sUser) Delete(ctx context.Context, in model.SysUserDeleteInput) (err error) {
-	userIdList := gstr.Split(in.UserIdStr, ",")
-	for _, v := range userIdList {
+	// userIdList := gstr.Split(in.UserIdStr, ",")
+	for _, v := range in.UserIdStr {
 		if _, err = dao.SysUser.Ctx(ctx).Cache(gdb.CacheOption{
 			Duration: -1,
-			Name:     "userid-" + v,
+			Name:     "userId-" + string(rune(v)),
 		}).Delete("user_id=?", v); err != nil {
 			return
 		}

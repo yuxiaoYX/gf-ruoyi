@@ -80,3 +80,15 @@ type SysMenuDeleteReq struct {
 
 // 删除菜单响应
 type SysMenuDeleteRes struct{}
+
+// 查询菜单树下拉结构输入
+type SysMenuTreeselectReq struct {
+	g.Meta `path:"/menu/treeselect" method:"post" summary:"菜单下拉树" tags:"菜单"`
+	RoleId int `v:"length:1,10#角色id长度为:{min}到{max}位" dc:"角色id"` // 角色ID
+}
+
+// 查询菜单树下拉结构响应
+type SysMenuTreeselectRes struct {
+	CheckedKeys []int                    `json:"checkedKeys"`
+	Menus       []map[string]interface{} `json:"menus"`
+}

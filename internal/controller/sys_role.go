@@ -56,3 +56,28 @@ func (c *cRole) Delete(ctx context.Context, req *v1.SysRoleDeleteReq) (res *v1.S
 	err = service.SysRole().Delete(ctx, *in)
 	return
 }
+
+// 查询角色已授权或未授权用户列表
+func (c *cRole) GetAllocatedList(ctx context.Context, req *v1.SysRoleAllocatedListReq) (res *v1.SysRoleAllocatedListRes, err error) {
+	in := &model.SysUserRoleAllocatedListInput{}
+	gconv.Scan(req, &in)
+	userRoleRes, err := service.SysUserRole().GetAllocatedList(ctx, *in)
+	gconv.Scan(userRoleRes, &res)
+	return
+}
+
+// 角色分配用户
+func (c *cRole) RoleSelectUser(ctx context.Context, req *v1.SysRoleSelectUserReq) (res *v1.SysRoleSelectUserRes, err error) {
+	in := &model.SysRoleSelectUserInput{}
+	gconv.Scan(req, &in)
+	err = service.SysUserRole().RoleSelectUser(ctx, *in)
+	return
+}
+
+// 角色取消用户
+func (c *cRole) RoleCancelUser(ctx context.Context, req *v1.SysRoleCancelUserReq) (res *v1.SysRoleCancelUserRes, err error) {
+	in := &model.SysRoleCancelUserInput{}
+	gconv.Scan(req, &in)
+	err = service.SysUserRole().RoleCancelUser(ctx, *in)
+	return
+}

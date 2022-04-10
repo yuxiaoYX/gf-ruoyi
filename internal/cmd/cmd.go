@@ -44,6 +44,7 @@ var (
 						controller.SysMenu,
 						controller.SysDictType,
 						controller.SysDictData,
+						controller.SysDept,
 					)
 				})
 
