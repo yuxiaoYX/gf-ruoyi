@@ -46,11 +46,6 @@ func (s sUserRole) GetRoles(ctx context.Context, userId uint) (out []*model.SysR
 func (s *sUserRole) GetAllocatedList(ctx context.Context, in model.SysUserRoleAllocatedListInput) (out model.SysUserRoleAllocatedListOutput, err error) {
 	// 获取角色已授权或未授权用户id列表
 	var userIds []*gvar.Var
-	// if in.IsAllocated {
-	// 	userIds, err = dao.SysUserRole.Ctx(ctx).Where("role_id", in.RoleId).Array("user_id")
-	// } else {
-	// 	userIds, err = dao.SysUserRole.Ctx(ctx).Where("role_id !=?", in.RoleId).Array("user_id")
-	// }
 	userIds, err = dao.SysUserRole.Ctx(ctx).Where("role_id", in.RoleId).Array("user_id")
 	if err != nil || len(userIds) == 0 {
 		return
@@ -84,33 +79,29 @@ func (s *sUserRole) GetAllocatedList(ctx context.Context, in model.SysUserRoleAl
 // }
 
 // 更新用户绑定的角色
-// func (s sUserRole) UpdateUser(ctx context.Context, in model.SysUserRoleUpdateUInput) (err error) {
-// 	// 删除用户的所有关联数据
-// 	if _, err = dao.SysUserRole.Ctx(ctx).Delete("user_id", in.UserId); err != nil {
-// 		return
-// 	}
-// 	if len(in.Roleids) == 0 {
-// 		return
-// 	}
-// 	// 添加关联信息
-// 	var userRoleWrite []map[string]interface{}
-// 	for _, v := range in.Roleids {
-// 		userRoleWrite = append(userRoleWrite, g.Map{
-// 			"user_id": in.UserId,
-// 			"role_id": v,
-// 		})
-// 	}
-// 	_, err = dao.SysUserRole.Ctx(ctx).Data(userRoleWrite).Save()
-// 	return
-// }
+func (s sUserRole) UpdateUser(ctx context.Context, in model.SysUserRoleUpdateUInput) (err error) {
+	// 删除用户的所有关联数据
+	if _, err = dao.SysUserRole.Ctx(ctx).Delete("user_id", in.UserId); err != nil {
+		return
+	}
+	if len(in.Roleids) == 0 {
+		return
+	}
+	// 添加关联信息
+	var userRoleWrite []map[string]interface{}
+	for _, v := range in.Roleids {
+		userRoleWrite = append(userRoleWrite, g.Map{
+			"user_id": in.UserId,
+			"role_id": v,
+		})
+	}
+	_, err = dao.SysUserRole.Ctx(ctx).Data(userRoleWrite).Save()
+	return
+}
 
 // 角色分配用户
 func (s sUserRole) RoleSelectUser(ctx context.Context, in model.SysRoleSelectUserInput) (err error) {
 	userIdList := gstr.Split(in.UserIds, ",")
-	// 删除角色的所有关联数据
-	// if _, err = dao.SysUserRole.Ctx(ctx).Delete("role_id", in.RoleId); err != nil {
-	// 	return
-	// }
 	if len(userIdList) == 0 {
 		return
 	}

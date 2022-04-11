@@ -25,7 +25,7 @@ type SysUserColumns struct {
     Password   string // 登录密码                 
     Mobile     string // 手机号码                 
     Avatar     string // 用户头像地址             
-    Status     string // 用户状态；0:禁用,1:正常  
+    Status     string // 用户状态（0正常 1停用）  
     DeptId     string // 部门id                   
     Remark     string // 备注                     
     LoginIp    string // 最后登录IP               

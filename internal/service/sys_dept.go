@@ -65,7 +65,7 @@ func (s *sDept) Delete(ctx context.Context, in model.SysDeptDeleteInput) (err er
 // 查询部门下拉树结构
 func (s *sDept) Treeselect(ctx context.Context) (treeList []map[string]interface{}, err error) {
 	var deptEntitys []*model.SysDeptOneOutput
-	if err = dao.SysDept.Ctx(ctx).Where("status=0").Scan(&deptEntitys); err != nil {
+	if err = dao.SysDept.Ctx(ctx).Where("status=0").OrderAsc("order_num").Scan(&deptEntitys); err != nil {
 		return
 	}
 	treeList, _ = s.formDeptTree(ctx, 0, deptEntitys)

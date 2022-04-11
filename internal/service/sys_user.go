@@ -54,6 +54,7 @@ func (s *sUser) GetList(ctx context.Context, in model.SysUserListInput) (out mod
 
 // 获取用户详细信息,缓存10小时
 func (s *sUser) GetOne(ctx context.Context, in model.SysUserOneInput) (out *model.SysUserOneOutput, err error) {
+	g.Log().Info(ctx, Context().Get(ctx))
 	err = dao.SysUser.Ctx(ctx).Cache(gdb.CacheOption{
 		Duration: time.Hour * 10,
 		Name:     "userId-" + gconv.String(in.UserId),
@@ -71,7 +72,12 @@ func (s *sUser) Create(ctx context.Context, in model.SysUserCreateInput) (err er
 	if userCount > 0 {
 		return errors.New("账户或昵称已存在！")
 	}
-	_, err = dao.SysUser.Ctx(ctx).Insert(in)
+	lastInsertId, err := dao.SysUser.Ctx(ctx).InsertAndGetId(in)
+	if err != nil {
+		return err
+	}
+	// 添加用户和角色关联信息
+	SysUserRole().UpdateUser(ctx, model.SysUserRoleUpdateUInput{UserId: uint(lastInsertId), Roleids: in.RoleIds})
 	return
 }
 
@@ -81,6 +87,8 @@ func (s *sUser) Update(ctx context.Context, in model.SysUserUpdateInput) (err er
 		Duration: -1,
 		Name:     "userId-" + gconv.String(in.UserId),
 	}).Data(in).Where("user_id", in.UserId).Update()
+	// 更新用户和角色关联信息
+	SysUserRole().UpdateUser(ctx, model.SysUserRoleUpdateUInput{UserId: in.UserId, Roleids: in.RoleIds})
 	return
 }
 
@@ -96,5 +104,20 @@ func (s *sUser) Delete(ctx context.Context, in model.SysUserDeleteInput) (err er
 		}
 	}
 	err = SysUserRole().Delete(ctx, model.SysUserRoleDeleteInput{UserIdStr: in.UserIdStr})
+	return
+}
+
+// 用户密码重置,只是修改密码，无需删除缓存
+func (s *sUser) ResetPwd(ctx context.Context, in model.SysUserResetPwdInput) (err error) {
+	_, err = dao.SysUser.Ctx(ctx).OmitEmpty().Data(in).Where("user_id", in.UserId).Update()
+	return
+}
+
+// 用户状态修改，并删除缓存
+func (s *sUser) ChangeStatus(ctx context.Context, in model.SysUserChangeStatusInput) (err error) {
+	_, err = dao.SysUser.Ctx(ctx).OmitEmpty().Cache(gdb.CacheOption{
+		Duration: -1,
+		Name:     "userId-" + gconv.String(in.UserId),
+	}).Data(in).Where("user_id", in.UserId).Update()
 	return
 }

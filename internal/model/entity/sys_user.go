@@ -16,8 +16,8 @@ type SysUser struct {
     Password  string      `json:"password"  `// 登录密码                 
     Mobile    string      `json:"mobile"    `// 手机号码                 
     Avatar    string      `json:"avatar"    `// 用户头像地址             
-    Status    string      `json:"status"    `// 用户状态；0:禁用,1:正常  
-    DeptId    string      `json:"deptId"    `// 部门id                   
+    Status    string      `json:"status"    `// 用户状态（0正常 1停用）  
+    DeptId    int64       `json:"deptId"    `// 部门id                   
     Remark    string      `json:"remark"    `// 备注                     
     LoginIp   string      `json:"loginIp"   `// 最后登录IP               
     LoginDate *gtime.Time `json:"loginDate" `// 最后登录时间             

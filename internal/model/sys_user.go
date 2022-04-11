@@ -52,8 +52,9 @@ type SysUserCreateInput struct {
 	Mobile   string // 手机号码
 	Avatar   string // 用户头像地址
 	Status   string // 用户状态；0:正常,1:停用
-	DeptId   string // 部门id
+	DeptId   int64  // 部门id
 	Remark   string // 备注
+	RoleIds  []uint // 角色选中id列表
 }
 
 // 更新用户信息输入
@@ -65,11 +66,24 @@ type SysUserUpdateInput struct {
 	Mobile   string // 手机号码
 	Avatar   string // 用户头像地址
 	Status   string // 用户状态；0:正常,1:停用
-	DeptId   string // 部门id
+	DeptId   int64  // 部门id
 	Remark   string // 备注
+	RoleIds  []uint // 角色选中id列表
 }
 
 // 删除用户输入
 type SysUserDeleteInput struct {
 	UserIdStr []int // 需要删除的数据主键，例：[1,2,3]
+}
+
+// 用户密码重置输入
+type SysUserResetPwdInput struct {
+	UserId   uint   // 用户ID
+	Password string // 登录密码
+}
+
+// 用户状态修改输入
+type SysUserChangeStatusInput struct {
+	UserId uint   // 用户ID
+	Status string // 用户状态；0:正常,1:禁用
 }

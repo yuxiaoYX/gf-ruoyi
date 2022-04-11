@@ -18,7 +18,7 @@ g.Meta `orm:"table:sys_user, do:true"`
     Password interface{} // 登录密码                 
     Mobile interface{} // 手机号码                 
     Avatar interface{} // 用户头像地址             
-    Status interface{} // 用户状态；0:禁用,1:正常  
+    Status interface{} // 用户状态（0正常 1停用）  
     DeptId interface{} // 部门id                   
     Remark interface{} // 备注                     
     LoginIp interface{} // 最后登录IP               

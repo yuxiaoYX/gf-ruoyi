@@ -25,8 +25,14 @@ type SysUserRoleAllocatedListOutput struct {
 
 // 更新用户绑定的角色输入
 type SysUserRoleUpdateUInput struct {
-	UserId  int   // 用户id
-	Roleids []int // 角色id列表
+	UserId  uint   // 用户id
+	Roleids []uint // 角色id列表
+}
+
+// 用户分配角色输入
+type SysUserSelectRoleInput struct {
+	UserId  string // 用户id
+	RoleIds string // 角色id，例：1,2,3
 }
 
 // 角色分配用户输入

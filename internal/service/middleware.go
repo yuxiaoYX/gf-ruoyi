@@ -1,6 +1,7 @@
 package service
 
 import (
+	"fmt"
 	"gf-ruoyi/internal/model"
 	"gf-ruoyi/internal/model/entity"
 	"gf-ruoyi/utility/response"
@@ -155,6 +156,7 @@ func (s *sMiddleware) ResponseHandler(r *ghttp.Request) {
 
 		response.JsonExit(r, code.Code(), err.Error())
 	} else {
-		response.JsonExit(r, code.Code(), "操作成功", res)
+		fmt.Println(code.Code())
+		response.JsonExit(r, 200, "操作成功", res)
 	}
 }
