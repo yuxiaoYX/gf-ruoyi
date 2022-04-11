@@ -37,11 +37,15 @@ func (s *sUser) Login(ctx context.Context, in model.SysUserLoginInput) (out *mod
 // 获取用户列表
 func (s *sUser) GetList(ctx context.Context, in model.SysUserListInput) (out model.SysUserListOutput, err error) {
 	m := dao.SysUser.Ctx(ctx).OmitEmpty().Where(g.Map{
-		"user_name": in.UserName,
-		"nick_name": in.NickName,
-		"status":    in.Status,
-		"dept_id":   in.DeptId,
+		"status":  in.Status,
+		"dept_id": in.DeptId,
 	})
+	if in.UserName != "" {
+		m = m.Where("user_name LIKE ?", "%"+in.UserName+"%")
+	}
+	if in.NickName != "" {
+		m = m.Where("nick_name LIKE ?", "%"+in.NickName+"%")
+	}
 	if in.BeginTime != "" && in.EndTime != "" {
 		m = m.Where("created_at>? and created_at<?", in.BeginTime, in.EndTime)
 	}

@@ -60,7 +60,7 @@ type SysUserCreateReq struct {
 	Mobile   string `v:"required|phone#请输入手机号！|手机号格式错误" dc:"手机号码"`                    // 手机号码
 	Avatar   string `dc:"用户头像地址"`                                                     // 用户头像地址
 	Status   string `d:"0" dc:"用户状态；0:正常,1:禁用"`                                       // 用户状态；0:正常,1:禁用
-	DeptId   int64  `dc:"部门id"`                                                       // 部门id
+	DeptId   int64  `d:"100" dc:"部门id"`                                               // 部门id
 	Remark   string `v:"max-length:200#备注最多为200个字符！" dc:"备注"`                         // 备注
 	RoleIds  []uint // 角色选中id列表
 }
