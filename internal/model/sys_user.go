@@ -87,3 +87,23 @@ type SysUserChangeStatusInput struct {
 	UserId uint   // 用户ID
 	Status string // 用户状态；0:正常,1:禁用
 }
+
+// 用户修改个人信息输入
+type SysUserUpdateProfileInput struct {
+	UserId   uint   // 用户ID
+	NickName string // 用户昵称
+	Mobile   string // 手机号码
+}
+
+// 用户修改个人密码输入
+type SysUserUpdatePwdInput struct {
+	UserId      uint   // 用户ID
+	OldPassword string // 旧密码
+	NewPassword string // 新密码
+}
+
+// 用户修改个人信息输入
+type SysUserUpdateAvatarInput struct {
+	UserId uint   // 用户ID
+	Avatar string // 用户头像地址
+}

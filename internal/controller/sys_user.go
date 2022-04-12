@@ -6,6 +6,8 @@ import (
 	"gf-ruoyi/internal/model"
 	"gf-ruoyi/internal/service"
 
+	"github.com/gogf/gf/v2/errors/gcode"
+	"github.com/gogf/gf/v2/errors/gerror"
 	"github.com/gogf/gf/v2/util/gconv"
 )
 
@@ -94,5 +96,84 @@ func (c *cUser) ChangeStatus(ctx context.Context, req *v1.SysUserChangeStatusReq
 	in := &model.SysUserChangeStatusInput{}
 	gconv.Scan(req, &in)
 	err = service.SysUser().ChangeStatus(ctx, *in)
+	return
+}
+
+// 用户获取个人信息
+func (c *cUser) GetProfile(ctx context.Context, req *v1.SysUserProfileReq) (res *v1.SysUserProfileRes, err error) {
+	userId := service.Context().Get(ctx).User.UserId
+	// 用户信息
+	userRes, err := service.SysUser().GetOne(ctx, model.SysUserOneInput{
+		UserId: userId,
+	})
+	if err != nil {
+		return
+	}
+	gconv.Scan(userRes, &res)
+	// 角色信息
+	roleRes, err := service.SysUserRole().GetRoles(ctx, userRes.UserId)
+	if err != nil {
+		return
+	}
+	gconv.Scan(roleRes, &res.Roles)
+	for _, v := range roleRes {
+		res.RoleIds = append(res.RoleIds, v.RoleId)
+	}
+	// 部门信息
+	deptRes, err := service.SysDept().GetOne(ctx, model.SysDeptOneInput{DeptId: userRes.DeptId})
+	gconv.Scan(deptRes, &res.Dept)
+	return
+}
+
+// 用户修改个人信息
+func (c *cUser) UpdateProfile(ctx context.Context, req *v1.SysUserUpdateProfileReq) (res *v1.SysUserUpdateProfileRes, err error) {
+	userId := service.Context().Get(ctx).User.UserId
+	err = service.SysUser().UpdateProfile(ctx, model.SysUserUpdateProfileInput{
+		UserId:   userId,
+		NickName: req.NickName,
+		Mobile:   req.Mobile,
+	})
+	return
+}
+
+// 用户修改个人密码
+func (c *cUser) UpdatePwd(ctx context.Context, req *v1.SysUserUpdatePwdReq) (res *v1.SysUserUpdatePwdRes, err error) {
+	userId := service.Context().Get(ctx).User.UserId
+	err = service.SysUser().UpdatePwd(ctx, model.SysUserUpdatePwdInput{
+		UserId:      userId,
+		OldPassword: req.OldPassword,
+		NewPassword: req.NewPassword,
+	})
+	return
+}
+
+// 用户上传头像
+func (c *cUser) UpdateAvatar(ctx context.Context, req *v1.SysUserUpdateAvatarReq) (res *v1.SysUserUpdateAvatarRes, err error) {
+	// var (
+	// 	request = g.RequestFromCtx(ctx)
+	// 	file    = request.GetUploadFile("avatarfile")
+	// )
+	if req.Avatarfile == nil {
+		return nil, gerror.NewCode(gcode.CodeMissingParameter, "请选择需要上传的文件")
+	}
+	fileEntity, err := service.SysFile().Upload(ctx, model.SysFileUploadInput{
+		File:       req.Avatarfile,
+		RandomName: true,
+		FileType:   "用户头像",
+	})
+	if err != nil {
+		return nil, err
+	}
+	// 头像地址保存到用户表
+	userId := service.Context().Get(ctx).User.UserId
+	err = service.SysUser().UpdateAvatar(ctx, model.SysUserUpdateAvatarInput{
+		UserId: userId,
+		Avatar: fileEntity.Path,
+	})
+	if err != nil {
+		return nil, err
+	}
+	res = &v1.SysUserUpdateAvatarRes{}
+	res.ImgUrl = fileEntity.Path
 	return
 }

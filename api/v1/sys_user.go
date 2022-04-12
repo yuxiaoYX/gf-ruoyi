@@ -2,6 +2,7 @@ package v1
 
 import (
 	"github.com/gogf/gf/v2/frame/g"
+	"github.com/gogf/gf/v2/net/ghttp"
 	"github.com/gogf/gf/v2/os/gtime"
 )
 
@@ -124,3 +125,44 @@ type SysUserChangeStatusReq struct {
 
 // 用户状态修改响应
 type SysUserChangeStatusRes struct{}
+
+// 用户查询个人信息请求
+type SysUserProfileReq struct {
+	g.Meta `path:"/user/profile" method:"get" summary:"用户查询个人信息" tags:"用户"`
+}
+
+// 用户查询个人信息响应
+type SysUserProfileRes struct {
+	*SysUserOneRes
+}
+
+// 用户修改个人信息请求
+type SysUserUpdateProfileReq struct {
+	g.Meta   `path:"/user/updateProfile" method:"post" summary:"用户修改个人信息" tags:"用户"`
+	NickName string `v:"required#用户昵称不能为空！" dc:"用户昵称"`             // 用户昵称
+	Mobile   string `v:"required|phone#请输入手机号！|手机号格式错误" dc:"手机号码"` // 手机号码
+}
+
+// 用户修改个人信息响应
+type SysUserUpdateProfileRes struct{}
+
+// 用户修改个人密码请求
+type SysUserUpdatePwdReq struct {
+	g.Meta      `path:"/user/profile/updatePwd" method:"post" summary:"用户修改个人密码" tags:"用户"`
+	OldPassword string `v:"required|length:6,30#请输入旧密码！|密码长度为:{min}到{max}位" dc:"旧密码"` // 旧密码
+	NewPassword string `v:"required|length:6,30#请输入新密码！|密码长度为:{min}到{max}位" dc:"新密码"` // 新密码
+}
+
+// 用户修改个人密码响应
+type SysUserUpdatePwdRes struct{}
+
+// 用户头像上传请求
+type SysUserUpdateAvatarReq struct {
+	g.Meta     `path:"/user/profile/avatar" method:"post" summary:"修改个人头像" tags:"用户"`
+	Avatarfile *ghttp.UploadFile `json:"avatarfile" type:"file" dc:"选择上传文件"`
+}
+
+// 用户头像上传响应
+type SysUserUpdateAvatarRes struct {
+	ImgUrl string `json:"imgUrl"` // 头像地址
+}

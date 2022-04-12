@@ -18,6 +18,13 @@ var (
 		Func: func(ctx context.Context, parser *gcmd.Parser) (err error) {
 			s := g.Server()
 			s.Group("/api", func(group *ghttp.RouterGroup) {
+				// 静态目录设置
+				uploadPath := g.Cfg().MustGet(ctx, "upload.path").String()
+				if uploadPath == "" {
+					g.Log().Fatal(ctx, "文件上传配置路径不能为空")
+				}
+				s.AddStaticPath("/api/upload", uploadPath)
+
 				group.Middleware(
 					service.Middleware().Ctx,
 					service.Middleware().CORS,

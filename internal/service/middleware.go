@@ -25,6 +25,7 @@ func Middleware() *sMiddleware {
 // 允许跨域
 func (s *sMiddleware) CORS(r *ghttp.Request) {
 	r.Response.CORSDefault()
+	// r.Response.DefaultCORSOptions()
 	r.Middleware.Next()
 }
 
