@@ -52,6 +52,7 @@ var (
 						controller.SysDictType,
 						controller.SysDictData,
 						controller.SysDept,
+						controller.SysConfig,
 					)
 				})
 

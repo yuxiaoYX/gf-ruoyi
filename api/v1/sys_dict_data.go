@@ -45,7 +45,6 @@ type SysDictDataOneRes struct {
 // 新增字典数据请求
 type SysDictDataCreateReq struct {
 	g.Meta    `path:"/dictData/create" method:"post" summary:"新增字典数据" tags:"字典数据"`
-	DictCode  int64  `v:"required|length:1,10#字典编码不能为空！|字典编码长度为:{min}到{max}位" dc:"字典编码"`  // 字典编码
 	DictSort  int    `v:"required|length:1,4#字典排序不能为空！|字典排序长度为:{min}到{max}位" dc:"字典排序"`   // 字典排序
 	DictLabel string `v:"required|length:1,100#字典标签不能为空！|字典标签长度为:{min}到{max}位" dc:"字典标签"` // 字典标签
 	DictValue string `v:"required|length:1,100#字典键值不能为空！|字典键值长度为:{min}到{max}位" dc:"字典键值"` // 字典键值

@@ -38,7 +38,6 @@ type SysDictTypeOneRes struct {
 // 新增字典类型请求
 type SysDictTypeCreateReq struct {
 	g.Meta   `path:"/dictType/create" method:"post" summary:"新增字典类型" tags:"字典类型"`
-	DictId   int64  `v:"required|length:1,10#字典主键不能为空！|字典主键长度为:{min}到{max}位" dc:"字典主键"`  // 字典主键
 	DictName string `v:"required|length:1,100#字典名称不能为空！|字典名称长度为:{min}到{max}位" dc:"字典名称"` // 字典名称
 	DictType string `v:"required|length:1,100#字典类型不能为空！|字典类型长度为:{min}到{max}位" dc:"字典类型"` // 字典类型
 	Status   string `d:"0" dc:"字典类型状态；0:正常,1:禁用"`                                        // 状态（0正常 1停用）

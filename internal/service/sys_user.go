@@ -10,6 +10,7 @@ import (
 	"github.com/gogf/gf/v2/database/gdb"
 	"github.com/gogf/gf/v2/errors/gerror"
 	"github.com/gogf/gf/v2/frame/g"
+	"github.com/gogf/gf/v2/os/gfile"
 	"github.com/gogf/gf/v2/util/gconv"
 )
 
@@ -149,6 +150,13 @@ func (s *sUser) UpdatePwd(ctx context.Context, in model.SysUserUpdatePwdInput) (
 
 // 用户修改头像
 func (s *sUser) UpdateAvatar(ctx context.Context, in model.SysUserUpdateAvatarInput) (err error) {
+	// 删除历史头像文件
+	userEntity, err := s.GetOne(ctx, model.SysUserOneInput{UserId: in.UserId})
+	if err != nil {
+		return err
+	}
+	gfile.Remove(userEntity.Avatar)
+	// 保存头像链接
 	_, err = dao.SysUser.Ctx(ctx).OmitEmpty().Cache(gdb.CacheOption{
 		Duration: -1,
 		Name:     "userId-" + gconv.String(in.UserId),
