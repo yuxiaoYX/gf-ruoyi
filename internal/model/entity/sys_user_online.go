@@ -10,12 +10,13 @@ import(
 
 // SysUserOnline is the golang structure for table sys_user_online.
 type SysUserOnline struct {
-    Id        uint64      `json:"id"        `//            
-    Token     string      `json:"token"     `// 用户token  
-    UserId    int         `json:"userId"    `// 用户id     
-    UserName  string      `json:"userName"  `// 用户名     
-    Ip        string      `json:"ip"        `// 登录ip     
-    Explorer  string      `json:"explorer"  `// 浏览器     
-    Os        string      `json:"os"        `// 操作系统   
-    CreatedAt *gtime.Time `json:"createdAt" `// 登录时间   
+    Id            uint64      `json:"id"            `//             
+    Token         string      `json:"token"         `// 用户token   
+    UserId        int64       `json:"userId"        `// 用户id      
+    UserName      string      `json:"userName"      `// 用户名      
+    Os            string      `json:"os"            `// 操作系统    
+    Ipaddr        string      `json:"ipaddr"        `// 登录IP地址  
+    LoginLocation string      `json:"loginLocation" `// 登录地点    
+    Browser       string      `json:"browser"       `// 浏览器类型  
+    LoginTime     *gtime.Time `json:"loginTime"     `// 登录时间    
 }

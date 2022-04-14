@@ -59,7 +59,7 @@ func (s *sMenu) Update(ctx context.Context, in model.SysMenuUpdateInput) (err er
 	_, err = dao.SysMenu.Ctx(ctx).OmitEmpty().Cache(gdb.CacheOption{
 		Duration: -1,
 		Name:     "menuid-" + gconv.String(in.MenuId),
-	}).Data(in).Where("menu_id=? or parent_id=?", in.MenuId, in.MenuId).Update()
+	}).Data(in).Where("menu_id=? AND parent_id=?", in.MenuId, in.ParentId).Update()
 	return
 }
 

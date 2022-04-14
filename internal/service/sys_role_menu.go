@@ -149,7 +149,7 @@ func (s *sRoleMenu) setMapRouter(ctx context.Context, entity *model.SysMenuOneOu
 		// 次级菜单
 		menu["alwaysShow"] = true
 		menu["component"] = "ParentView"
-		menu["path"] = "/" + entity.Path
+		menu["path"] = entity.Path
 	} else if entity.IsFrame == "0" {
 		// 外链
 		menu["alwaysShow"] = false

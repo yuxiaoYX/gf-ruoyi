@@ -28,6 +28,9 @@ func (c *cLogin) Login(ctx context.Context, req *v1.LoginDoReq) (res *v1.LoginDo
 		UserName: req.UserName,
 		Password: req.Password,
 	})
+	// 保存登录日志
+	service.SysLoginLog().Create(ctx, req.UserName, err)
+
 	if err != nil {
 		return
 	}

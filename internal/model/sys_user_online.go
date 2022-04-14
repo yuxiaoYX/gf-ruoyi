@@ -2,12 +2,13 @@ package model
 
 // 添加在线用户输入参数
 type SysUserOnlineCreateInput struct {
-	Token    string // 用户token
-	UserId   int    // 用户id
-	UserName string // 用户名
-	Ip       string // 登录ip
-	Explorer string // 浏览器
-	Os       string // 操作系统
+	Token         string `json:"token"         ` // 用户token
+	UserId        int64  `json:"userId"        ` // 用户id
+	UserName      string `json:"userName"      ` // 用户名
+	Os            string `json:"os"            ` // 操作系统
+	Ipaddr        string `json:"ipaddr"        ` // 登录IP地址
+	LoginLocation string `json:"loginLocation" ` // 登录地点
+	Browser       string `json:"browser"       ` // 浏览器类型
 }
 
 // 删除在线用户

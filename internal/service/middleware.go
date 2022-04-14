@@ -92,6 +92,7 @@ func (s *sMiddleware) Auth(r *ghttp.Request) {
 			return
 		}
 	}
+
 	// 获取访问地址对应的菜单信息，status==0启用中的菜单
 	menuEntity, err := SysMenu().GetList(ctx, model.SysMenuListInput{Status: "0"})
 	if err != nil {

@@ -12,12 +12,13 @@ import(
 // SysUserOnline is the golang structure of table sys_user_online for DAO operations like Where/Data.
 type SysUserOnline struct {
 g.Meta `orm:"table:sys_user_online, do:true"`
-    Id interface{} //            
-    Token interface{} // 用户token  
-    UserId interface{} // 用户id     
-    UserName interface{} // 用户名     
-    Ip interface{} // 登录ip     
-    Explorer interface{} // 浏览器     
-    Os interface{} // 操作系统   
-    CreatedAt *gtime.Time // 登录时间   
+    Id interface{} //             
+    Token interface{} // 用户token   
+    UserId interface{} // 用户id      
+    UserName interface{} // 用户名      
+    Os interface{} // 操作系统    
+    Ipaddr interface{} // 登录IP地址  
+    LoginLocation interface{} // 登录地点    
+    Browser interface{} // 浏览器类型  
+    LoginTime     *gtime.Time // 登录时间    
 }

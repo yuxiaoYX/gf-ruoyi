@@ -53,6 +53,7 @@ var (
 						controller.SysDictData,
 						controller.SysDept,
 						controller.SysConfig,
+						controller.SysLoginLog,
 					)
 				})
 
