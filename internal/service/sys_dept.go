@@ -5,8 +5,11 @@ import (
 	"errors"
 	"gf-ruoyi/internal/model"
 	"gf-ruoyi/internal/service/internal/dao"
+	"time"
 
+	"github.com/gogf/gf/v2/database/gdb"
 	"github.com/gogf/gf/v2/text/gstr"
+	"github.com/gogf/gf/v2/util/gconv"
 )
 
 type sDept struct{}
@@ -32,7 +35,10 @@ func (s *sDept) GetList(ctx context.Context, in model.SysDeptListInput) (out []*
 
 // 获取部门详细信息
 func (s *sDept) GetOne(ctx context.Context, in model.SysDeptOneInput) (out *model.SysDeptOneOutput, err error) {
-	err = dao.SysDept.Ctx(ctx).Where("dept_id", in.DeptId).Scan(&out)
+	err = dao.SysDept.Ctx(ctx).Cache(gdb.CacheOption{
+		Duration: time.Hour * 10,
+		Name:     "deptId-" + gconv.String(in.DeptId),
+	}).Where("dept_id", in.DeptId).Scan(&out)
 	return
 }
 
@@ -51,14 +57,24 @@ func (s *sDept) Create(ctx context.Context, in model.SysDeptCreateInput) (err er
 
 // 更新部门
 func (s *sDept) Update(ctx context.Context, in model.SysDeptUpdateInput) (err error) {
-	_, err = dao.SysDept.Ctx(ctx).OmitEmpty().Data(in).Where("dept_id=? or parent_id=?", in.DeptId, in.DeptId).Update()
+	_, err = dao.SysDept.Ctx(ctx).OmitEmpty().Cache(gdb.CacheOption{
+		Duration: -1,
+		Name:     "deptId-" + gconv.String(in.DeptId),
+	}).Data(in).Where("dept_id=? or parent_id=?", in.DeptId, in.DeptId).Update()
 	return
 }
 
 // 删除部门
 func (s *sDept) Delete(ctx context.Context, in model.SysDeptDeleteInput) (err error) {
 	deptIdList := gstr.Split(in.DeptIdStr, ",")
-	_, err = dao.SysDept.Ctx(ctx).Delete("dept_id IN(?)", deptIdList)
+	for _, v := range deptIdList {
+		if _, err = dao.SysDept.Ctx(ctx).Cache(gdb.CacheOption{
+			Duration: -1,
+			Name:     "userId-" + string(v),
+		}).Delete("dept_id =?", v); err != nil {
+			return
+		}
+	}
 	return
 }
 

@@ -27,7 +27,7 @@ type SysLoginLogColumns struct {
     Os             string // 操作系统                 
     Status         string // 登录状态（0成功 1失败）  
     Msg            string // 提示消息                 
-    LoginTime      string // 登录时间
+    CreatedAt      string // 登录时间
 }
 
 //  sysLoginLogColumns holds the columns for table sys_login_log.
@@ -40,7 +40,7 @@ var sysLoginLogColumns = SysLoginLogColumns{
             Os:            "os",              
             Status:        "status",          
             Msg:           "msg",             
-            LoginTime:     "login_time",
+            CreatedAt:     "created_at",
 }
 
 // NewSysLoginLogDao creates and returns a new DAO object for table data access.

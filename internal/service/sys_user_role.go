@@ -18,27 +18,34 @@ func SysUserRole() *sUserRole {
 	return &sUserRole{}
 }
 
-// 根据用户id，获取角色id列表和角色权限字符列表
-func (s *sUserRole) GetFieldList(ctx context.Context, userId uint) (out model.SysUserRoleFieldsOutput, err error) {
-	roleEntitys, err := s.GetRoles(ctx, userId)
-	if err != nil {
-		return
-	}
-	for _, v := range roleEntitys {
-		out.RoleIds = append(out.RoleIds, v.RoleId)
-		out.RoleNames = append(out.RoleNames, v.RoleName)
-	}
-	return
-}
+// // 根据用户id，获取角色id列表和角色权限字符列表
+// func (s *sUserRole) GetFieldList(ctx context.Context, userId uint) (out model.SysUserRoleFieldsOutput, err error) {
+// 	roleEntitys, err := s.GetRoles(ctx, userId)
+// 	if err != nil {
+// 		return
+// 	}
+// 	for _, v := range roleEntitys {
+// 		out.RoleIds = append(out.RoleIds, v.RoleId)
+// 		out.RoleNames = append(out.RoleNames, v.RoleName)
+// 	}
+// 	return
+// }
 
 // 获取用户关联角色信息
 // 排除被禁用的角色
-func (s sUserRole) GetRoles(ctx context.Context, userId uint) (out []*model.SysRoleOneOutput, err error) {
+func (s sUserRole) GetRoles(ctx context.Context, userId uint) (out model.SysUserRolesOutput, err error) {
 	roleIds, err := dao.SysUserRole.Ctx(ctx).Where("user_id", userId).Array("role_id")
 	if err != nil {
 		return
 	}
-	err = dao.SysRole.Ctx(ctx).Where("status=0 AND role_id IN(?)", roleIds).Scan(&out)
+	err = dao.SysRole.Ctx(ctx).Where("status=0 AND role_id IN(?)", roleIds).Scan(&out.Roles)
+	if err != nil {
+		return
+	}
+	for _, v := range out.Roles {
+		out.RoleIds = append(out.RoleIds, v.RoleId)
+		out.RoleNames = append(out.RoleNames, v.RoleName)
+	}
 	return
 }
 
@@ -67,16 +74,6 @@ func (s *sUserRole) GetAllocatedList(ctx context.Context, in model.SysUserRoleAl
 	out.Total = len(out.Rows)
 	return
 }
-
-// 获取角色关联用户信息
-// func (s sUserRole) getUsers(ctx context.Context, roleId uint) (out []*model.SysUserOneOutput, err error) {
-// 	userIds, err := dao.SysUserRole.Ctx(ctx).Where("role_id", roleId).Array("user_id")
-// 	if err != nil {
-// 		return
-// 	}
-// 	err = dao.SysUser.Ctx(ctx).Where("user_id IN(?)", userIds).Scan(&out)
-// 	return
-// }
 
 // 更新用户绑定的角色
 func (s sUserRole) UpdateUser(ctx context.Context, in model.SysUserRoleUpdateUInput) (err error) {

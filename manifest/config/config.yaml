@@ -27,7 +27,7 @@ gfcli:
   gen: 
     dao:
     - link: "mysql:root:123456@tcp(127.0.0.1:3306)/gf_ruoyi"
-      tables: "sys_user_online"
+      tables: "sys_oper_log"
 
 # 文件上传设置
 upload:

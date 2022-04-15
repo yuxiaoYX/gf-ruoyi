@@ -28,25 +28,36 @@ func (c *cLogin) Login(ctx context.Context, req *v1.LoginDoReq) (res *v1.LoginDo
 		UserName: req.UserName,
 		Password: req.Password,
 	})
-	// 保存登录日志
-	service.SysLoginLog().Create(ctx, req.UserName, err)
 
+	r := g.RequestFromCtx(ctx)
+	userAgent := r.Header.Get("User-Agent")
+	ua := user_agent.New(userAgent)
+	ipaddr := r.GetClientIp()
+	loginLocation := utils.GetCityByIp(ctx, r.GetClientIp())
+	browser, _ := ua.Browser()
+	os := ua.OS()
+	// 保存登录日志
+	service.SysLoginLog().Create(ctx, model.SysLoginLogCreateInput{
+		UserName:      req.UserName,
+		Ipaddr:        ipaddr,
+		LoginLocation: loginLocation,
+		Browser:       browser,
+		Os:            os,
+		Err:           err,
+	})
 	if err != nil {
 		return
 	}
 	// 保存用户在线状态到数据库
 	token := guid.S([]byte(out.UserName))
-	r := g.RequestFromCtx(ctx)
-	userAgent := r.Header.Get("User-Agent")
-	ua := user_agent.New(userAgent)
-	explorer, _ := ua.Browser()
 	service.SysUserOnline().Create(ctx, model.SysUserOnlineCreateInput{
-		Token:    token,
-		UserId:   int(out.UserId),
-		UserName: out.UserName,
-		Ip:       utils.GetClientIp(r),
-		Os:       ua.OS(),
-		Explorer: explorer,
+		Token:         token,
+		UserId:        int64(out.UserId),
+		UserName:      out.UserName,
+		Os:            os,
+		Ipaddr:        ipaddr,
+		LoginLocation: loginLocation,
+		Browser:       browser,
 	})
 
 	res.Token = token
@@ -65,7 +76,7 @@ func (c *cLogin) Logout(ctx context.Context, req *v1.LogoutReq) (res *v1.LogoutR
 			return
 		}
 		token := parts[1]
-		err = service.SysUserOnline().Delete(ctx, model.SysUserOnlineDeleteInput{Token: token})
+		err = service.SysUserOnline().TokenDelete(ctx, token)
 	}
 	return
 }
@@ -73,12 +84,12 @@ func (c *cLogin) Logout(ctx context.Context, req *v1.LogoutReq) (res *v1.LogoutR
 // 登录后获取用户信息
 func (c *cLogin) GetInfo(ctx context.Context, req *v1.LoginUserInfoReq) (res v1.LoginUserInfoRes, err error) {
 	// 从上下文，获取用户信息
-	userEntity := service.Context().Get(ctx).User
+	userEntity := service.Context().Get(ctx).UserInfo.User
 	gconv.Scan(userEntity, &res.User)
 	// 从上下文，获取角色权限字符
-	res.Roles = service.Context().Get(ctx).Roles.RoleNames
+	res.Roles = service.Context().Get(ctx).UserInfo.RoleNames
 	// 获取菜单权限标识
-	roleIds := gconv.Ints(service.Context().Get(ctx).Roles.RoleIds)
+	roleIds := gconv.Ints(service.Context().Get(ctx).UserInfo.RoleIds)
 	// 角色id为1的，拥有全部权限
 	for _, i := range roleIds {
 		if i == 1 {
@@ -94,7 +105,7 @@ func (c *cLogin) GetInfo(ctx context.Context, req *v1.LoginUserInfoReq) (res v1.
 
 // 登录后获取用户路由表
 func (c *cLogin) GetRouters(ctx context.Context, req *v1.LoginUserRouterReq) (res v1.LoginUserRouterRes, err error) {
-	roleIds := gconv.Ints(service.Context().Get(ctx).Roles.RoleIds)
+	roleIds := gconv.Ints(service.Context().Get(ctx).UserInfo.RoleIds)
 	res, err = service.SysRoleMenu().GetTreeRoute(ctx, roleIds)
 	return
 }

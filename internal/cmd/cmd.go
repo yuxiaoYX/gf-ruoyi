@@ -56,7 +56,11 @@ var (
 						controller.SysLoginLog,
 					)
 				})
-
+				group.Group("/monitor", func(group *ghttp.RouterGroup) {
+					group.Bind(
+						controller.SysUserOnline,
+					)
+				})
 			})
 			s.Run()
 			return nil

@@ -18,5 +18,5 @@ type SysUserOnline struct {
     Ipaddr        string      `json:"ipaddr"        `// 登录IP地址  
     LoginLocation string      `json:"loginLocation" `// 登录地点    
     Browser       string      `json:"browser"       `// 浏览器类型  
-    LoginTime     *gtime.Time `json:"loginTime"     `// 登录时间    
+    CreatedAt     *gtime.Time `json:"createdAt"     `// 登录时间    
 }

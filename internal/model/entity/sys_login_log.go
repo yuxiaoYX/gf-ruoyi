@@ -18,5 +18,5 @@ type SysLoginLog struct {
     Os            string      `json:"os"            `// 操作系统                 
     Status        string      `json:"status"        `// 登录状态（0成功 1失败）  
     Msg           string      `json:"msg"           `// 提示消息                 
-    LoginTime     *gtime.Time `json:"loginTime"     `// 登录时间                 
+    CreatedAt     *gtime.Time `json:"createdAt"     `// 登录时间                 
 }

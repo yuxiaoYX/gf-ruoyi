@@ -3,7 +3,6 @@ package service
 import (
 	"fmt"
 	"gf-ruoyi/internal/model"
-	"gf-ruoyi/internal/model/entity"
 	"gf-ruoyi/utility/response"
 	"strings"
 
@@ -59,18 +58,34 @@ func (s *sMiddleware) TokenAuth(r *ghttp.Request) {
 		onlineInfo, _ := SysUserOnline().GetToken(r.Context(), token)
 		if onlineInfo == nil {
 			response.JsonExit(r, 1, "您的帐户异地登陆或令牌失效!")
-			// r.SetError(gerror.New("您的帐户异地登陆或令牌失效!"))
 		}
 		// 设置用户信息到上下文
-		userEntity, _ := SysUser().GetOne(r.Context(), model.SysUserOneInput{UserId: uint(onlineInfo.UserId)})
-		var ctxUser *entity.SysUser
-		gconv.Struct(userEntity, &ctxUser)
-		Context().SetUser(r.Context(), ctxUser)
-		// 设置角色字段列表到上下文
-		roleFields, _ := SysUserRole().GetFieldList(r.Context(), userEntity.UserId)
-		var ctxRoles *model.ContextRoles
-		gconv.Struct(roleFields, &ctxRoles)
-		Context().SetRoles(r.Context(), ctxRoles)
+		ctx := r.Context()
+		var userInfo model.ContextUser
+		// 用户信息
+		userEntity, _ := SysUser().GetOne(ctx, model.SysUserOneInput{UserId: uint(onlineInfo.UserId)})
+		gconv.Struct(userEntity, &userInfo.User)
+		// 用户角色信息
+		roleEntitys, _ := SysUserRole().GetRoles(ctx, userEntity.UserId)
+		userInfo.Roles = roleEntitys.Roles
+		userInfo.RoleIds = roleEntitys.RoleIds
+		userInfo.RoleNames = roleEntitys.RoleNames
+		// 用户部门信息
+		deptEntity, _ := SysDept().GetOne(ctx, model.SysDeptOneInput{DeptId: userEntity.DeptId})
+		gconv.Struct(deptEntity, &userInfo.Dept)
+		Context().SetUser(r.Context(), &userInfo)
+
+		// response.JsonExit(r, 1, "11", userInfo)
+		// userEntity, _ := SysUser().GetOne(r.Context(), model.SysUserOneInput{UserId: uint(onlineInfo.UserId)})
+		// var ctxUser *entity.SysUser
+		// gconv.Struct(userEntity, &ctxUser)
+		// Context().SetUser(r.Context(), ctxUser)
+		// // 设置角色字段列表到上下文
+		// roleFields, _ := SysUserRole().GetFieldList(r.Context(), userEntity.UserId)
+		// var ctxRoles *model.ContextRoles
+		// gconv.Struct(roleFields, &ctxRoles)
+		// Context().SetRoles(r.Context(), ctxRoles)
+
 		r.Middleware.Next()
 	} else {
 		response.JsonExit(r, 1, "未登录或非法访问!")
@@ -81,7 +96,7 @@ func (s *sMiddleware) TokenAuth(r *ghttp.Request) {
 func (s *sMiddleware) Auth(r *ghttp.Request) {
 	ctx := r.Context()
 
-	roleIds := gconv.Ints(Context().Get(ctx).Roles.RoleIds)
+	roleIds := gconv.Ints(Context().Get(ctx).UserInfo.RoleIds)
 	if len(roleIds) == 0 {
 		response.JsonExit(r, 500, "没有角色权限")
 	}
@@ -139,6 +154,7 @@ func (s *sMiddleware) Auth(r *ghttp.Request) {
 // 返回处理中间件
 func (s *sMiddleware) ResponseHandler(r *ghttp.Request) {
 	r.Middleware.Next()
+	SysOperLog().Create(r.Context())
 	// 如果已经有返回内容，那么该中间件什么也不做
 	if r.Response.BufferLength() > 0 {
 		return

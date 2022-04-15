@@ -1,10 +1,17 @@
 package model
 
-// 根据用户id，获取角色id列表和角色名称列表输出
-type SysUserRoleFieldsOutput struct {
-	RoleIds   []uint   // 角色ID
-	RoleNames []string // 角色名称
+import "gf-ruoyi/internal/model/entity"
 
+// // 根据用户id，获取角色id列表和角色名称列表输出
+// type SysUserRoleFieldsOutput struct {
+// 	RoleIds   []uint   // 角色ID
+// 	RoleNames []string // 角色名称
+
+// }
+type SysUserRolesOutput struct {
+	RoleIds   []uint            // 角色ID
+	RoleNames []string          // 角色名称
+	Roles     []*entity.SysRole // 角色信息
 }
 
 // 查询角色已授权或未授权用户列表输入

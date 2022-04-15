@@ -20,5 +20,5 @@ g.Meta `orm:"table:sys_user_online, do:true"`
     Ipaddr interface{} // 登录IP地址  
     LoginLocation interface{} // 登录地点    
     Browser interface{} // 浏览器类型  
-    LoginTime     *gtime.Time // 登录时间    
+    CreatedAt     *gtime.Time // 登录时间    
 }

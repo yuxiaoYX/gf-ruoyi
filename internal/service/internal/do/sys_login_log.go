@@ -20,5 +20,5 @@ g.Meta `orm:"table:sys_login_log, do:true"`
     Os interface{} // 操作系统                 
     Status interface{} // 登录状态（0成功 1失败）  
     Msg interface{} // 提示消息                 
-    LoginTime     *gtime.Time // 登录时间                 
+    CreatedAt     *gtime.Time // 登录时间                 
 }

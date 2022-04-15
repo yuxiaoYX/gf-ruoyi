@@ -25,3 +25,15 @@ type SysLoginLogListOutput struct {
 type SysLoginLogDeleteInput struct {
 	InfoIdStr string // 需要删除的数据主键，例：[1,2,3]
 }
+
+// 新建登录日志输入
+type SysLoginLogCreateInput struct {
+	UserName      string // 登录账号
+	Ipaddr        string // 登录IP地址
+	LoginLocation string // 登录地点
+	Browser       string // 浏览器类型
+	Os            string // 操作系统
+	Status        string // 登录状态（0成功 1失败）
+	Msg           string // 提示消息
+	Err           error
+}

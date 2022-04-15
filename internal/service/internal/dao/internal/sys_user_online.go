@@ -27,7 +27,7 @@ type SysUserOnlineColumns struct {
     Ipaddr         string // 登录IP地址  
     LoginLocation  string // 登录地点    
     Browser        string // 浏览器类型  
-    LoginTime      string // 登录时间
+    CreatedAt      string // 登录时间
 }
 
 //  sysUserOnlineColumns holds the columns for table sys_user_online.
@@ -40,7 +40,7 @@ var sysUserOnlineColumns = SysUserOnlineColumns{
             Ipaddr:        "ipaddr",          
             LoginLocation: "login_location",  
             Browser:       "browser",         
-            LoginTime:     "login_time",
+            CreatedAt:     "created_at",
 }
 
 // NewSysUserOnlineDao creates and returns a new DAO object for table data access.

@@ -107,7 +107,12 @@ func (s *sUser) Delete(ctx context.Context, in model.SysUserDeleteInput) (err er
 			return
 		}
 	}
-	err = SysUserRole().Delete(ctx, model.SysUserRoleDeleteInput{UserIdStr: in.UserIdStr})
+	// 删除用户和角色的管理信息
+	if err = SysUserRole().Delete(ctx, model.SysUserRoleDeleteInput{UserIdStr: in.UserIdStr}); err != nil {
+		return
+	}
+	// 删除用户token
+	SysUserOnline().Delete(ctx, model.SysUserOnlineDeleteInput{Ids: gconv.Uint64s(in.UserIdStr)})
 	return
 }
 
@@ -119,10 +124,15 @@ func (s *sUser) ResetPwd(ctx context.Context, in model.SysUserResetPwdInput) (er
 
 // 用户状态修改，并删除缓存
 func (s *sUser) ChangeStatus(ctx context.Context, in model.SysUserChangeStatusInput) (err error) {
-	_, err = dao.SysUser.Ctx(ctx).OmitEmpty().Cache(gdb.CacheOption{
+	if _, err = dao.SysUser.Ctx(ctx).OmitEmpty().Cache(gdb.CacheOption{
 		Duration: -1,
 		Name:     "userId-" + gconv.String(in.UserId),
-	}).Data(in).Where("user_id", in.UserId).Update()
+	}).Data(in).Where("user_id", in.UserId).Update(); err != nil {
+		return
+	}
+
+	// 删除用户token
+	SysUserOnline().Delete(ctx, model.SysUserOnlineDeleteInput{Ids: gconv.Uint64s(in.UserId)})
 	return
 }
 

@@ -32,7 +32,7 @@ func (s *sFile) Upload(ctx context.Context, in model.SysFileUploadInput) (*model
 	}
 	// 同一用户1分钟之内只能上传10张图片
 	count, err := dao.SysFile.Ctx(ctx).
-		Where(dao.SysFile.Columns().UserId, Context().Get(ctx).User.UserId).
+		Where(dao.SysFile.Columns().UserId, Context().Get(ctx).UserInfo.User.UserId).
 		WhereGTE(dao.SysFile.Columns().CreatedAt, gtime.Now().Add(-1*time.Minute)).
 		Count()
 	if err != nil {
@@ -53,7 +53,7 @@ func (s *sFile) Upload(ctx context.Context, in model.SysFileUploadInput) (*model
 		Src:  gfile.Join(uploadPath, dateDirName, fileName),
 		// TODO Url填写网络地址
 		// Url:    "/upload/" + dateDirName + "/" + fileName,
-		UserId:   Context().Get(ctx).User.UserId,
+		UserId:   Context().Get(ctx).UserInfo.User.UserId,
 		FileType: in.FileType,
 	}
 	result, err := dao.SysFile.Ctx(ctx).Data(data).OmitEmpty().Insert()

@@ -3,14 +3,10 @@ package service
 import (
 	"context"
 	"gf-ruoyi/internal/model"
-	"gf-ruoyi/internal/model/entity"
 	"gf-ruoyi/internal/service/internal/dao"
-	"gf-ruoyi/utility/utils"
 
 	"github.com/gogf/gf/v2/frame/g"
-	"github.com/gogf/gf/v2/os/gtime"
 	"github.com/gogf/gf/v2/text/gstr"
-	"github.com/mssola/user_agent"
 )
 
 type sLoginLog struct{}
@@ -30,7 +26,7 @@ func (s *sLoginLog) GetList(ctx context.Context, in model.SysLoginLogListInput) 
 		m = m.Where("ipaddr LIKE ?", "%"+in.Ipaddr+"%")
 	}
 	if in.BeginTime != "" && in.EndTime != "" {
-		m = m.Where("login_time>? and login_time<?", in.BeginTime, in.EndTime)
+		m = m.Where("created_at>? and created_at<?", in.BeginTime, in.EndTime)
 	}
 	if err = m.Page(in.PageNum, in.PageSize).Scan(&out.Rows); err != nil {
 		return
@@ -57,24 +53,15 @@ func (s *sLoginLog) Clean(ctx context.Context) (err error) {
 }
 
 // 新增登录日志
-func (s *sLoginLog) Create(ctx context.Context, userName string, err1 error) (err2 error) {
-	loginData := &entity.SysLoginLog{}
-	r := g.RequestFromCtx(ctx)
-	userAgent := r.Header.Get("User-Agent")
-	ua := user_agent.New(userAgent)
-	loginData.UserName = userName
-	loginData.Ipaddr = r.GetClientIp()
-	loginData.LoginLocation = utils.GetCityByIp(ctx, r.GetClientIp())
-	loginData.Browser, _ = ua.Browser()
-	loginData.Os = ua.OS()
-	if err1 != nil {
-		loginData.Status = "1"
-		loginData.Msg = err1.Error()
+// TODO 如果使用，用户昵称登录，保存的userName是nickName
+func (s *sLoginLog) Create(ctx context.Context, in model.SysLoginLogCreateInput) (err error) {
+	if in.Err != nil {
+		in.Status = "1"
+		in.Msg = in.Err.Error()
 	} else {
-		loginData.Status = "0"
-		loginData.Msg = "登录成功"
+		in.Status = "0"
+		in.Msg = "登录成功"
 	}
-	loginData.LoginTime = gtime.Now()
-	_, err2 = dao.SysLoginLog.Ctx(ctx).Save(loginData)
+	_, err = dao.SysLoginLog.Ctx(ctx).Save(in)
 	return
 }

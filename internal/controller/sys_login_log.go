@@ -32,7 +32,7 @@ func (c *cLoginLog) Delete(ctx context.Context, req *v1.SysLoginLogDeleteReq) (r
 	return
 }
 
-// 删除登录日志
+// 清空登录日志
 func (c *cLoginLog) Clean(ctx context.Context, req *v1.SysLoginLogCleanReq) (res *v1.SysLoginLogCleanRes, err error) {
 	err = service.SysLoginLog().Clean(ctx)
 	return

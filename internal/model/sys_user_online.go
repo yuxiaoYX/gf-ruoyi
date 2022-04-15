@@ -1,5 +1,22 @@
 package model
 
+import "gf-ruoyi/internal/model/entity"
+
+// 获取在线用户列表请求
+type SysUserOnlineListInput struct {
+	UserName  string // 用户名
+	BeginTime string // 开始时间
+	EndTime   string // 结束时间
+	PageNum   int    // 分页码
+	PageSize  int    // 分页数量
+}
+
+// 获取在线用户列表响应
+type SysUserOnlineListOutput struct {
+	Rows  []*entity.SysUserOnline `json:"rows"`  // 列表
+	Total int                     `json:"total"` // 数据总数
+}
+
 // 添加在线用户输入参数
 type SysUserOnlineCreateInput struct {
 	Token         string `json:"token"         ` // 用户token
@@ -13,9 +30,7 @@ type SysUserOnlineCreateInput struct {
 
 // 删除在线用户
 type SysUserOnlineDeleteInput struct {
-	Id     uint64
-	Token  string // 用户token
-	UserId int    // 用户id
+	Ids []uint64 // 在线用户id列表
 }
 
 // 查询token是否在线输出
