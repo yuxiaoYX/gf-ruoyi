@@ -35,6 +35,7 @@ type SysMenuCreateInput struct {
 	Status    string // 菜单状态（0正常 1停用）
 	Perms     string // 权限标识
 	IsAuth    string // 是否验证（0是 1否）
+	IsLog     string // 是否记录操作日志（0是 1否）
 	Icon      string // 菜单图标
 }
 
@@ -54,6 +55,7 @@ type SysMenuUpdateInput struct {
 	Status    string // 菜单状态（0正常 1停用）
 	Perms     string // 权限标识
 	IsAuth    string // 是否验证（0是 1否）
+	IsLog     string // 是否记录操作日志（0是 1否）
 	Icon      string // 菜单图标
 }
 

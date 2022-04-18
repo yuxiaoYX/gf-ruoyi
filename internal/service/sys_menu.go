@@ -42,12 +42,14 @@ func (s *sMenu) GetOne(ctx context.Context, in model.SysMenuOneInput) (out *mode
 
 // 新增菜单
 func (s *sMenu) Create(ctx context.Context, in model.SysMenuCreateInput) (err error) {
-	menuCount, err := dao.SysMenu.Ctx(ctx).Where("path=?", in.Path).Count()
-	if err != nil {
-		return err
-	}
-	if menuCount > 0 {
-		return errors.New("路由地址已存在！")
+	if in.Path != "" {
+		menuCount, err := dao.SysMenu.Ctx(ctx).Where("path=?", in.Path).Count()
+		if err != nil {
+			return err
+		}
+		if menuCount > 0 {
+			return errors.New("路由地址已存在！")
+		}
 	}
 	_, err = dao.SysMenu.Ctx(ctx).Insert(in)
 	return

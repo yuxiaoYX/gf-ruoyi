@@ -42,7 +42,7 @@ type SysConfigCreateReq struct {
 	ConfigKey   string `v:"required|length:1,100#参数键名不能为空！|参数键名长度为:{min}到{max}位" dc:"参数键名"` // 参数键名
 	ConfigValue string `v:"required|length:1,500#参数键值不能为空！|参数键值长度为:{min}到{max}位" dc:"参数键值"` // 参数键值
 	ConfigType  string `v:"max-length:1#系统内置长度错误" dc:"系统内置（Y是 N否）"`                         // 系统内置（Y是 N否）
-	Remark      string `dc:"系统内置（Y是 N否）"`                                                   // 备注
+	Remark      string `dc:"备注"`                                                            // 备注
 }
 
 // 新增参数响应
@@ -56,7 +56,7 @@ type SysConfigUpdateReq struct {
 	ConfigKey   string `v:"required|length:1,100#参数键名不能为空！|参数键名长度为:{min}到{max}位" dc:"参数键名"` // 参数键名
 	ConfigValue string `v:"required|length:1,500#参数键值不能为空！|参数键值长度为:{min}到{max}位" dc:"参数键值"` // 参数键值
 	ConfigType  string `v:"max-length:1#系统内置长度错误" dc:"系统内置（Y是 N否）"`                         // 系统内置（Y是 N否）
-	Remark      string `dc:"系统内置（Y是 N否）"`                                                   // 备注
+	Remark      string `dc:"备注"`                                                            // 备注
 }
 
 // 更新参数信息响应

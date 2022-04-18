@@ -16,7 +16,7 @@ type LoginDoRes struct {
 
 // 注销请求
 type LogoutReq struct {
-	g.Meta `path:"/logout" method:"post" summary:"执行用户注销接口" tags:"用户"`
+	g.Meta `path:"/logout" method:"post" summary:"执行用户注销接口" tags:"登录"`
 }
 
 // 注销响应
@@ -24,7 +24,7 @@ type LogoutRes struct{}
 
 // 登录后获取用户信息请求
 type LoginUserInfoReq struct {
-	g.Meta `path:"/getInfo" method:"post" summary:"登录后获取用户信息" tags:"用户"`
+	g.Meta `path:"/getInfo" method:"post" summary:"登录后获取用户信息" tags:"登录"`
 }
 
 // 登录后获取用户信息响应
@@ -36,7 +36,7 @@ type LoginUserInfoRes struct {
 
 // 登录后获取用户路由表请求
 type LoginUserRouterReq struct {
-	g.Meta `path:"/getRouters" method:"post" summary:"登录后获取用户信息" tags:"用户"`
+	g.Meta `path:"/getRouters" method:"post" summary:"登录后获取用户路由表" tags:"登录"`
 }
 
 // 登录后获取用户路由表响应

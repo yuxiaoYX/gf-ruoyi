@@ -33,7 +33,7 @@ func (s *sDictType) GetList(ctx context.Context, in model.SysDictTypeListInput) 
 	if err = m.Page(in.PageNum, in.PageSize).Scan(&out.Rows); err != nil {
 		return
 	}
-	out.Total = len(out.Rows)
+	out.Total, err = m.Count()
 	return
 }
 

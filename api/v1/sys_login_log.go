@@ -33,10 +33,10 @@ type SysLoginLogDeleteReq struct {
 // 删除登录日志响应
 type SysLoginLogDeleteRes struct{}
 
-// 根据登录日志键名查询登录日志值请求
+// 清空登录日志请求
 type SysLoginLogCleanReq struct {
-	g.Meta `path:"/loginLog/clean" method:"get" summary:"查询登录日志树结构" tags:"登录日志"`
+	g.Meta `path:"/loginLog/clean" method:"get" summary:"清空登录日志" tags:"登录日志"`
 }
 
-// 根据登录日志键名查询登录日志值响应
+// 清空登录日志响应
 type SysLoginLogCleanRes struct{}

@@ -42,7 +42,7 @@ func (s *sDictData) GetList(ctx context.Context, in model.SysDictDataListInput) 
 	if err = m.Page(in.PageNum, in.PageSize).OrderAsc("dict_sort").Scan(&out.Rows); err != nil {
 		return
 	}
-	out.Total = len(out.Rows)
+	out.Total, err = m.Count()
 	return
 }
 

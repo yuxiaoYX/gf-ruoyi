@@ -71,7 +71,7 @@ func (s *sUserRole) GetAllocatedList(ctx context.Context, in model.SysUserRoleAl
 	if err = m.Page(in.PageNum, in.PageSize).Scan(&out.Rows); err != nil {
 		return
 	}
-	out.Total = len(out.Rows)
+	out.Total, err = m.Count()
 	return
 }
 

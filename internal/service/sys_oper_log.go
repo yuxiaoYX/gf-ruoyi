@@ -2,6 +2,7 @@ package service
 
 import (
 	"context"
+	"gf-ruoyi/internal/model"
 	"gf-ruoyi/internal/model/entity"
 	"gf-ruoyi/internal/service/internal/dao"
 	"gf-ruoyi/utility/utils"
@@ -19,34 +20,89 @@ func SysOperLog() *sOperLog {
 	return &sOperLog{}
 }
 
+// 获取操作日志列表
+func (s *sOperLog) GetList(ctx context.Context, in model.SysOperLogListInput) (out model.SysOperLogListOutput, err error) {
+	m := dao.SysOperLog.Ctx(ctx).OmitEmpty().Where(g.Map{
+		"user_name": in.BusinessType,
+		"status":    in.Status,
+	})
+	if in.Title != "" {
+		m = m.Where("title LIKE ?", "%"+in.Title+"%")
+	}
+	if in.OperName != "" {
+		m = m.Where("oper_name LIKE ?", "%"+in.OperName+"%")
+	}
+	if in.BeginTime != "" && in.EndTime != "" {
+		m = m.Where("created_at>? and created_at<?", in.BeginTime, in.EndTime)
+	}
+	if err = m.Page(in.PageNum, in.PageSize).Scan(&out.Rows); err != nil {
+		return
+	}
+	out.Total, err = m.Count()
+	return
+}
+
+// 删除操作日志
+func (s *sOperLog) Delete(ctx context.Context, in model.SysOperLogDeleteInput) (err error) {
+	operIdList := gstr.Split(in.OperIdStr, ",")
+	for _, v := range operIdList {
+		if _, err = dao.SysOperLog.Ctx(ctx).Delete("oper_id=?", v); err != nil {
+			return
+		}
+	}
+	return
+}
+
+// 清空操作日志
+func (s *sOperLog) Clean(ctx context.Context) (err error) {
+	_, err = dao.SysOperLog.Ctx(ctx).Where("oper_id>0").Delete()
+	return
+}
+
 // 添加操作日志
 func (s *sOperLog) Create(ctx context.Context) (err error) {
-	// var operInfo *entity.SysOperLog
 
 	r := g.RequestFromCtx(ctx)
 	url := r.Request.URL //请求地址
-	perms := gstr.TrimLeft(url.Path, "/api")
-	menuName, err := dao.SysMenu.Ctx(ctx).Fields("menu_name").Where("perms=?", perms).Value()
-	if err != nil {
+	// 用户登录，不记录操作日志
+	if gstr.ContainsI(url.Path, "login") {
 		return
 	}
+
+	var menuEntity *entity.SysMenu
+	perms := gstr.TrimLeft(url.Path, "/api")
+	err = dao.SysMenu.Ctx(ctx).Where("is_log=0 AND perms=?", perms).Scan(&menuEntity)
+	if err != nil || menuEntity == nil {
+		return
+	}
+
+	var operInfo entity.SysOperLog
 	rawQuery := url.RawQuery
 	if rawQuery != "" {
 		rawQuery = "?" + rawQuery
 	}
-	ipaddr := r.GetClientIp()
-	location := utils.GetCityByIp(ctx, r.GetClientIp())
-	operInfo := entity.SysOperLog{
-		Title:         menuName.String(),
-		BusinessType:  0, // TODO 未完成
-		Method:        url.Path,
-		RequestMethod: r.Method,
-		OperatorType:  0,
-		OperName:      Context().Get(ctx).UserInfo.User.UserName,
-		DeptName:      Context().Get(ctx).UserInfo.Dept.DeptName,
-		OperUrl:       url.Path + rawQuery,
-		OperIp:        ipaddr,
-		OperLocation:  location,
+	operInfo.Title = menuEntity.MenuName
+	operInfo.Method = url.Path
+	operInfo.RequestMethod = r.Method
+	operInfo.OperatorType = 0
+	operInfo.OperName = Context().Get(ctx).UserInfo.User.UserName
+	operInfo.DeptName = Context().Get(ctx).UserInfo.Dept.DeptName
+	operInfo.OperUrl = url.Path + rawQuery
+	operInfo.OperIp = r.GetClientIp()
+	operInfo.OperLocation = utils.GetCityByIp(ctx, r.GetClientIp())
+
+	methodList := gstr.SplitAndTrim(url.Path, "/")
+	method := methodList[len(methodList)-1]
+	if gstr.ContainsI(method, "create") {
+		operInfo.BusinessType = 1
+	} else if gstr.ContainsI(method, "delete") {
+		operInfo.BusinessType = 2
+	} else if gstr.ContainsI(method, "update") {
+		operInfo.BusinessType = 3
+	} else if gstr.ContainsI(method, "get") {
+		operInfo.BusinessType = 4
+	} else {
+		operInfo.BusinessType = 0
 	}
 	params := r.GetMap()
 	if params != nil {
@@ -64,11 +120,6 @@ func (s *sOperLog) Create(ctx context.Context) (err error) {
 		operInfo.Status = 0
 	}
 
-	g.Log().Info(ctx, operInfo)
-
-	// dao.SysOperLog.Ctx(ctx).Insert(entity.SysOperLog{
-	// 	Title: ,
-	// })
-
+	dao.SysOperLog.Ctx(ctx).Insert(operInfo)
 	return
 }

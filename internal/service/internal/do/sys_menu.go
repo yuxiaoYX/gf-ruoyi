@@ -26,6 +26,7 @@ g.Meta `orm:"table:sys_menu, do:true"`
     Status interface{} // 菜单状态（0正常 1停用）        
     Perms interface{} // 权限标识                       
     IsAuth interface{} // 是否验证（0是 1否）            
+    IsLog interface{} // 是否记录操作日志（0是 1否）    
     Icon interface{} // 菜单图标                       
     CreatedAt *gtime.Time // 创建时间                       
     UpdatedAt *gtime.Time // 更新时间                       

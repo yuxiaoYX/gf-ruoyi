@@ -31,14 +31,14 @@ func (s *sLoginLog) GetList(ctx context.Context, in model.SysLoginLogListInput) 
 	if err = m.Page(in.PageNum, in.PageSize).Scan(&out.Rows); err != nil {
 		return
 	}
-	out.Total = len(out.Rows)
+	out.Total, err = m.Count()
 	return
 }
 
 // 删除登录日志
 func (s *sLoginLog) Delete(ctx context.Context, in model.SysLoginLogDeleteInput) (err error) {
-	InfoIdList := gstr.Split(in.InfoIdStr, ",")
-	for _, v := range InfoIdList {
+	infoIdList := gstr.Split(in.InfoIdStr, ",")
+	for _, v := range infoIdList {
 		if _, err = dao.SysLoginLog.Ctx(ctx).Delete("info_id=?", v); err != nil {
 			return
 		}

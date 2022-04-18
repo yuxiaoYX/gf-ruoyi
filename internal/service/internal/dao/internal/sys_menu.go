@@ -33,6 +33,7 @@ type SysMenuColumns struct {
     Status     string // 菜单状态（0正常 1停用）        
     Perms      string // 权限标识                       
     IsAuth     string // 是否验证（0是 1否）            
+    IsLog      string // 是否记录操作日志（0是 1否）    
     Icon       string // 菜单图标                       
     CreatedAt  string // 创建时间                       
     UpdatedAt  string // 更新时间                       
@@ -55,6 +56,7 @@ var sysMenuColumns = SysMenuColumns{
             Status:    "status",      
             Perms:     "perms",       
             IsAuth:    "is_auth",     
+            IsLog:     "is_log",      
             Icon:      "icon",        
             CreatedAt: "created_at",  
             UpdatedAt: "updated_at",  

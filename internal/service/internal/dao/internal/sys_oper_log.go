@@ -19,21 +19,21 @@ type SysOperLogDao struct {
 
 // SysOperLogColumns defines and stores column names for table sys_oper_log.
 type SysOperLogColumns struct {
-	OperId         string // 日志主键                                 
-    Title          string // 模块标题                                 
-    BusinessType   string // 业务类型（0其它 1新增 2修改 3删除）      
-    Method         string // 方法名称                                 
-    RequestMethod  string // 请求方式                                 
-    OperatorType   string // 操作类别（0其它 1后台用户 2手机端用户）  
-    OperName       string // 操作人员                                 
-    DeptName       string // 部门名称                                 
-    OperUrl        string // 请求URL                                  
-    OperIp         string // 主机地址                                 
-    OperLocation   string // 操作地点                                 
-    OperParam      string // 请求参数                                 
-    JsonResult     string // 返回参数                                 
-    Status         string // 操作状态（0正常 1异常）                  
-    ErrorMsg       string // 错误消息                                 
+	OperId         string // 日志主键                                   
+    Title          string // 模块标题                                   
+    BusinessType   string // 业务类型（0其它 1新增 2删除 3修改 4查询）  
+    Method         string // 方法名称                                   
+    RequestMethod  string // 请求方式                                   
+    OperatorType   string // 操作类别（0其它 1后台用户 2手机端用户）    
+    OperName       string // 操作人员                                   
+    DeptName       string // 部门名称                                   
+    OperUrl        string // 请求URL                                    
+    OperIp         string // 主机地址                                   
+    OperLocation   string // 操作地点                                   
+    OperParam      string // 请求参数                                   
+    JsonResult     string // 返回参数                                   
+    Status         string // 操作状态（0正常 1异常）                    
+    ErrorMsg       string // 错误消息                                   
     CreatedAt      string // 操作时间
 }
 

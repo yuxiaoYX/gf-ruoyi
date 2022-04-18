@@ -29,7 +29,7 @@ func (s *sUserOnline) GetList(ctx context.Context, in model.SysUserOnlineListInp
 	if err = m.Page(in.PageNum, in.PageSize).Scan(&out.Rows); err != nil {
 		return
 	}
-	out.Total = len(out.Rows)
+	out.Total, err = m.Count()
 	return
 }
 

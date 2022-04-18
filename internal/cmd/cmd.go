@@ -53,11 +53,12 @@ var (
 						controller.SysDictData,
 						controller.SysDept,
 						controller.SysConfig,
-						controller.SysLoginLog,
 					)
 				})
 				group.Group("/monitor", func(group *ghttp.RouterGroup) {
 					group.Bind(
+						controller.SysLoginLog,
+						controller.SysOperLog,
 						controller.SysUserOnline,
 					)
 				})

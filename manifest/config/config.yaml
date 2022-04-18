@@ -1,7 +1,7 @@
 server:
   address:     ":8000"
   openapiPath: "/api.json"
-  swaggerPath: "/swagger"
+  swaggerPath: "/api/swagger"
   errorStack:  false 
 
 logger:
@@ -27,7 +27,7 @@ gfcli:
   gen: 
     dao:
     - link: "mysql:root:123456@tcp(127.0.0.1:3306)/gf_ruoyi"
-      tables: "sys_oper_log"
+      tables: "sys_job"
 
 # 文件上传设置
 upload:
