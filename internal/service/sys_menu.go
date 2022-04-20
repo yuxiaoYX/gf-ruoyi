@@ -42,6 +42,7 @@ func (s *sMenu) GetOne(ctx context.Context, in model.SysMenuOneInput) (out *mode
 
 // 新增菜单
 func (s *sMenu) Create(ctx context.Context, in model.SysMenuCreateInput) (err error) {
+	// 路由地址不能重复
 	if in.Path != "" {
 		menuCount, err := dao.SysMenu.Ctx(ctx).Where("path=?", in.Path).Count()
 		if err != nil {

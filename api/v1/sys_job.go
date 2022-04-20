@@ -37,22 +37,15 @@ type SysJobOneRes struct {
 
 // 新增定时任务请求
 type SysJobCreateReq struct {
-	g.Meta   `path:"/job/create" method:"post" summary:"新增定时任务" tags:"定时任务"`
-	JobName  string `v:"required|length:1,100#定时任务名称不能为空！|定时任务名称长度为:{min}到{max}位" dc:"定时任务名称"` // 定时任务名称
-	JobKey   string `v:"required|length:1,100#定时任务键名不能为空！|定时任务键名长度为:{min}到{max}位" dc:"定时任务键名"` // 定时任务键名
-	JobValue string `v:"required|length:1,500#定时任务键值不能为空！|定时任务键值长度为:{min}到{max}位" dc:"定时任务键值"` // 定时任务键值
-	JobType  string `v:"max-length:1#系统内置长度错误" dc:"系统内置（Y是 N否）"`                               // 系统内置（Y是 N否）
-	Remark   string `dc:"系统内置（Y是 N否）"`                                                         // 备注
-
-	JobId          int64  `json:"jobId"          ` // 任务ID
-	JobName        string `json:"jobName"        ` // 任务名称
-	JobGroup       string `json:"jobGroup"       ` // 任务组名
-	InvokeTarget   string `json:"invokeTarget"   ` // 调用目标字符串
-	JobParams      string `json:"jobParams"      ` // 参数
-	CronExpression string `json:"cronExpression" ` // cron执行表达式
-	MisfirePolicy  string `json:"misfirePolicy"  ` // 计划执行错误策略（1立即执行 2执行一次 3放弃执行）
-	Status         string `json:"status"         ` // 状态（0正常 1暂停）
-	Remark         string `json:"remark"         ` // 备注信息
+	g.Meta         `path:"/job/create" method:"post" summary:"新增定时任务" tags:"定时任务"`
+	JobName        string `v:"required|length:1,64#任务名称不能为空！|任务名称长度为:{min}到{max}位" dc:"任务名称"`           // 任务名称
+	JobGroup       string `v:"required|length:1,64#任务组名不能为空！|任务组名长度为:{min}到{max}位" dc:"任务组名"`           // 任务组名
+	InvokeTarget   string `v:"required|length:1,500#调用目标字符串不能为空！|调用目标字符串长度为:{min}到{max}位" dc:"调用目标字符串"` // 调用目标字符串
+	JobParams      string `v:"max-length:200#参数长度错误" dc:"参数"`                                           // 参数
+	CronExpression string `v:"max-length:255#cron执行表达式长度错误" dc:"cron执行表达式"`                             // cron执行表达式
+	MisfirePolicy  string `v:"max-length:20#计划执行错误策略长度错误" dc:"计划执行错误策略（1立即执行 2执行一次 3放弃执行）"`             // 计划执行错误策略（1立即执行 2执行一次 3放弃执行）
+	Status         string `v:"max-length:1#状态长度错误" dc:"状态（0正常 1暂停）"`                                    // 状态（0正常 1暂停）
+	Remark         string `v:"max-length:500#备注信息长度错误" dc:"备注信息"`                                       // 备注信息
 }
 
 // 新增定时任务响应
@@ -60,13 +53,16 @@ type SysJobCreateRes struct{}
 
 // 更新定时任务信息请求
 type SysJobUpdateReq struct {
-	g.Meta   `path:"/job/update" method:"post" summary:"修改定时任务" tags:"定时任务"`
-	JobId    int    `v:"required|length:1,5#定时任务id不能为空！|定时任务id长度为:{min}到{max}位" dc:"定时任务id"`   // 定时任务主键
-	JobName  string `v:"required|length:1,100#定时任务名称不能为空！|定时任务名称长度为:{min}到{max}位" dc:"定时任务名称"` // 定时任务名称
-	JobKey   string `v:"required|length:1,100#定时任务键名不能为空！|定时任务键名长度为:{min}到{max}位" dc:"定时任务键名"` // 定时任务键名
-	JobValue string `v:"required|length:1,500#定时任务键值不能为空！|定时任务键值长度为:{min}到{max}位" dc:"定时任务键值"` // 定时任务键值
-	JobType  string `v:"max-length:1#系统内置长度错误" dc:"系统内置（Y是 N否）"`                               // 系统内置（Y是 N否）
-	Remark   string `dc:"系统内置（Y是 N否）"`                                                         // 备注
+	g.Meta         `path:"/job/update" method:"post" summary:"修改定时任务" tags:"定时任务"`
+	JobId          int64  `v:"required|length:1,20#任务ID不能为空！|任务ID长度为:{min}到{max}位" dc:"任务ID"`           // 任务ID
+	JobName        string `v:"required|length:1,64#任务名称不能为空！|任务名称长度为:{min}到{max}位" dc:"任务名称"`           // 任务名称
+	JobGroup       string `v:"required|length:1,64#任务组名不能为空！|任务组名长度为:{min}到{max}位" dc:"任务组名"`           // 任务组名
+	InvokeTarget   string `v:"required|length:1,500#调用目标字符串不能为空！|调用目标字符串长度为:{min}到{max}位" dc:"调用目标字符串"` // 调用目标字符串
+	JobParams      string `v:"max-length:200#参数长度错误" dc:"参数"`                                           // 参数
+	CronExpression string `v:"max-length:255#cron执行表达式长度错误" dc:"cron执行表达式"`                             // cron执行表达式
+	MisfirePolicy  string `v:"max-length:20#计划执行错误策略长度错误" dc:"计划执行错误策略（1立即执行 2执行一次 3放弃执行）"`             // 计划执行错误策略（1立即执行 2执行一次 3放弃执行）
+	Status         string `v:"max-length:1#状态长度错误" dc:"状态（0正常 1暂停）"`                                    // 状态（0正常 1暂停）
+	Remark         string `v:"max-length:500#备注信息长度错误" dc:"备注信息"`                                       // 备注信息
 }
 
 // 更新定时任务信息响应

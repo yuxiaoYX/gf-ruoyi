@@ -118,7 +118,7 @@ type SysUserResetPwdRes struct{}
 
 // 用户状态修改请求
 type SysUserChangeStatusReq struct {
-	g.Meta `path:"/user/changeStatus" method:"post" summary:"重置密码" tags:"用户"`
+	g.Meta `path:"/user/changeStatus" method:"post" summary:"用户状态修改" tags:"用户"`
 	UserId uint   `v:"required|length:1,10#用户id不能为空！|用户名长度为:{min}到{max}位" dc:"用户id"`      // 用户ID
 	Status string `v:"required|max-length:1#用户状态不能为空！|用户状态长度为:{max}" dc:"用户状态；0:正常,1:禁用"` // 用户状态；0:正常,1:禁用
 }

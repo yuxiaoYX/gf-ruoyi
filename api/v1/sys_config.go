@@ -73,7 +73,7 @@ type SysConfigDeleteRes struct{}
 
 // 根据参数键名查询参数值请求
 type SysConfigKeyReq struct {
-	g.Meta    `path:"/config/configKey" method:"get" summary:"查询参数树结构" tags:"参数"`
+	g.Meta    `path:"/config/configKey" method:"get" summary:"参数键名查询参数值" tags:"参数"`
 	ConfigKey string `v:"required|length:1,100#参数键名不能为空！|参数键名长度为:{min}到{max}位" dc:"参数键名"` // 参数键名
 }
 

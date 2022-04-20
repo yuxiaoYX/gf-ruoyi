@@ -60,6 +60,7 @@ var (
 						controller.SysLoginLog,
 						controller.SysOperLog,
 						controller.SysUserOnline,
+						controller.SysJob,
 					)
 				})
 			})
