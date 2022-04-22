@@ -63,6 +63,11 @@ var (
 						controller.SysJob,
 					)
 				})
+				group.Group("/tool", func(group *ghttp.RouterGroup) {
+					group.Bind(
+						controller.SysGenTable,
+					)
+				})
 			})
 			s.Run()
 			return nil
