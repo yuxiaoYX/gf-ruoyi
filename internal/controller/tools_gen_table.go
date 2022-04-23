@@ -23,6 +23,6 @@ func (c *cGenTable) GetTableNames(ctx context.Context, req *v1.SysGenTablesReq) 
 
 // 获取当前表所有字段
 func (c *cGenTable) GetGenColumns(ctx context.Context, req *v1.SysGenColumnsReq) (res v1.SysGenColumnsRes, err error) {
-	res.Columns, err = service.SysGenTable().GetGenColumns(ctx, model.SysGenColumnInput{TableName: req.TableName})
+	_, err = service.SysGenTable().GetGenColumns(ctx, model.SysGenColumnInput{TableName: req.TableName})
 	return
 }

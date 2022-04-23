@@ -1,7 +1,6 @@
 package v1
 
 import (
-	"github.com/gogf/gf/v2/database/gdb"
 	"github.com/gogf/gf/v2/frame/g"
 )
 
@@ -23,5 +22,5 @@ type SysGenColumnsReq struct {
 
 // 获取当前表所有字段响应
 type SysGenColumnsRes struct {
-	Columns map[string]*gdb.TableField `json:"columns"`
+	// Columns map[string]*gdb.TableField `json:"columns"`
 }
