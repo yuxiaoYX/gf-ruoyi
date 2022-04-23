@@ -19,48 +19,73 @@ func SysGenTable() *sGenTable {
 }
 
 // 获取当前数据库所有表
-func (s *sGenTable) GetGenTables(ctx context.Context) (out []*model.SysGenTablesOutput, err error) {
+func (s *sGenTable) GetGenTables(ctx context.Context) (out model.SysGenTablesOutput, err error) {
 	db := g.DB()
-	sql := "select table_name as table_name from information_schema.tables where table_schema = 'gf_ruoyi'"
-	err = db.GetScan(ctx, &out, sql)
+	sql := "select * from information_schema.tables where table_schema = 'gf_ruoyi'"
+	err = db.GetScan(ctx, &out.Tables, sql)
 	return
 }
 
 // 获取当前表所有字段
-func (s *sGenTable) GetGenColumns(ctx context.Context, in model.SysGenColumnInput) (out []*model.SysGenColumnOutput, err error) {
+func (s *sGenTable) GetGenColumns(ctx context.Context, in model.SysGenColumnInput) (out model.SysGenColumnOutput, err error) {
 	db := g.DB()
 	// sql := "select * from information_schema.columns where table_schema = 'gf_ruoyi' AND table_name = 'sys_user'"
 	// err = db.GetScan(ctx, out, sql)
-
-	fieldMap, err := db.TableFields(ctx, "sys_user", "gf_ruoyi")
-	// array := make([]map[string]interface{}, len(fieldMap))
-	out = make([]*model.SysGenColumnOutput, len(fieldMap))
-	for _, v := range fieldMap {
-		column, err := s.initColumnField(v)
-		if err != nil {
-			return nil, err
-		}
-		g.Log().Info(ctx, v)
-		out[v.Index] = &column
+	// var tableInfo *model.SysGenTablesOutput
+	sql := "select * from information_schema.tables where table_schema = 'gf_ruoyi'"
+	err = db.GetScan(ctx, &out.TableInfo, sql)
+	if err != nil {
+		return
 	}
-	g.Log().Info(ctx, &out)
+	fieldMap, err := db.TableFields(ctx, in.TableName, "gf_ruoyi")
+	if err != nil {
+		return
+	}
+	columnList := make([]*model.SysGenColumnInfo, len(fieldMap))
+	for _, v := range fieldMap {
+		column := s.initColumnField(v)
+		columnList[v.Index] = &column
+	}
+	out.ColumnList = columnList
 	return
 }
 
 // 初始化列属性字段
-func (s *sGenTable) initColumnField(field *gdb.TableField) (column model.SysGenColumnOutput, err error) {
+func (s *sGenTable) initColumnField(field *gdb.TableField) (column model.SysGenColumnInfo) {
 	column.ColumnName = field.Name
 	column.ColumnType = field.Type
 	column.ColumnComment = field.Comment
-	column.GoType = generateStructFieldDefinition(field)
+	column.GoType = s.generateStructFieldDefinition(field)
 	column.GoField = gstr.CaseCamel(field.Name)
 	column.HtmlField = gstr.CaseCamelLower(field.Name)
-
+	if field.Key == "PRI" {
+		column.IsPk = "1"
+	} else {
+		column.IsPk = "0"
+	}
+	if field.Extra == "auto_increment" {
+		column.IsIncrement = "1"
+	} else {
+		column.IsIncrement = "0"
+	}
+	if field.Null == false {
+		column.IsRequired = "1"
+	} else {
+		column.IsRequired = "0"
+	}
+	column.Sort = field.Index + 1
+	if column.GoType == "string" && len(column.GoType) >= 500 {
+		column.HtmlType = "textarea"
+	} else if gstr.ContainsI(column.GoType, "time") {
+		column.HtmlType = "datetime"
+	} else {
+		column.HtmlType = "input"
+	}
 	return
 }
 
 // generateStructFieldForModel generates and returns the attribute definition for specified field.
-func generateStructFieldDefinition(field *gdb.TableField) string {
+func (s *sGenTable) generateStructFieldDefinition(field *gdb.TableField) string {
 	var (
 		typeName string
 	)

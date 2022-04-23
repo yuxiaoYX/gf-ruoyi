@@ -17,12 +17,13 @@ type cGenTable struct{}
 // 获取当前数据库所有表
 func (c *cGenTable) GetTableNames(ctx context.Context, req *v1.SysGenTablesReq) (res v1.SysGenTablesRes, err error) {
 	Tables, err := service.SysGenTable().GetGenTables(ctx)
-	gconv.Scan(Tables, &res.Tables)
+	gconv.Scan(Tables, &res)
 	return
 }
 
 // 获取当前表所有字段
 func (c *cGenTable) GetGenColumns(ctx context.Context, req *v1.SysGenColumnsReq) (res v1.SysGenColumnsRes, err error) {
-	_, err = service.SysGenTable().GetGenColumns(ctx, model.SysGenColumnInput{TableName: req.TableName})
+	columns, err := service.SysGenTable().GetGenColumns(ctx, model.SysGenColumnInput{TableName: req.TableName})
+	gconv.Scan(columns, &res)
 	return
 }

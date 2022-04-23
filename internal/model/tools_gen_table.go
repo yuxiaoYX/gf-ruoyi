@@ -2,7 +2,7 @@ package model
 
 // 获取当前数据库所有表输出
 type SysGenTablesOutput struct {
-	TableName string `json:"tableName"`
+	Tables []*SysGenTableInfo
 }
 
 // 获取当前表所有字段输入
@@ -12,21 +12,33 @@ type SysGenColumnInput struct {
 
 // 获取当前表所有字段输出
 type SysGenColumnOutput struct {
-	ColumnName    string // 字段名
-	ColumnType    string // 字段类型
-	ColumnComment string // 字段注释
-	GoType        string // go类型
-	GoField       string // go字段名
-	HtmlField     string // json字段名
-	IsPk          string // 是否主键（1是）
-	IsIncrement   string // 是否自增（1是）
-	IsRequired    string // 是否必填（1是）
-	IsInsert      string // 是否为插入字段（1是）
-	IsEdit        string // 是否编辑字段（1是）
-	IsList        string // 是否列表字段（1是）
-	IsQuery       string // 是否查询字段（1是）
-	QueryType     string // 查询方式（等于、不等于、大于、小于、范围）
-	HtmlType      string // 显示类型（文本框、文本域、下拉框、复选框、单选框、日期控件）
-	DictType      string // 字典类型
-	Sort          int    // 排序
+	TableInfo  *SysGenTableInfo
+	ColumnList []*SysGenColumnInfo
+}
+
+// 表信息
+type SysGenTableInfo struct {
+	TableName    string
+	TableComment string
+}
+
+// 字段信息
+type SysGenColumnInfo struct {
+	ColumnName    string `json:"columnName"`    // 字段名
+	ColumnType    string `json:"columnType"`    // 字段类型
+	ColumnComment string `json:"columnComment"` // 字段注释
+	GoType        string `json:"goType"`        // go类型
+	GoField       string `json:"goField"`       // go字段名
+	HtmlField     string `json:"htmlField"`     // json字段名
+	IsPk          string `json:"isPk"`          // 是否主键（1是）
+	IsIncrement   string `json:"isIncrement"`   // 是否自增（1是）
+	IsRequired    string `json:"isRequired"`    // 是否必填（1是）
+	IsInsert      string `json:"isInsert"`      // 是否为插入字段（1是）
+	IsEdit        string `json:"isEdit"`        // 是否编辑字段（1是）
+	IsList        string `json:"isList"`        // 是否列表字段（1是）
+	IsQuery       string `json:"isQuery"`       // 是否查询字段（1是）
+	QueryType     string `json:"queryType"`     // 查询方式（等于、不等于、大于、小于、范围）
+	HtmlType      string `json:"htmlType"`      // 显示类型（文本框、文本域、下拉框、复选框、单选框、日期控件）
+	DictType      string `json:"dictType"`      // 字典类型
+	Sort          int    `json:"sort"`          // 排序
 }
