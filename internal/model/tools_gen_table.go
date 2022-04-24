@@ -16,10 +16,19 @@ type SysGenColumnOutput struct {
 	ColumnList []*SysGenColumnInfo
 }
 
+// 预览代码输入
+type SysGenPreviewCodeInput struct {
+	*SysGenAutoCodeInfo
+}
+
+// 预览代码输出
+type SysGenPreviewCodeOutput struct {
+}
+
 // 表信息
 type SysGenTableInfo struct {
-	TableName    string
-	TableComment string
+	TableName    string `json:"tableName"`
+	TableComment string `json:"tableComment"`
 }
 
 // 字段信息
@@ -41,4 +50,16 @@ type SysGenColumnInfo struct {
 	HtmlType      string `json:"htmlType"`      // 显示类型（文本框、文本域、下拉框、复选框、单选框、日期控件）
 	DictType      string `json:"dictType"`      // 字典类型
 	Sort          int    `json:"sort"`          // 排序
+}
+
+// 表信息
+type SysGenAutoCodeInfo struct {
+	StructName         string              // Struct名称
+	Abbreviation       string              // Struct简称
+	Description        string              // Struct中文名称
+	ApiFile            string              // api文件夹
+	TplCategory        string              // 使用的模板（crud单表操作 tree树表操作）
+	AutoCreateApiToSql bool                // 自动创建api
+	AutoMoveFile       bool                // 自动移动文件
+	Fields             []*SysGenColumnInfo // 列信息
 }

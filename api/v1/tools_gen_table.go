@@ -1,6 +1,8 @@
 package v1
 
 import (
+	"gf-ruoyi/internal/model"
+
 	"github.com/gogf/gf/v2/frame/g"
 )
 
@@ -11,7 +13,7 @@ type SysGenTablesReq struct {
 
 // 获取当前数据库所有表响应
 type SysGenTablesRes struct {
-	Tables []*SysGenTableInfo `json:"tables"`
+	Tables []*model.SysGenTableInfo `json:"tables"`
 }
 
 // 获取当前表所有字段请求
@@ -22,27 +24,16 @@ type SysGenColumnsReq struct {
 
 // 获取当前表所有字段响应
 type SysGenColumnsRes struct {
-	TableInfo  *SysGenTableInfo    `json:"tableInfo"`
-	ColumnList []*SysGenColumnInfo `json:"columnList"`
+	TableInfo  *model.SysGenTableInfo    `json:"tableInfo"`
+	ColumnList []*model.SysGenColumnInfo `json:"columnList"`
 }
 
-// 表信息
-type SysGenTableInfo struct {
-	TableName    string `json:"tableName"`
-	TableComment string `json:"tableComment"`
+// 预览代码请求
+type SysGenPreviewCodeReq struct {
+	g.Meta `path:"/gen/preview" method:"post" summary:"预览代码" tags:"代码生成"`
+	*model.SysGenAutoCodeInfo
 }
 
-// 字段信息
-type SysGenColumnInfo struct {
-	ColumnName    string `json:"columnName"`    // 字段名
-	ColumnType    string `json:"columnType"`    // 字段类型
-	ColumnComment string `json:"columnComment"` // 字段注释
-	GoType        string `json:"goType"`        // go类型
-	GoField       string `json:"goField"`       // go字段名
-	HtmlField     string `json:"htmlField"`     // json字段名
-	IsPk          string `json:"isPk"`          // 是否主键（1是）
-	IsIncrement   string `json:"isIncrement"`   // 是否自增（1是）
-	IsRequired    string `json:"isRequired"`    // 是否必填（1是）
-	HtmlType      string `json:"htmlType"`      // 显示类型（文本框、文本域、下拉框、复选框、单选框、日期控件）
-	Sort          int    `json:"sort"`          // 排序
+// 预览代码响应
+type SysGenPreviewCodeRes struct {
 }

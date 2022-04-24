@@ -1,0 +1,100 @@
+// ==========================================================================
+// 自动生成控制器相关代码，只生成一次，按需修改,再次生成不会覆盖.
+// 生成日期：{{date "Y-m-d H:i:s"}}
+// ==========================================================================
+////
+{{$structName := .table.StructName | CaseCamel}}
+{{$abbreviation := .table.Abbreviation | CaseCamelLower}}
+
+
+package {{.table.ApiFile}}
+
+import (
+	"{{ProjectName}}/internal/model/entity"
+	"github.com/gogf/gf/v2/frame/g"
+)
+
+// 分页获取{{.table.Description}}列表请求
+type {{$structName}}ListReq struct {
+	g.Meta      `path:"/{{$abbreviation}}/getList" method:"post" summary:"分页获取{{.table.Description}}列表" tags:"{{.table.Description}}"`
+    {{range $index, $field := .table.Fields}}
+    {{if eq $field.IsQuery "1"}}
+    {{$field.GoField}} {{$field.GoType}} `dc:"{{$field.ColumnComment}}"` // {{$field.ColumnComment}}
+    {{end}}
+    {{if eq $field.GoField "CreatedAt"}}
+    BeginTime   string `dc:"开始时间"`                                      // 开始时间
+	EndTime     string `dc:"结束时间"`                                      // 结束时间
+    {{end}}
+    {{end}}
+	PageNum     int    `d:"1" v:"min:0#分页号码错误" dc:"分页号码，默认1"`           // 分页码
+	PageSize    int    `d:"10" v:"max:100#分页数量最多是100条" dc:"分页数量，最大100"` // 分页数量
+}
+
+// 分页获取{{.table.Description}}列表响应
+type {{$structName}}ListRes struct {
+	Rows  []*{{$structName}}OneRes `json:"rows"`  // 列表
+	Total int                `json:"total"` // 数据总数
+}
+
+// 获取单个{{.table.Description}}信息请求
+type {{$structName}}OneReq struct {
+	g.Meta   `path:"/{{$abbreviation}}/getOne" method:"post" summary:"获取单个{{.table.Description}}信息" tags:"{{.table.Description}}"`
+    {{range $index, $field := .table.Fields}}
+    {{if eq $field.IsPk "1"}}
+    {{$field.GoField}} {{$field.GoType}} `v:"required#{{$field.ColumnComment}}不能为空！" dc:"{{$field.ColumnComment}}"` // {{$field.ColumnComment}}
+    {{end}}
+    {{end}}
+	
+}
+
+// 获取单个{{.table.Description}}信息响应
+type {{$structName}}OneRes struct {
+	*entity.{{$structName}}
+}
+
+// 新增{{.table.Description}}请求
+type {{$structName}}CreateReq struct {
+	g.Meta      `path:"/{{$abbreviation}}/create" method:"post" summary:"新增{{.table.Description}}" tags:"{{.table.Description}}"`
+    {{range $index, $field := .table.Fields}}
+    {{if and (eq $field.IsInsert "1") (ne $field.IsPk "1")}}
+    {{if (eq $field.IsRequired "1")}}
+    {{$field.GoField}} {{$field.GoType}} `v:"required#{{$field.ColumnComment}}不能为空！" dc:"{{$field.ColumnComment}}"` // {{$field.ColumnComment}}
+    {{else}}
+    {{$field.GoField}} {{$field.GoType}} `dc:"{{$field.ColumnComment}}"` // {{$field.ColumnComment}}
+    {{end}}
+    {{end}}
+    {{end}}
+}
+
+// 新增{{.table.Description}}响应
+type {{$structName}}CreateRes struct{}
+
+// 更新{{.table.Description}}信息请求
+type {{$structName}}UpdateReq struct {
+	g.Meta      `path:"/{{$abbreviation}}/update" method:"post" summary:"修改{{.table.Description}}" tags:"{{.table.Description}}"`
+    {{range $index, $field := .table.Fields}}
+    {{if or (eq $field.IsEdit "1") (eq $field.IsPk "1")}}
+    {{if (eq $field.IsRequired "1")}}
+    {{$field.GoField}} {{$field.GoType}} `v:"required#{{$field.ColumnComment}}不能为空！" dc:"{{$field.ColumnComment}}"` // {{$field.ColumnComment}}
+    {{else}}
+    {{$field.GoField}} {{$field.GoType}} `dc:"{{$field.ColumnComment}}"` // {{$field.ColumnComment}}
+    {{end}}
+    {{end}}
+    {{end}}
+}
+
+// 更新{{.table.Description}}信息响应
+type {{$structName}}UpdateRes struct{}
+
+// 删除{{.table.Description}}请求
+type {{$structName}}DeleteReq struct {
+	g.Meta      `path:"/{{$abbreviation}}/delete" method:"post" summary:"删除{{.table.Description}}" tags:"{{.table.Description}}"`
+    {{range $index, $field := .table.Fields}}
+    {{if eq $field.IsPk "1"}}
+    {{$field.GoField}}Str {{$field.GoType}} `v:"required#{{$field.ColumnComment}}不能为空！" dc:"{{$field.ColumnComment}}"` // {{$field.ColumnComment}}，例：1,2,3
+    {{end}}
+    {{end}}
+}
+
+// 删除{{.table.Description}}响应
+type Sys{{$structName}}DeleteRes struct{}

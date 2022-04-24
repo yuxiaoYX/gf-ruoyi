@@ -27,3 +27,13 @@ func (c *cGenTable) GetGenColumns(ctx context.Context, req *v1.SysGenColumnsReq)
 	gconv.Scan(columns, &res)
 	return
 }
+
+// 获取当前表所有字段
+func (c *cGenTable) PreviewCode(ctx context.Context, req *v1.SysGenPreviewCodeReq) (res v1.SysGenPreviewCodeRes, err error) {
+	in := &model.SysGenPreviewCodeInput{}
+	gconv.Scan(req, &in)
+
+	columns, err := service.SysGenTable().PreviewCode(ctx, *in)
+	gconv.Scan(columns, &res)
+	return
+}
