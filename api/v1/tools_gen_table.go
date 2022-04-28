@@ -30,10 +30,21 @@ type SysGenColumnsRes struct {
 
 // 预览代码请求
 type SysGenPreviewCodeReq struct {
-	g.Meta `path:"/gen/preview" method:"post" summary:"预览代码" tags:"代码生成"`
-	*model.SysGenAutoCodeInfo
+	g.Meta             `path:"/gen/preview" method:"post" summary:"预览代码" tags:"代码生成"`
+	StructName         string                    `v:"required#Struct名称不能为空！" dc:"Struct名称"`     // Struct名称
+	Abbreviation       string                    `v:"required#Struct简称不能为空！" dc:"Struct简称"`     // Struct简称
+	Description        string                    `v:"required#Struct中文名称不能为空！" dc:"Struct中文名称"` // Struct中文名称
+	ApiFile            string                    `v:"required#api文件夹不能为空！" dc:"api文件夹"`         // api文件夹
+	TplCategory        string                    `v:"required#使用的模板不能为空！" dc:"使用的模板"`           // 使用的模板（crud单表操作 tree树表操作）
+	AutoCreateApiToSql bool                      `dc:"自动创建api"`                                 // 自动创建api
+	AutoMoveFile       bool                      `dc:"自动移动文件"`                                  // 自动移动文件
+	Fields             []*model.SysGenColumnInfo `dc:"列信息"`                                     // 列信息
 }
 
 // 预览代码响应
 type SysGenPreviewCodeRes struct {
+	ServerApi        string `json:"server_api"`
+	ServerController string `json:"server_controller"`
+	ServerModel      string `json:"server_model"`
+	ServerService    string `json:"server_server"`
 }

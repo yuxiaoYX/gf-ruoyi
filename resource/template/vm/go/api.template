@@ -56,7 +56,7 @@ type {{$structName}}OneRes struct {
 type {{$structName}}CreateReq struct {
 	g.Meta      `path:"/{{$abbreviation}}/create" method:"post" summary:"新增{{.table.Description}}" tags:"{{.table.Description}}"`
     {{range $index, $field := .table.Fields}}
-    {{if and (eq $field.IsInsert "1") (ne $field.IsPk "1")}}
+    {{if and (eq $field.IsInsert "1") (ne $field.IsIncrement "1")}}
     {{if (eq $field.IsRequired "1")}}
     {{$field.GoField}} {{$field.GoType}} `v:"required#{{$field.ColumnComment}}不能为空！" dc:"{{$field.ColumnComment}}"` // {{$field.ColumnComment}}
     {{else}}
@@ -73,7 +73,7 @@ type {{$structName}}CreateRes struct{}
 type {{$structName}}UpdateReq struct {
 	g.Meta      `path:"/{{$abbreviation}}/update" method:"post" summary:"修改{{.table.Description}}" tags:"{{.table.Description}}"`
     {{range $index, $field := .table.Fields}}
-    {{if or (eq $field.IsEdit "1") (eq $field.IsPk "1")}}
+    {{if or (eq $field.IsEdit "1") (eq $field.IsIncrement "1")}}
     {{if (eq $field.IsRequired "1")}}
     {{$field.GoField}} {{$field.GoType}} `v:"required#{{$field.ColumnComment}}不能为空！" dc:"{{$field.ColumnComment}}"` // {{$field.ColumnComment}}
     {{else}}

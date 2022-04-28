@@ -28,7 +28,7 @@ func (c *cGenTable) GetGenColumns(ctx context.Context, req *v1.SysGenColumnsReq)
 	return
 }
 
-// 获取当前表所有字段
+// 预览代码
 func (c *cGenTable) PreviewCode(ctx context.Context, req *v1.SysGenPreviewCodeReq) (res v1.SysGenPreviewCodeRes, err error) {
 	in := &model.SysGenPreviewCodeInput{}
 	gconv.Scan(req, &in)

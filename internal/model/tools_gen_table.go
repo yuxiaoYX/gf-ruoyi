@@ -23,6 +23,10 @@ type SysGenPreviewCodeInput struct {
 
 // 预览代码输出
 type SysGenPreviewCodeOutput struct {
+	ServerApi        string `json:"server_api"`
+	ServerController string `json:"server_controller"`
+	ServerModel      string `json:"server_model"`
+	ServerService    string `json:"server_server"`
 }
 
 // 表信息

@@ -55,13 +55,12 @@ func (s *sGenTable) GetGenColumns(ctx context.Context, in model.SysGenColumnInpu
 }
 
 // 预览代码
-func (s *sGenTable) PreviewCode(ctx context.Context, in model.SysGenPreviewCodeInput) (out model.SysGenPreviewCodeOutput, err error) {
+func (s *sGenTable) PreviewCode(ctx context.Context, in model.SysGenPreviewCodeInput) (out *model.SysGenPreviewCodeOutput, err error) {
 	view := gview.New()
 	view.SetConfigWithMap(g.Map{
 		// "Paths":      g.Cfg().MustGet(ctx, "gen.templatePath").String(),
 		"Delimiters": []string{"{{", "}}"},
 	})
-
 	view.BindFuncMap(g.Map{
 		// "UcFirst": func(str string) string { // 首字母大写
 		// 	return gstr.UcFirst(str)
@@ -82,15 +81,28 @@ func (s *sGenTable) PreviewCode(ctx context.Context, in model.SysGenPreviewCodeI
 	})
 
 	tplData := g.Map{"table": in}
+	// api代码
 	apiValue := ""
 	var tmpApi string
 	if tmpApi, err = view.Parse(ctx, "vm/go/api.template", tplData); err == nil {
 		apiValue = tmpApi
-		apiValue, err = s.trimBreak(apiValue)
+		apiValue, _ = s.trimBreak(apiValue)
 	} else {
 		return
 	}
-	g.Log().Info(ctx, apiValue)
+	// controller代码
+	controllerValue := ""
+	var tmpController string
+	if tmpController, err = view.Parse(ctx, "vm/go/controller.template", tplData); err == nil {
+		controllerValue = tmpController
+		controllerValue, _ = s.trimBreak(controllerValue)
+	} else {
+		return
+	}
+	out = &model.SysGenPreviewCodeOutput{
+		ServerApi:        apiValue,
+		ServerController: controllerValue,
+	}
 	return
 }
 
