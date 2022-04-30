@@ -79,8 +79,9 @@ func (s *sGenTable) PreviewCode(ctx context.Context, in model.SysGenPreviewCodeI
 			return g.Cfg().MustGet(ctx, "gen.projectName").String()
 		},
 	})
-
-	tplData := g.Map{"table": in}
+	// 元素0为模块名，元素1为文件名
+	fileNames := gstr.Split(gstr.CaseSnakeFirstUpper(in.StructName), "_")
+	tplData := g.Map{"table": in, "plugin": fileNames[0], "fileName": fileNames[1]}
 	// api代码
 	apiValue := ""
 	var tmpApi string
@@ -99,9 +100,49 @@ func (s *sGenTable) PreviewCode(ctx context.Context, in model.SysGenPreviewCodeI
 	} else {
 		return
 	}
+	// model代码
+	modelValue := ""
+	var tmpModel string
+	if tmpModel, err = view.Parse(ctx, "vm/go/model.template", tplData); err == nil {
+		modelValue = tmpModel
+		modelValue, _ = s.trimBreak(modelValue)
+	} else {
+		return
+	}
+	// service代码
+	serviceValue := ""
+	var tmpService string
+	if tmpService, err = view.Parse(ctx, "vm/go/service.template", tplData); err == nil {
+		serviceValue = tmpService
+		serviceValue, _ = s.trimBreak(serviceValue)
+	} else {
+		return
+	}
+	// webApi代码
+	webApiValue := ""
+	var tmpWebApi string
+	if tmpWebApi, err = view.Parse(ctx, "vm/js/api.template", tplData); err == nil {
+		webApiValue = tmpWebApi
+		webApiValue, _ = s.trimBreak(webApiValue)
+	} else {
+		return
+	}
+	// webVueList代码
+	webVueListValue := ""
+	var tmpWebVueList string
+	if tmpWebVueList, err = view.Parse(ctx, "vm/vue/list.template", tplData); err == nil {
+		webVueListValue = tmpWebVueList
+		webVueListValue, _ = s.trimBreak(webVueListValue)
+	} else {
+		return
+	}
 	out = &model.SysGenPreviewCodeOutput{
 		ServerApi:        apiValue,
 		ServerController: controllerValue,
+		ServerModel:      modelValue,
+		ServerService:    serviceValue,
+		WebApi:           webApiValue,
+		WebVueList:       webVueListValue,
 	}
 	return
 }

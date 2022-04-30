@@ -1,0 +1,54 @@
+// ==========================================================================
+// 自动生成控制器相关代码，只生成一次，按需修改,再次生成不会覆盖.
+// 生成日期：{{date "Y-m-d H:i:s"}}
+// ==========================================================================
+////
+{{$structName := .table.StructName | CaseCamel}}
+{{$abbreviation := .table.Abbreviation | CaseCamelLower}}
+
+import request from '@/utils/request'
+
+// 查询参数列表
+export function list{{$structName}}(data) {
+  return request({
+    url: '/{{.plugin}}/{{.fileName}}/getList',
+    method: 'post',
+    data: data
+  })
+}
+
+// 查询参数详细
+export function get{{$structName}}(query) {
+  return request({
+    url: '/{{.plugin}}/{{.fileName}}/getOne',
+    method: 'get',
+    params:query
+  })
+}
+
+// 新增参数配置
+export function add{{$structName}}(data) {
+  return request({
+    url: '/{{.plugin}}/{{.fileName}}/create',
+    method: 'post',
+    data: data
+  })
+}
+
+// 修改参数配置
+export function update{{$structName}}(data) {
+  return request({
+    url: '/{{.plugin}}/{{.fileName}}/update',
+    method: 'post',
+    data: data
+  })
+}
+
+// 删除参数配置
+export function del{{$structName}}(query) {
+  return request({
+    url: '/{{.plugin}}/{{.fileName}}/delete',
+    method: 'get',
+    params:query
+  })
+}

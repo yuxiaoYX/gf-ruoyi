@@ -27,6 +27,9 @@ type SysGenPreviewCodeOutput struct {
 	ServerController string `json:"server_controller"`
 	ServerModel      string `json:"server_model"`
 	ServerService    string `json:"server_server"`
+	WebApi           string `json:"web_api"`
+	WebVueList       string `json:"web_vueList"`
+	Sql              string `json:"sql"`
 }
 
 // 表信息
