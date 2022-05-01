@@ -4,7 +4,7 @@
 // ==========================================================================
 ////
 {{$structName := .table.StructName | CaseCamel}}
-{{$abbreviation := .table.Abbreviation | CaseCamelLower}}
+{{$businessName := .table.BusinessName | CaseCamelLower}}
 
 
 package controller
@@ -16,7 +16,7 @@ import (
 
 // 分页获取{{.table.Description}}列表请求
 type {{$structName}}ListReq struct {
-    g.Meta      `path:"/{{$abbreviation}}/getList" method:"post" summary:"分页获取{{.table.Description}}列表" tags:"{{.table.Description}}"`
+    g.Meta      `path:"/{{$businessName}}/getList" method:"post" summary:"分页获取{{.table.Description}}列表" tags:"{{.table.Description}}"`
     {{range $index, $field := .table.Fields}}
     {{if eq $field.IsQuery "1"}}
     {{$field.GoField}} {{$field.GoType}} `dc:"{{$field.ColumnComment}}"` // {{$field.ColumnComment}}
@@ -38,7 +38,7 @@ type {{$structName}}ListRes struct {
 
 // 获取单个{{.table.Description}}信息请求
 type {{$structName}}OneReq struct {
-    g.Meta   `path:"/{{$abbreviation}}/getOne" method:"get" summary:"获取单个{{.table.Description}}信息" tags:"{{.table.Description}}"`
+    g.Meta   `path:"/{{$businessName}}/getOne" method:"get" summary:"获取单个{{.table.Description}}信息" tags:"{{.table.Description}}"`
     {{range $index, $field := .table.Fields}}
     {{if eq $field.IsPk "1"}}
     {{$field.GoField}} {{$field.GoType}} `v:"required#{{$field.ColumnComment}}不能为空！" dc:"{{$field.ColumnComment}}"` // {{$field.ColumnComment}}
@@ -54,7 +54,7 @@ type {{$structName}}OneRes struct {
 
 // 新增{{.table.Description}}请求
 type {{$structName}}CreateReq struct {
-    g.Meta      `path:"/{{$abbreviation}}/create" method:"post" summary:"新增{{.table.Description}}" tags:"{{.table.Description}}"`
+    g.Meta      `path:"/{{$businessName}}/create" method:"post" summary:"新增{{.table.Description}}" tags:"{{.table.Description}}"`
     {{range $index, $field := .table.Fields}}
     {{if and (eq $field.IsInsert "1") (ne $field.IsIncrement "1")}}
     {{if (eq $field.IsRequired "1")}}
@@ -71,7 +71,7 @@ type {{$structName}}CreateRes struct{}
 
 // 更新{{.table.Description}}信息请求
 type {{$structName}}UpdateReq struct {
-    g.Meta      `path:"/{{$abbreviation}}/update" method:"post" summary:"修改{{.table.Description}}" tags:"{{.table.Description}}"`
+    g.Meta      `path:"/{{$businessName}}/update" method:"post" summary:"修改{{.table.Description}}" tags:"{{.table.Description}}"`
     {{range $index, $field := .table.Fields}}
     {{if or (eq $field.IsEdit "1") (eq $field.IsIncrement "1")}}
     {{if (eq $field.IsRequired "1")}}
@@ -88,7 +88,7 @@ type {{$structName}}UpdateRes struct{}
 
 // 删除{{.table.Description}}请求
 type {{$structName}}DeleteReq struct {
-    g.Meta      `path:"/{{$abbreviation}}/delete" method:"get" summary:"删除{{.table.Description}}" tags:"{{.table.Description}}"`
+    g.Meta      `path:"/{{$businessName}}/delete" method:"get" summary:"删除{{.table.Description}}" tags:"{{.table.Description}}"`
     {{range $index, $field := .table.Fields}}
     {{if eq $field.IsPk "1"}}
     {{$field.GoField}}Str {{$field.GoType}} `v:"required#{{$field.ColumnComment}}不能为空！" dc:"{{$field.ColumnComment}}"` // {{$field.ColumnComment}}，例：1,2,3

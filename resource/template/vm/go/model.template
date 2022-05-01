@@ -4,7 +4,6 @@
 // ==========================================================================
 ////
 {{$structName := .table.StructName | CaseCamel}}
-{{$abbreviation := .table.Abbreviation | CaseCamelLower}}
 
 
 package model

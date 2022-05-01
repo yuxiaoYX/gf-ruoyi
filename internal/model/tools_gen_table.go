@@ -62,8 +62,9 @@ type SysGenColumnInfo struct {
 // 表信息
 type SysGenAutoCodeInfo struct {
 	StructName         string              // Struct名称
-	Abbreviation       string              // Struct简称
 	Description        string              // Struct中文名称
+	ModuleName         string              // 模块名
+	BusinessName       string              // 业务名
 	ApiFile            string              // api文件夹
 	TplCategory        string              // 使用的模板（crud单表操作 tree树表操作）
 	AutoCreateApiToSql bool                // 自动创建api

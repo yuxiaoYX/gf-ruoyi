@@ -72,16 +72,15 @@ func (s *sGenTable) PreviewCode(ctx context.Context, in model.SysGenPreviewCodeI
 		"CaseCamel":      gstr.CaseCamel,      //首字母大写驼峰
 		// "HasSuffix":      gstr.HasSuffix,      //是否存在后缀
 		// "ContainsI":      gstr.ContainsI,      //是否包含子字符串
-		// "VueTag": func(t string) string {
-		// 	return t
-		// },
+		"VueTag": func(t string) string {
+			return t
+		}, // 防止于Vue的变量分隔符号冲突
 		"ProjectName": func() string {
 			return g.Cfg().MustGet(ctx, "gen.projectName").String()
 		},
 	})
-	// 元素0为模块名，元素1为文件名
-	fileNames := gstr.Split(gstr.CaseSnakeFirstUpper(in.StructName), "_")
-	tplData := g.Map{"table": in, "plugin": fileNames[0], "fileName": fileNames[1]}
+
+	tplData := g.Map{"table": in}
 	// api代码
 	apiValue := ""
 	var tmpApi string

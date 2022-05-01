@@ -4,14 +4,14 @@
 // ==========================================================================
 ////
 {{$structName := .table.StructName | CaseCamel}}
-{{$abbreviation := .table.Abbreviation | CaseCamelLower}}
+{{$abbreviation := .table.BusinessName | CaseCamelLower}}
 
 import request from '@/utils/request'
 
 // 查询参数列表
 export function list{{$structName}}(data) {
   return request({
-    url: '/{{.plugin}}/{{.fileName}}/getList',
+    url: '/{{.table.ModuleName}}/{{$abbreviation}}/getList',
     method: 'post',
     data: data
   })
@@ -20,7 +20,7 @@ export function list{{$structName}}(data) {
 // 查询参数详细
 export function get{{$structName}}(query) {
   return request({
-    url: '/{{.plugin}}/{{.fileName}}/getOne',
+    url: '/{{.table.ModuleName}}/{{$abbreviation}}/getOne',
     method: 'get',
     params:query
   })
@@ -29,7 +29,7 @@ export function get{{$structName}}(query) {
 // 新增参数配置
 export function add{{$structName}}(data) {
   return request({
-    url: '/{{.plugin}}/{{.fileName}}/create',
+    url: '/{{.table.ModuleName}}/{{$abbreviation}}/create',
     method: 'post',
     data: data
   })
@@ -38,7 +38,7 @@ export function add{{$structName}}(data) {
 // 修改参数配置
 export function update{{$structName}}(data) {
   return request({
-    url: '/{{.plugin}}/{{.fileName}}/update',
+    url: '/{{.table.ModuleName}}/{{$abbreviation}}/update',
     method: 'post',
     data: data
   })
@@ -47,7 +47,7 @@ export function update{{$structName}}(data) {
 // 删除参数配置
 export function del{{$structName}}(query) {
   return request({
-    url: '/{{.plugin}}/{{.fileName}}/delete',
+    url: '/{{.table.ModuleName}}/{{$abbreviation}}/delete',
     method: 'get',
     params:query
   })
