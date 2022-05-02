@@ -1,13 +1,6 @@
-// ==========================================================================
-// 自动生成控制器相关代码，只生成一次，按需修改,再次生成不会覆盖.
-// 生成日期：{{date "Y-m-d H:i:s"}}
-// ==========================================================================
-////
+<template>
 {{$structName := .table.StructName | CaseCamel}}
 {{$businessName := .table.BusinessName | CaseCamelLower}}
-
-
-<template>
   <div class="app-container">
     <el-form :model="queryParams" ref="queryRef" :inline="true" v-show="showSearch" label-width="68px">
       {{range $index, $field := .table.Fields}}
@@ -68,7 +61,7 @@
           plain
           icon="Plus"
           @click="handleAdd"
-          v-hasPermi="['system/config/create']"
+          v-hasPermi="['{{.table.ModuleName}}/{{$businessName}}/create']"
         >新增</el-button>
       </el-col>
       <el-col :span="1.5">
@@ -78,7 +71,7 @@
           icon="Edit"
           :disabled="single"
           @click="handleUpdate"
-          v-hasPermi="['system/config/update']"
+          v-hasPermi="['{{.table.ModuleName}}/{{$businessName}}/update']"
         >修改</el-button>
       </el-col>
       <el-col :span="1.5">
@@ -88,60 +81,47 @@
           icon="Delete"
           :disabled="multiple"
           @click="handleDelete"
-          v-hasPermi="['system/config/delete']"
+          v-hasPermi="['{{.table.ModuleName}}/{{$businessName}}/delete']"
         >删除</el-button>
-      </el-col>
-      <el-col :span="1.5">
-        <el-button
-          type="warning"
-          plain
-          icon="Download"
-          @click="handleExport"
-          v-hasPermi="['system/config/export']"
-        >导出</el-button>
-      </el-col>
-      <el-col :span="1.5">
-        <el-button
-          type="danger"
-          plain
-          icon="Refresh"
-          @click="handleRefreshCache"
-          v-hasPermi="['system/config/delete']"
-        >刷新缓存</el-button>
       </el-col>
       <right-toolbar v-model:showSearch="showSearch" @queryTable="getList"></right-toolbar>
     </el-row>
 
-    <el-table v-loading="loading" :data="configList" @selection-change="handleSelectionChange">
+    <!-- 表格展示 -->
+    <el-table v-loading="loading" :data="{{$businessName}}List" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center" />
-      <el-table-column label="参数主键" align="center" prop="configId" />
-      <el-table-column label="参数名称" align="center" prop="configName" :show-overflow-tooltip="true" />
-      <el-table-column label="参数键名" align="center" prop="configKey" :show-overflow-tooltip="true" />
-      <el-table-column label="参数键值" align="center" prop="configValue" />
-      <el-table-column label="系统内置" align="center" prop="configType">
+      {{range $index, $field := .table.Fields}}
+      {{if and (eq $field.IsList "1") (eq $field.IsPk "1")}}
+      <el-table-column label="{{$field.ColumnComment}}" align="center" prop="{{$field.HtmlField}}" />
+      {{else if and (eq $field.IsList "1") (eq $field.HtmlType "datetime")}}
+      <el-table-column label="{{$field.ColumnComment}}" align="center" prop="{{$field.HtmlField}}" width="180">
         <template #default="scope">
-          <dict-tag :options="sys_yes_no" :value="scope.row.configType" />
+          <span>{{VueTag "{{" }} parseTime(scope.row.{{$field.HtmlField}}) {{VueTag "}}"}}</span>
         </template>
       </el-table-column>
-      <el-table-column label="备注" align="center" prop="remark" :show-overflow-tooltip="true" />
-      <el-table-column label="更新时间" align="center" prop="updatedAt" width="180">
+      {{else if and (eq $field.IsList "1") (eq $field.HtmlType "select")}}
+      <el-table-column label="{{$field.ColumnComment}}" align="center" prop="{{$field.HtmlField}}">
         <template #default="scope">
-          <span>{{VueTag "{{" }} parseTime(scope.row.updatedAt) {{VueTag "}}"}}</span>
+          <dict-tag :options="{{$field.DictType}}" :value="scope.row.{{$field.HtmlField}}" />
         </template>
       </el-table-column>
+      {{else }}
+      <el-table-column label="{{$field.ColumnComment}}" align="center" prop="{{$field.HtmlField}}" :show-overflow-tooltip="true" />
+      {{end}}
+      {{end}}
       <el-table-column label="操作" align="center" width="150" class-name="small-padding fixed-width">
         <template #default="scope">
           <el-button
             type="text"
             icon="Edit"
             @click="handleUpdate(scope.row)"
-            v-hasPermi="['system/config/update']"
+            v-hasPermi="['{{.table.ModuleName}}/{{$businessName}}/update']"
           >修改</el-button>
           <el-button
             type="text"
             icon="Delete"
             @click="handleDelete(scope.row)"
-            v-hasPermi="['system/config/delete']"
+            v-hasPermi="['{{.table.ModuleName}}/{{$businessName}}/delete']"
           >删除</el-button>
         </template>
       </el-table-column>
@@ -155,30 +135,57 @@
       @pagination="getList"
     />
 
-    <!-- 添加或修改参数配置对话框 -->
+    <!-- 添加或修改配置对话框 -->
     <el-dialog :title="title" v-model="open" width="500px" append-to-body>
-      <el-form ref="configRef" :model="form" :rules="rules" label-width="80px">
-        <el-form-item label="参数名称" prop="configName">
-          <el-input v-model="form.configName" placeholder="请输入参数名称" />
+      <el-form ref="{{$businessName}}Ref" :model="form" :rules="rules" label-width="80px">
+
+      {{range $index, $field := .table.Fields}}
+      {{if and (eq $field.IsInsert "1") (ne $field.IsPk "1")}}
+        {{if eq $field.HtmlType "input"}}
+        <el-form-item label="{{$field.ColumnComment}}" prop="{{$field.HtmlField}}">
+          <el-input v-model="form.{{$field.HtmlField}}" placeholder="请输入{{$field.ColumnComment}}" />
         </el-form-item>
-        <el-form-item label="参数键名" prop="configKey">
-          <el-input v-model="form.configKey" placeholder="请输入参数键名" />
+        {{else if eq $field.HtmlType "textarea"}}
+        <el-form-item label="{{$field.ColumnComment}}" prop="{{$field.HtmlField}}">
+          <el-input v-model="form.{{$field.HtmlField}}" type="textarea" placeholder="请输入{{$field.ColumnComment}}" />
         </el-form-item>
-        <el-form-item label="参数键值" prop="configValue">
-          <el-input v-model="form.configValue" placeholder="请输入参数键值" />
-        </el-form-item>
-        <el-form-item label="系统内置" prop="configType">
-          <el-radio-group v-model="form.configType">
+        {{else if eq $field.HtmlType "select"}}
+        {{if $field.DictType}}
+        <el-form-item label="{{$field.ColumnComment}}" prop="{{$field.HtmlField}}">
+          <el-radio-group v-model="form.{{$field.HtmlField}}">
             <el-radio
-              v-for="dict in sys_yes_no"
+              v-for="dict in {{$field.DictType}}"
               :key="dict.value"
               :label="dict.value"
-            >{{ VueTag "{{" }} dict.label {{ VueTag "{{" }}</el-radio>
+            >{{ VueTag "{{" }} dict.label {{ VueTag "}}" }}</el-radio>
           </el-radio-group>
         </el-form-item>
-        <el-form-item label="备注" prop="remark">
-          <el-input v-model="form.remark" type="textarea" placeholder="请输入内容" />
+        {{else}}
+        <el-form-item label="{{$field.ColumnComment}}" prop="{{$field.HtmlField}}">
+          <el-radio-group v-model="form.{{$field.HtmlField}}">
+            <el-radio
+              v-for="dict in {{$field.DictType}}"
+              :key="dict.value"
+              :label="dict.value"
+            >{{ VueTag "{{" }} dict.label {{ VueTag "}}" }}</el-radio>
+          </el-radio-group>
         </el-form-item>
+        {{end}}
+        
+        {{else if eq $field.HtmlType "radio"}}
+
+        {{else if eq $field.HtmlType "checkbox"}}
+
+        {{else if eq $field.HtmlType "datetime"}}
+
+        {{else }}
+      {{else }}
+      
+      {{end}}
+      {{end}}
+
+        
+        
       </el-form>
       <template #footer>
         <div class="dialog-footer">
@@ -191,10 +198,15 @@
 </template>
 
 <script setup name="{{$structName}}">
-import { list{{$structName}}, get{{$structName}}, del{{$structName}}, add{{$structName}}, update{{$structName}} } from "@/api/{{$businessName}}/{{.table.ModuleName}}";
+import { list{{$structName}}, get{{$structName}}, del{{$structName}}, add{{$structName}}, update{{$structName}} } from "@/api/{{.table.ModuleName}}/{{$businessName}}.js";
 
 const { proxy } = getCurrentInstance();
-const { sys_yes_no } = proxy.useDict("sys_yes_no");
+{{range $index, $field := .table.Fields}}
+{{if $field.DictType}}
+const { {{$field.DictType}} } = proxy.useDict("{{$field.DictType}}");
+{{end}}
+{{end}}
+
 
 const configList = ref([]);
 const open = ref(false);

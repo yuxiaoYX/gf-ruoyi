@@ -1,17 +1,12 @@
-// ==========================================================================
-// 自动生成控制器相关代码，只生成一次，按需修改,再次生成不会覆盖.
-// 生成日期：{{date "Y-m-d H:i:s"}}
-// ==========================================================================
-////
-{{$structName := .table.StructName | CaseCamel}}
-{{$abbreviation := .table.BusinessName | CaseCamelLower}}
-
 import request from '@/utils/request'
+
+{{$structName := .table.StructName | CaseCamel}}
+{{$businessName := .table.BusinessName | CaseCamelLower}}
 
 // 查询参数列表
 export function list{{$structName}}(data) {
   return request({
-    url: '/{{.table.ModuleName}}/{{$abbreviation}}/getList',
+    url: '/{{.table.ModuleName}}/{{$businessName}}/getList',
     method: 'post',
     data: data
   })
@@ -20,7 +15,7 @@ export function list{{$structName}}(data) {
 // 查询参数详细
 export function get{{$structName}}(query) {
   return request({
-    url: '/{{.table.ModuleName}}/{{$abbreviation}}/getOne',
+    url: '/{{.table.ModuleName}}/{{$businessName}}/getOne',
     method: 'get',
     params:query
   })
@@ -29,7 +24,7 @@ export function get{{$structName}}(query) {
 // 新增参数配置
 export function add{{$structName}}(data) {
   return request({
-    url: '/{{.table.ModuleName}}/{{$abbreviation}}/create',
+    url: '/{{.table.ModuleName}}/{{$businessName}}/create',
     method: 'post',
     data: data
   })
@@ -38,7 +33,7 @@ export function add{{$structName}}(data) {
 // 修改参数配置
 export function update{{$structName}}(data) {
   return request({
-    url: '/{{.table.ModuleName}}/{{$abbreviation}}/update',
+    url: '/{{.table.ModuleName}}/{{$businessName}}/update',
     method: 'post',
     data: data
   })
@@ -47,7 +42,7 @@ export function update{{$structName}}(data) {
 // 删除参数配置
 export function del{{$structName}}(query) {
   return request({
-    url: '/{{.table.ModuleName}}/{{$abbreviation}}/delete',
+    url: '/{{.table.ModuleName}}/{{$businessName}}/delete',
     method: 'get',
     params:query
   })

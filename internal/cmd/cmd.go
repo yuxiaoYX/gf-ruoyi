@@ -68,6 +68,11 @@ var (
 						controller.SysGenTable,
 					)
 				})
+				group.Group("/ceshi", func(group *ghttp.RouterGroup) {
+					group.Bind(
+						controller.SysAa,
+					)
+				})
 			})
 			s.Run()
 			return nil

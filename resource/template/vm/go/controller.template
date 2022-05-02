@@ -24,18 +24,18 @@ type c{{$structName}} struct{}
 
 // 分页获取{{.table.Description}}列表
 func (c *c{{$structName}}) GetList(ctx context.Context, req *{{.table.ApiFile}}.{{$structName}}ListReq) (res *{{.table.ApiFile}}.{{$structName}}ListRes, err error) {
-    {{$businessName}}Res, err :=service.{{$structName}}().GetList(ctx,model.{{$structName}}ListInput{
-    {{range $index, $field := .table.Fields}}
-    {{if eq $field.IsQuery "1"}}
-    {{$field.GoField}}: req.{{$field.GoField}},
-    {{end}}
-    {{if eq $field.GoField "CreatedAt"}}
-    BeginTime: req.BeginTime,
-    EndTime: req.EndTime,
-    {{end}}
-    {{end}}
-    PageNum:  req.PageNum,
-    PageSize: req.PageSize,
+    {{$businessName}}Res, err := service.{{$structName}}().GetList(ctx,model.{{$structName}}ListInput{
+        {{range $index, $field := .table.Fields}}
+        {{if and (eq $field.IsQuery "1") (ne $field.GoType "*gtime.Time")}}
+        {{$field.GoField}}: req.{{$field.GoField}},
+        {{end}}
+        {{if eq $field.GoField "CreatedAt"}}
+        BeginTime: req.BeginTime,
+        EndTime: req.EndTime,
+        {{end}}
+        {{end}}
+        PageNum:  req.PageNum,
+        PageSize: req.PageSize,
     })
     gconv.Scan({{$businessName}}Res, &res)
     return
@@ -43,23 +43,27 @@ func (c *c{{$structName}}) GetList(ctx context.Context, req *{{.table.ApiFile}}.
 
 // 获取单个{{.table.Description}}信息
 func (c *c{{$structName}}) GetOne(ctx context.Context, req *{{.table.ApiFile}}.{{$structName}}OneReq) (res *{{.table.ApiFile}}.{{$structName}}OneRes, err error) {
-    $businessName}}Res, err := service.{{$structName}}().GetOne(ctx, model.{{$structName}}OneInput{
+    {{$businessName}}Res, err := service.{{$structName}}().GetOne(ctx, model.{{$structName}}OneInput{
         {{range $index, $field := .table.Fields}}
         {{if eq $field.IsPk "1"}}
         {{$field.GoField}}: req.{{$field.GoField}},
         {{end}}
         {{end}}
     })
-    gconv.Scan($businessName}}Res, &res)
+    gconv.Scan({{$businessName}}Res, &res)
     return
 }
 
 // 新建{{.table.Description}}
 func (c *c{{$structName}}) Create(ctx context.Context, req *{{.table.ApiFile}}.{{$structName}}CreateReq) (res *{{.table.ApiFile}}.{{$structName}}CreateRes, err error) {
-    err = service.{{$structName}}().Create(ctx, model.SysUserCreateInput{
+    err = service.{{$structName}}().Create(ctx, model.{{$structName}}CreateInput{
         {{range $index, $field := .table.Fields}}
-        {{if and (eq $field.IsInsert "1") (ne $field.IsIncrement "1")}}
+        {{if and (ne $field.IsPk "1") (ne $field.IsIncrement "1")}}
+        
+        {{if or (eq $field.IsRequired "1") (eq $field.IsInsert "1")}}
         {{$field.GoField}}: req.{{$field.GoField}},
+        {{end}}
+        
         {{end}}
         {{end}}
     })
@@ -68,9 +72,9 @@ func (c *c{{$structName}}) Create(ctx context.Context, req *{{.table.ApiFile}}.{
 
 // 更新{{.table.Description}}
 func (c *c{{$structName}}) Update(ctx context.Context, req *{{.table.ApiFile}}.{{$structName}}UpdateReq) (res *{{.table.ApiFile}}.{{$structName}}UpdateRes, err error) {
-    err = service.{{$structName}}().Update(ctx, model.SysUserUpdateInput{
+    err = service.{{$structName}}().Update(ctx, model.{{$structName}}UpdateInput{
         {{range $index, $field := .table.Fields}}
-        {{if and (eq $field.IsEdit "1") (ne $field.IsIncrement "1")}}
+        {{if or (eq $field.IsRequired "1") (eq $field.IsEdit "1")}}
         {{$field.GoField}}: req.{{$field.GoField}},
         {{end}}
         {{end}}
@@ -79,8 +83,8 @@ func (c *c{{$structName}}) Update(ctx context.Context, req *{{.table.ApiFile}}.{
 }
 
 // 删除{{.table.Description}}
-func (c *c{{$structName}}) Delete(ctx context.Context, req *{{.table.ApiFile}}.{{$structName}}Req) (res *{{.table.ApiFile}}.{{$structName}}DeleteRes, err error) {
-    err = service.{{$structName}}().Delete(ctx, model.SysUserDeleteInput{
+func (c *c{{$structName}}) Delete(ctx context.Context, req *{{.table.ApiFile}}.{{$structName}}DeleteReq) (res *{{.table.ApiFile}}.{{$structName}}DeleteRes, err error) {
+    err = service.{{$structName}}().Delete(ctx, model.{{$structName}}DeleteInput{
         {{range $index, $field := .table.Fields}}
         {{if eq $field.IsPk "1"}}
         {{$field.GoField}}Str: req.{{$field.GoField}}Str,

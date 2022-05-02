@@ -170,7 +170,7 @@ func (s *sGenTable) initColumnField(field *gdb.TableField) (column model.SysGenC
 		column.IsRequired = "1"
 	}
 	column.Sort = field.Index + 1
-	if column.GoType == "string" && s.getColumnLength(field.Type) >= 500 {
+	if column.GoType == "string" && s.getColumnLength(field.Type) >= 300 {
 		column.HtmlType = "textarea"
 	} else if gstr.ContainsI(column.GoType, "time") {
 		column.HtmlType = "datetime"
@@ -248,7 +248,7 @@ func (s *sGenTable) getColumnLength(columnType string) int {
 	end := strings.Index(columnType, ")")
 	result := ""
 	if start >= 0 && end >= 0 {
-		result = columnType[start+1 : end-1]
+		result = columnType[start+1 : end]
 	}
 	return gconv.Int(result)
 }

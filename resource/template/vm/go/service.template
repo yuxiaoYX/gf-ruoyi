@@ -5,16 +5,13 @@
 ////
 {{$structName := .table.StructName | CaseCamel}}
 
-package controller
+package service
 
 import (
     "context"
-    "errors"
     "{{ProjectName}}/internal/model"
     "{{ProjectName}}/internal/service/internal/dao"
-    "time"
 
-    "github.com/gogf/gf/v2/frame/g"
     "github.com/gogf/gf/v2/text/gstr"
 )
 
@@ -22,41 +19,43 @@ type s{{$structName}} struct{}
 
 // {{.table.Description}}管理服务
 func {{$structName}}() *s{{$structName}} {
-    return &sConfig{}
+    return &s{{$structName}}{}
 }
 
 // 获取{{.table.Description}}列表
 func (s *s{{$structName}}) GetList(ctx context.Context, in model.{{$structName}}ListInput) (out model.{{$structName}}ListOutput, err error) {
-    m := dao.{{$structName}}.Ctx(ctx).OmitEmpty().Where(g.Map{
-        {{range $index, $field := .table.Fields}}
-        {{if eq $field.IsQuery "1"}}
-        "{{$field.ColumnName}}":  in.{{$field.GoField}},
-        {{end}}
-        {{end}}
-    })
+    m := dao.{{$structName}}.Ctx(ctx).OmitEmpty()
     {{range $index, $field := .table.Fields}}
-    {{if eq $column.QueryType "EQ"}}
-        m = m.Where(in.{{$field.GoField}})
+    {{if eq $field.QueryType "EQ"}}
+    m = m.Where("{{$field.ColumnName}}", in.{{$field.GoField}})
     {{else}}
-        {{if eq $column.QueryType "NE"}}
-        if in.{{$column.GoField}} != "" {
-            m = m.Where(in.{{$field.GoField}})
-        }
-        {{else if (eq $column.GoType "Time")}}
-
-        {{else if (eq $column.GoType "Time")}}
-
-        {{else if (eq $column.GoType "Time")}}
-
-        {{else if (eq $column.GoType "Time")}}
-
-        {{else if (eq $column.GoType "Time")}}
-        {{end}}
-
-
+    {{if eq $field.QueryType "NE"}}
+    if in.{{$field.GoField}} != "" {
+        m = m.Where("{{$field.ColumnName}}", in.{{$field.GoField}})
+    }
+    {{else if (eq $field.QueryType "GT")}}
+    if in.{{$field.GoField}} != "" {
+        m = m.WhereGT("{{$field.ColumnName}}", in.{{$field.GoField}})
+    }
+    {{else if (eq $field.QueryType "GTE")}}
+    if in.{{$field.GoField}} != "" {
+        m = m.WhereGTE("{{$field.ColumnName}}", in.{{$field.GoField}})
+    }
+    {{else if (eq $field.QueryType "LT")}}
+    if in.{{$field.GoField}} != "" {
+        m = m.WhereLT("{{$field.ColumnName}}", in.{{$field.GoField}})
+    }
+    {{else if (eq $field.QueryType "LTE")}}
+    if in.{{$field.GoField}} != "" {
+        m = m.WhereLTE("{{$field.ColumnName}}", in.{{$field.GoField}})
+    }
+    {{else if (eq $field.QueryType "LIKE")}}
+    if in.{{$field.GoField}} != "" {
+        m = m.WhereLike("{{$field.ColumnName}}", "%"+in.{{$field.GoField}}+"%")
+    }
     {{end}}
-
-
+    
+    {{end}}
     {{if eq $field.GoField "CreatedAt"}}
     if in.BeginTime != "" && in.EndTime != "" {
         m = m.Where("created_at>? and created_at<?", in.BeginTime, in.EndTime)
@@ -78,20 +77,7 @@ func (s *s{{$structName}}) GetOne(ctx context.Context, in model.{{$structName}}O
 
 // 新增{{.table.Description}}
 func (s *s{{$structName}}) Create(ctx context.Context, in model.{{$structName}}CreateInput) (err error) {
-    count, err := dao.{{$structName}}.Ctx(ctx).Where(
-        {{range $index, $field := .table.Fields}}
-        {{if eq $field.IsPk "1"}}
-        {{$field.GoField}},
-        {{end}}
-        {{end}}
-    ).Count()
-    if err != nil {
-        return err
-    }
-    if count > 0 {
-        return errors.New("{{.table.Description}}主键已存在！")
-    }
-    _, err = dao.{{$structName}}.Ctx(ctx).Insert(in)
+    _, err = dao.{{$structName}}.Ctx(ctx).OmitEmpty().Insert(in)
     return
 }
 
@@ -113,7 +99,7 @@ func (s *s{{$structName}}) Delete(ctx context.Context, in model.{{$structName}}D
     {{if eq $field.IsPk "1"}}
     {{$field.HtmlField}}List := gstr.Split(in.{{$field.GoField}}Str, ",")
     for _, v := range {{$field.HtmlField}}List {
-        if _, err = dao.{{$structName}}.Ctx(ctx).Delete(in.{{$field.GoField}}); err != nil {
+        if _, err = dao.{{$structName}}.Ctx(ctx).Delete("{{$field.ColumnName}}=?", v); err != nil {
             return
         }
     }
