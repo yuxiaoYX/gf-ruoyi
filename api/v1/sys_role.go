@@ -63,8 +63,8 @@ type SysRoleUpdateRes struct{}
 
 // 删除角色请求
 type SysRoleDeleteReq struct {
-	g.Meta    `path:"/role/delete" method:"post" summary:"删除角色" tags:"角色"`
-	RoleIdStr []int `v:"required#角色id不能为空！" dc:"角色id"` // 需要删除的数据主键，例：[1,2,3]
+	g.Meta     `path:"/role/delete" method:"post" summary:"删除角色" tags:"角色"`
+	RoleIdList []int `v:"required#角色id不能为空！" dc:"角色id"` // 需要删除的数据主键，例：[1,2,3]
 }
 
 // 删除角色响应

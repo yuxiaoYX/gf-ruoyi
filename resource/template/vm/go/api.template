@@ -88,10 +88,10 @@ type {{$structName}}UpdateRes struct{}
 
 // 删除{{.table.Description}}请求
 type {{$structName}}DeleteReq struct {
-    g.Meta      `path:"/{{$businessName}}/delete" method:"get" summary:"删除{{.table.Description}}" tags:"{{.table.Description}}"`
+    g.Meta      `path:"/{{$businessName}}/delete" method:"post" summary:"删除{{.table.Description}}" tags:"{{.table.Description}}"`
     {{range $index, $field := .table.Fields}}
     {{if eq $field.IsPk "1"}}
-    {{$field.GoField}}Str string `v:"required#{{$field.ColumnComment}}不能为空！" dc:"{{$field.ColumnComment}}"` // {{$field.ColumnComment}}，例：1,2,3
+    {{$field.GoField}}List []{{$field.GoType}} `v:"required#{{$field.ColumnComment}}不能为空！" dc:"{{$field.ColumnComment}}"` // {{$field.ColumnComment}}，例：[1,2,3]
     {{end}}
     {{end}}
 }

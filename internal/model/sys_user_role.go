@@ -56,6 +56,6 @@ type SysRoleCancelUserInput struct {
 
 // 删除关联信息输入
 type SysUserRoleDeleteInput struct {
-	UserIdStr []int // 需要删除的数据主键，例：[1,2,3]
-	RoleIdStr []int // 需要删除的数据主键，例：[1,2,3]
+	UserIdList []int // 需要删除的数据主键，例：[1,2,3]
+	RoleIdList []int // 需要删除的数据主键，例：[1,2,3]
 }

@@ -61,5 +61,5 @@ type SysMenuUpdateInput struct {
 
 // 删除菜单输入
 type SysMenuDeleteInput struct {
-	MenuIdStr string // 需要删除的数据主键，例：1,2,3
+	MenuIdList []int // 需要删除的数据主键，例：[1,2,3]
 }

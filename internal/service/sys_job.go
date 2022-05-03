@@ -6,7 +6,6 @@ import (
 	"gf-ruoyi/internal/service/internal/dao"
 
 	"github.com/gogf/gf/v2/frame/g"
-	"github.com/gogf/gf/v2/text/gstr"
 )
 
 type sJob struct{}
@@ -55,7 +54,6 @@ func (s *sJob) Update(ctx context.Context, in model.SysJobUpdateInput) (err erro
 
 // 删除定时任务
 func (s *sJob) Delete(ctx context.Context, in model.SysJobDeleteInput) (err error) {
-	jobIdList := gstr.Split(in.JobIdStr, ",")
-	_, err = dao.SysJob.Ctx(ctx).Delete("job_id IN(?)", jobIdList)
+	_, err = dao.SysJob.Ctx(ctx).Delete("job_id IN(?)", in.JobIdList)
 	return
 }

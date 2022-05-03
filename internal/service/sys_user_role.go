@@ -124,11 +124,11 @@ func (s sUserRole) RoleCancelUser(ctx context.Context, in model.SysRoleCancelUse
 // 删除关联信息
 func (s *sUserRole) Delete(ctx context.Context, in model.SysUserRoleDeleteInput) (err error) {
 	m := dao.SysUserRole.Ctx(ctx)
-	if in.UserIdStr != nil {
-		m = m.WhereOr("user_id IN(?)", in.UserIdStr)
+	if in.UserIdList != nil {
+		m = m.WhereOr("user_id IN(?)", in.UserIdList)
 	}
-	if in.RoleIdStr != nil {
-		m = m.WhereOr("role_id IN(?)", in.RoleIdStr)
+	if in.RoleIdList != nil {
+		m = m.WhereOr("role_id IN(?)", in.RoleIdList)
 	}
 	_, err = m.Delete()
 	return

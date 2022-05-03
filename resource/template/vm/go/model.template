@@ -15,9 +15,11 @@ import (
 // 分页获取{{.table.Description}}列表输入
 type {{$structName}}ListInput struct {
     {{range $index, $field := .table.Fields}}
-    {{if eq $field.IsQuery "1"}}
+
+    {{if and (eq $field.IsQuery "1") (ne $field.GoType "*gtime.Time")}}
     {{$field.GoField}} {{$field.GoType}} // {{$field.ColumnComment}}
     {{end}}
+
     {{if eq $field.GoField "CreatedAt"}}
     BeginTime   string // 开始时间
     EndTime     string // 结束时间
@@ -80,7 +82,7 @@ type {{$structName}}UpdateOutput struct{}
 type {{$structName}}DeleteInput struct {
     {{range $index, $field := .table.Fields}}
     {{if eq $field.IsPk "1"}}
-    {{$field.GoField}}Str string // {{$field.ColumnComment}}，例：1,2,3
+    {{$field.GoField}}List []{{$field.GoType}} // {{$field.ColumnComment}}主键，例：[1,2,3]
     {{end}}
     {{end}}
 }

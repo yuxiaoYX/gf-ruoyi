@@ -52,7 +52,7 @@ type SysConfigUpdateInput struct {
 
 // 删除参数输入
 type SysConfigDeleteInput struct {
-	ConfigIdStr string // 需要删除的数据主键，例：[1,2,3]
+	ConfigIdList []int // 需要删除的数据主键，例：[1,2,3]
 }
 
 // 根据参数键名查询参数值输入

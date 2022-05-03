@@ -61,8 +61,8 @@ type SysDeptUpdateRes struct{}
 
 // 删除部门请求
 type SysDeptDeleteReq struct {
-	g.Meta    `path:"/dept/delete" method:"post" summary:"删除部门" tags:"部门"`
-	DeptIdStr string `v:"required#部门id不能为空！" dc:"部门id"` // 需要删除的数据主键，例：1,2,3
+	g.Meta     `path:"/dept/delete" method:"post" summary:"删除部门" tags:"部门"`
+	DeptIdList []int `v:"required#部门id不能为空！" dc:"部门id"` // 需要删除的数据主键，例：[1,2,3]
 }
 
 // 删除部门响应

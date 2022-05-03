@@ -1,5 +1,5 @@
 // ==========================================================================
-// 自动生成控制器相关代码，只生成一次，按需修改,再次生成不会覆盖.
+// 自动生成控制器相关代码，只生成一次，按需修改,再次生成不会覆盖11.
 // 生成日期：{{date "Y-m-d H:i:s"}}
 // ==========================================================================
 ////
@@ -12,7 +12,7 @@ import (
     "{{ProjectName}}/internal/model"
     "{{ProjectName}}/internal/service/internal/dao"
 
-    "github.com/gogf/gf/v2/text/gstr"
+    "github.com/gogf/gf/v2/frame/g"
 )
 
 type s{{$structName}} struct{}
@@ -26,10 +26,15 @@ func {{$structName}}() *s{{$structName}} {
 func (s *s{{$structName}}) GetList(ctx context.Context, in model.{{$structName}}ListInput) (out model.{{$structName}}ListOutput, err error) {
     m := dao.{{$structName}}.Ctx(ctx).OmitEmpty()
     {{range $index, $field := .table.Fields}}
+    {{if eq $field.GoField "CreatedAt"}}
+    if in.BeginTime != "" && in.EndTime != "" {
+        m = m.Where("created_at>? and created_at<?", in.BeginTime, in.EndTime)
+    }
+    {{end}}
+    {{if eq $field.IsQuery "1"}}
     {{if eq $field.QueryType "EQ"}}
     m = m.Where("{{$field.ColumnName}}", in.{{$field.GoField}})
-    {{else}}
-    {{if eq $field.QueryType "NE"}}
+    {{else if eq $field.QueryType "NE"}}
     if in.{{$field.GoField}} != "" {
         m = m.Where("{{$field.ColumnName}}", in.{{$field.GoField}})
     }
@@ -54,13 +59,8 @@ func (s *s{{$structName}}) GetList(ctx context.Context, in model.{{$structName}}
         m = m.WhereLike("{{$field.ColumnName}}", "%"+in.{{$field.GoField}}+"%")
     }
     {{end}}
+    {{end}}
     
-    {{end}}
-    {{if eq $field.GoField "CreatedAt"}}
-    if in.BeginTime != "" && in.EndTime != "" {
-        m = m.Where("created_at>? and created_at<?", in.BeginTime, in.EndTime)
-    }
-    {{end}}
     {{end}}
     if err = m.Page(in.PageNum, in.PageSize).Scan(&out.Rows); err != nil {
         return
@@ -83,13 +83,13 @@ func (s *s{{$structName}}) Create(ctx context.Context, in model.{{$structName}}C
 
 // 更新{{.table.Description}}
 func (s *s{{$structName}}) Update(ctx context.Context, in model.{{$structName}}UpdateInput) (err error) {
-    _, err = dao.{{$structName}}.Ctx(ctx).OmitEmpty().Data(in).Where(
+    _, err = dao.{{$structName}}.Ctx(ctx).OmitEmpty().Data(in).Where(g.Map{
         {{range $index, $field := .table.Fields}}
         {{if eq $field.IsPk "1"}}
-        in.{{$field.GoField}},
+        "{{$field.ColumnName}}=?": in.{{$field.GoField}},
         {{end}}
         {{end}}
-    ).Update()
+	}).Update()
     return
 }
 
@@ -97,12 +97,7 @@ func (s *s{{$structName}}) Update(ctx context.Context, in model.{{$structName}}U
 func (s *s{{$structName}}) Delete(ctx context.Context, in model.{{$structName}}DeleteInput) (err error) {
     {{range $index, $field := .table.Fields}}
     {{if eq $field.IsPk "1"}}
-    {{$field.HtmlField}}List := gstr.Split(in.{{$field.GoField}}Str, ",")
-    for _, v := range {{$field.HtmlField}}List {
-        if _, err = dao.{{$structName}}.Ctx(ctx).Delete("{{$field.ColumnName}}=?", v); err != nil {
-            return
-        }
-    }
+    _, err = dao.{{$structName}}.Ctx(ctx).Delete("{{$field.ColumnName}} IN(?)", in.{{$field.GoField}}List)
     {{end}}
     {{end}}
     return

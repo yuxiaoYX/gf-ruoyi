@@ -26,6 +26,6 @@ func (c *cUserOnline) GetList(ctx context.Context, req *v1.SysUserOnlineListReq)
 
 // 删除在线用户
 func (c *cUserOnline) Delete(ctx context.Context, req *v1.SysUserOnlineDeleteReq) (res *v1.SysUserOnlineDeleteRes, err error) {
-	err = service.SysUserOnline().Delete(ctx, model.SysUserOnlineDeleteInput{Ids: req.Ids})
+	err = service.SysUserOnline().Delete(ctx, model.SysUserOnlineDeleteInput{Ids: req.IdList})
 	return
 }

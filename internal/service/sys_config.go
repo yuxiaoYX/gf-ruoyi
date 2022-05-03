@@ -9,7 +9,6 @@ import (
 
 	"github.com/gogf/gf/v2/database/gdb"
 	"github.com/gogf/gf/v2/frame/g"
-	"github.com/gogf/gf/v2/text/gstr"
 	"github.com/gogf/gf/v2/util/gconv"
 )
 
@@ -71,11 +70,10 @@ func (s *sConfig) Update(ctx context.Context, in model.SysConfigUpdateInput) (er
 
 // 删除参数,并删除缓存
 func (s *sConfig) Delete(ctx context.Context, in model.SysConfigDeleteInput) (err error) {
-	configIdList := gstr.Split(in.ConfigIdStr, ",")
-	for _, v := range configIdList {
+	for _, v := range in.ConfigIdList {
 		if _, err = dao.SysConfig.Ctx(ctx).Cache(gdb.CacheOption{
 			Duration: -1,
-			Name:     "configId-" + v,
+			Name:     "configId-" + gconv.String(v),
 		}).Delete("config_id=?", v); err != nil {
 			return
 		}

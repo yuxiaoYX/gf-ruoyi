@@ -77,7 +77,7 @@ func (s *sGenTable) PreviewCode(ctx context.Context, in model.SysGenPreviewCodeI
 		}, // 防止于Vue的变量分隔符号冲突
 		"ProjectName": func() string {
 			return g.Cfg().MustGet(ctx, "gen.projectName").String()
-		},
+		}, // 获取项目名称
 	})
 
 	tplData := g.Map{"table": in}

@@ -70,8 +70,8 @@ type SysJobUpdateRes struct{}
 
 // 删除定时任务请求
 type SysJobDeleteReq struct {
-	g.Meta   `path:"/job/delete" method:"post" summary:"删除定时任务" tags:"定时任务"`
-	JobIdStr string `v:"required#定时任务id不能为空！" dc:"定时任务id"` // 需要删除的数据主键，例：1,2,3
+	g.Meta    `path:"/job/delete" method:"post" summary:"删除定时任务" tags:"定时任务"`
+	JobIdList []int64 `v:"required#定时任务id不能为空！" dc:"定时任务id"` // 需要删除的数据主键，例：[1,2,3]
 }
 
 // 删除定时任务响应

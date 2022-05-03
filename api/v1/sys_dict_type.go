@@ -62,8 +62,8 @@ type SysDictTypeUpdateRes struct{}
 
 // 删除字典类型请求
 type SysDictTypeDeleteReq struct {
-	g.Meta    `path:"/dictType/delete" method:"post" summary:"删除字典类型" tags:"字典类型"`
-	DictIdStr string `v:"required#字典主键不能为空！" dc:"字典主键"` // 需要删除的数据主键，例：1,2,3
+	g.Meta     `path:"/dictType/delete" method:"post" summary:"删除字典类型" tags:"字典类型"`
+	DictIdList []int64 `v:"required#字典主键不能为空！" dc:"字典主键"` // 需要删除的数据主键，例：[1,2,3]
 }
 
 // 删除字典类型响应

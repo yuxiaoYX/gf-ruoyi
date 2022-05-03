@@ -9,7 +9,6 @@ import (
 
 	"github.com/gogf/gf/v2/database/gdb"
 	"github.com/gogf/gf/v2/frame/g"
-	"github.com/gogf/gf/v2/text/gstr"
 )
 
 type sDictData struct{}
@@ -77,7 +76,7 @@ func (s *sDictData) Update(ctx context.Context, in model.SysDictDataUpdateInput)
 // 删除字典数据,并删除缓存
 func (s *sDictData) Delete(ctx context.Context, in model.SysDictDataDeleteInput) (err error) {
 	var dictDataList []*model.SysDictDataOneOutput
-	if err = dao.SysDictData.Ctx(ctx).Where("dict_code IN(?)", gstr.Split(in.DictCodeStr, ",")).Scan(&dictDataList); err != nil {
+	if err = dao.SysDictData.Ctx(ctx).Where("dict_code IN(?)", in.DictCodeList).Scan(&dictDataList); err != nil {
 		return
 	}
 	for _, v := range dictDataList {

@@ -23,7 +23,7 @@ type SysLoginLogListOutput struct {
 
 // 删除登录日志输入
 type SysLoginLogDeleteInput struct {
-	InfoIdStr string // 需要删除的数据主键，例：[1,2,3]
+	InfoIdList []int64 // 需要删除的数据主键，例：[1,2,3]
 }
 
 // 新建登录日志输入

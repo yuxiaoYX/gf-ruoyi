@@ -58,5 +58,5 @@ type SysJobUpdateInput struct {
 
 // 删除定时任务输入
 type SysJobDeleteInput struct {
-	JobIdStr string // 需要删除的数据主键，例：[1,2,3]
+	JobIdList []int64 // 需要删除的数据主键，例：[1,2,3]
 }

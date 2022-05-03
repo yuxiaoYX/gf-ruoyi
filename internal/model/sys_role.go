@@ -51,7 +51,7 @@ type SysRoleUpdateInput struct {
 
 // 删除角色输入
 type SysRoleDeleteInput struct {
-	RoleIdStr []int // 需要删除的数据主键，例：[1,2,3]
+	RoleIdList []int // 需要删除的数据主键，例：[1,2,3]
 }
 
 // 查询角色已授权用户列表请求

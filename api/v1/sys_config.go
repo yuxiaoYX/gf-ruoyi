@@ -64,8 +64,8 @@ type SysConfigUpdateRes struct{}
 
 // 删除参数请求
 type SysConfigDeleteReq struct {
-	g.Meta      `path:"/config/delete" method:"post" summary:"删除参数" tags:"参数"`
-	ConfigIdStr string `v:"required#参数id不能为空！" dc:"参数id"` // 需要删除的数据主键，例：1,2,3
+	g.Meta       `path:"/config/delete" method:"post" summary:"删除参数" tags:"参数"`
+	ConfigIdList []int `v:"required#参数id不能为空！" dc:"参数id"` // 需要删除的数据主键，例：[1,2,3]
 }
 
 // 删除参数响应

@@ -60,5 +60,5 @@ type SysDictDataUpdateInput struct {
 
 // 删除字典数据输入
 type SysDictDataDeleteInput struct {
-	DictCodeStr string // 需要删除的数据主键，例：1,2,3
+	DictCodeList []int64 // 需要删除的数据主键，例：[1,2,3]
 }

@@ -99,7 +99,7 @@ func (s *sUser) Update(ctx context.Context, in model.SysUserUpdateInput) (err er
 // 删除用户,并删除缓存
 func (s *sUser) Delete(ctx context.Context, in model.SysUserDeleteInput) (err error) {
 	// userIdList := gstr.Split(in.UserIdStr, ",")
-	for _, v := range in.UserIdStr {
+	for _, v := range in.UserIdList {
 		if _, err = dao.SysUser.Ctx(ctx).Cache(gdb.CacheOption{
 			Duration: -1,
 			Name:     "userId-" + string(rune(v)),
@@ -108,11 +108,11 @@ func (s *sUser) Delete(ctx context.Context, in model.SysUserDeleteInput) (err er
 		}
 	}
 	// 删除用户和角色的管理信息
-	if err = SysUserRole().Delete(ctx, model.SysUserRoleDeleteInput{UserIdStr: in.UserIdStr}); err != nil {
+	if err = SysUserRole().Delete(ctx, model.SysUserRoleDeleteInput{UserIdList: in.UserIdList}); err != nil {
 		return
 	}
 	// 删除用户token
-	SysUserOnline().Delete(ctx, model.SysUserOnlineDeleteInput{Ids: gconv.Uint64s(in.UserIdStr)})
+	SysUserOnline().Delete(ctx, model.SysUserOnlineDeleteInput{Ids: gconv.Uint64s(in.UserIdList)})
 	return
 }
 

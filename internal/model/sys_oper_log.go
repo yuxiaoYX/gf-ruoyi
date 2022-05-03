@@ -24,5 +24,5 @@ type SysOperLogListOutput struct {
 
 // 删除操作日志输入
 type SysOperLogDeleteInput struct {
-	OperIdStr string // 需要删除的数据主键，例：[1,2,3]
+	OperIdList []int64 // 需要删除的数据主键，例：[1,2,3]
 }

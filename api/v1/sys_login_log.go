@@ -26,8 +26,8 @@ type SysLoginLogListRes struct {
 
 // 删除登录日志请求
 type SysLoginLogDeleteReq struct {
-	g.Meta    `path:"/loginLog/delete" method:"post" summary:"删除登录日志" tags:"登录日志"`
-	InfoIdStr string `v:"required#访问id不能为空！" dc:"登录日志id"` // 需要删除的数据主键，例：1,2,3
+	g.Meta     `path:"/loginLog/delete" method:"post" summary:"删除登录日志" tags:"登录日志"`
+	InfoIdList []int64 `v:"required#访问id不能为空！" dc:"登录日志id"` // 需要删除的数据主键，例：[1,2,3]
 }
 
 // 删除登录日志响应

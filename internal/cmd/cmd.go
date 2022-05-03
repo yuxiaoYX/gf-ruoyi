@@ -68,7 +68,7 @@ var (
 						controller.SysGenTable,
 					)
 				})
-				group.Group("/ceshi", func(group *ghttp.RouterGroup) {
+				group.Group("/sys", func(group *ghttp.RouterGroup) {
 					group.Bind(
 						controller.SysAa,
 					)

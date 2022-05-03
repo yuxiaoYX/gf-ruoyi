@@ -25,7 +25,7 @@ type SysUserOnlineListRes struct {
 // 删除在线用户请求
 type SysUserOnlineDeleteReq struct {
 	g.Meta `path:"/online/delete" method:"post" summary:"删除在线用户" tags:"在线用户"`
-	Ids    []uint64 `v:"required#在线用户id不能为空！" dc:"在线用户id"` // 需要删除的数据主键，例：1,2,3
+	IdList []uint64 `v:"required#在线用户id不能为空！" dc:"在线用户id"` // 需要删除的数据主键，例：1,2,3
 }
 
 // 删除在线用户响应

@@ -79,7 +79,7 @@ func (s *sRole) Update(ctx context.Context, in model.SysRoleUpdateInput) (err er
 // 删除角色,并删除缓存
 func (s *sRole) Delete(ctx context.Context, in model.SysRoleDeleteInput) (err error) {
 	// roleIdList := gstr.Split(in.RoleIdStr, ",")
-	for _, v := range in.RoleIdStr {
+	for _, v := range in.RoleIdList {
 		if _, err = dao.SysRole.Ctx(ctx).Cache(gdb.CacheOption{
 			Duration: -1,
 			Name:     "roleId-" + string(rune(v)),
@@ -92,6 +92,6 @@ func (s *sRole) Delete(ctx context.Context, in model.SysRoleDeleteInput) (err er
 		}
 	}
 	// 删除用户和角色关联
-	err = SysUserRole().Delete(ctx, model.SysUserRoleDeleteInput{RoleIdStr: in.RoleIdStr})
+	err = SysUserRole().Delete(ctx, model.SysUserRoleDeleteInput{RoleIdList: in.RoleIdList})
 	return
 }

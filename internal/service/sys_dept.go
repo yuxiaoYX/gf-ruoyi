@@ -8,7 +8,6 @@ import (
 	"time"
 
 	"github.com/gogf/gf/v2/database/gdb"
-	"github.com/gogf/gf/v2/text/gstr"
 	"github.com/gogf/gf/v2/util/gconv"
 )
 
@@ -66,11 +65,10 @@ func (s *sDept) Update(ctx context.Context, in model.SysDeptUpdateInput) (err er
 
 // 删除部门
 func (s *sDept) Delete(ctx context.Context, in model.SysDeptDeleteInput) (err error) {
-	deptIdList := gstr.Split(in.DeptIdStr, ",")
-	for _, v := range deptIdList {
+	for _, v := range in.DeptIdList {
 		if _, err = dao.SysDept.Ctx(ctx).Cache(gdb.CacheOption{
 			Duration: -1,
-			Name:     "userId-" + string(v),
+			Name:     "userId-" + gconv.String(v),
 		}).Delete("dept_id =?", v); err != nil {
 			return
 		}

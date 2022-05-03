@@ -27,8 +27,8 @@ type SysOperLogListRes struct {
 
 // 删除操作日志请求
 type SysOperLogDeleteReq struct {
-	g.Meta    `path:"/operLog/delete" method:"post" summary:"删除操作日志" tags:"操作日志"`
-	OperIdStr string `v:"required#操作日志id不能为空！" dc:"操作日志id"` // 需要删除的数据主键，例：1,2,3
+	g.Meta     `path:"/operLog/delete" method:"post" summary:"删除操作日志" tags:"操作日志"`
+	OperIdList []int64 `v:"required#操作日志id不能为空！" dc:"操作日志id"`
 }
 
 // 删除操作日志响应

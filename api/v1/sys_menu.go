@@ -76,8 +76,8 @@ type SysMenuUpdateRes struct{}
 
 // 删除菜单请求
 type SysMenuDeleteReq struct {
-	g.Meta    `path:"/menu/delete" method:"post" summary:"删除菜单" tags:"菜单"`
-	MenuIdStr string `v:"required#菜单id不能为空！" dc:"菜单id"` // 需要删除的数据主键，例：1,2,3
+	g.Meta     `path:"/menu/delete" method:"post" summary:"删除菜单" tags:"菜单"`
+	MenuIdList []int `v:"required#菜单id不能为空！" dc:"菜单id列表"` // 需要删除的数据主键，例：[1,2,3]
 }
 
 // 删除菜单响应

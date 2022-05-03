@@ -8,7 +8,6 @@ import (
 	"time"
 
 	"github.com/gogf/gf/v2/database/gdb"
-	"github.com/gogf/gf/v2/text/gstr"
 	"github.com/gogf/gf/v2/util/gconv"
 )
 
@@ -34,7 +33,7 @@ func (s *sMenu) GetList(ctx context.Context, in model.SysMenuListInput) (out []*
 func (s *sMenu) GetOne(ctx context.Context, in model.SysMenuOneInput) (out *model.SysMenuOneOutput, err error) {
 	err = dao.SysMenu.Ctx(ctx).Cache(gdb.CacheOption{
 		Duration: time.Hour * 10,
-		Name:     "menuid-" + gconv.String(in.MenuId),
+		Name:     "menuId-" + gconv.String(in.MenuId),
 		Force:    false,
 	}).Where("menu_id", in.MenuId).Scan(&out)
 	return
@@ -61,18 +60,17 @@ func (s *sMenu) Create(ctx context.Context, in model.SysMenuCreateInput) (err er
 func (s *sMenu) Update(ctx context.Context, in model.SysMenuUpdateInput) (err error) {
 	_, err = dao.SysMenu.Ctx(ctx).OmitEmpty().Cache(gdb.CacheOption{
 		Duration: -1,
-		Name:     "menuid-" + gconv.String(in.MenuId),
+		Name:     "menuId-" + gconv.String(in.MenuId),
 	}).Data(in).Where("menu_id=? AND parent_id=?", in.MenuId, in.ParentId).Update()
 	return
 }
 
 // 删除菜单,并删除缓存
 func (s *sMenu) Delete(ctx context.Context, in model.SysMenuDeleteInput) (err error) {
-	menuIdList := gstr.Split(in.MenuIdStr, ",")
-	for _, v := range menuIdList {
+	for _, v := range in.MenuIdList {
 		if _, err = dao.SysMenu.Ctx(ctx).Cache(gdb.CacheOption{
 			Duration: -1,
-			Name:     "menuid-" + v,
+			Name:     "menuId-" + gconv.String(v),
 		}).Delete("menu_id=?", v); err != nil {
 			return
 		}

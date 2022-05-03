@@ -6,7 +6,6 @@ import (
 	"gf-ruoyi/internal/service/internal/dao"
 
 	"github.com/gogf/gf/v2/frame/g"
-	"github.com/gogf/gf/v2/text/gstr"
 )
 
 type sLoginLog struct{}
@@ -37,8 +36,7 @@ func (s *sLoginLog) GetList(ctx context.Context, in model.SysLoginLogListInput) 
 
 // 删除登录日志
 func (s *sLoginLog) Delete(ctx context.Context, in model.SysLoginLogDeleteInput) (err error) {
-	infoIdList := gstr.Split(in.InfoIdStr, ",")
-	for _, v := range infoIdList {
+	for _, v := range in.InfoIdList {
 		if _, err = dao.SysLoginLog.Ctx(ctx).Delete("info_id=?", v); err != nil {
 			return
 		}

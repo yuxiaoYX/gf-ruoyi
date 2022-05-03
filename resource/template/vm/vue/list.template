@@ -1,6 +1,7 @@
 <template>
 {{$structName := .table.StructName | CaseCamel}}
 {{$businessName := .table.BusinessName | CaseCamelLower}}
+{{$lens := .table.Fields|len}}
   <div class="app-container">
     <el-form :model="queryParams" ref="queryRef" :inline="true" v-show="showSearch" label-width="68px">
       {{range $index, $field := .table.Fields}}
@@ -19,17 +20,12 @@
       {{else if and (eq $field.HtmlType "select" "radio" "checkbox") (ne $field.DictType "") }}
       <el-form-item label="{{$field.ColumnComment}}" prop="{{$field.HtmlField}}">
         <el-select v-model="queryParams.{{$field.HtmlField}}" placeholder="{{$field.ColumnComment}}" clearable>
-          <el-option
-            v-for="dict in {{$field.DictType}}"
-            :key="dict.value"
-            :label="dict.label"
-            :value="dict.value"
-          />
+          <el-option v-for="dict in {{$field.DictType}}" :key="dict.value" :label="dict.label" :value="dict.value" />
         </el-select>
       </el-form-item>
       {{else if eq $field.HtmlType "datetime"}}
-      <el-form-item label="{{$field.ColumnComment}}" style="width: 308px;">
-        <el-date-picker
+      <el-form-item label="{{$field.ColumnComment}}">
+        <el-date-picker style="width: 200px;"
             v-model="dateRange"
             value-format="YYYY-MM-DD"
             type="daterange"
@@ -152,15 +148,18 @@
         {{else if eq $field.HtmlType "select"}}
         {{if $field.DictType}}
         <el-form-item label="{{$field.ColumnComment}}" prop="{{$field.HtmlField}}">
-          <el-radio-group v-model="form.{{$field.HtmlField}}">
-            <el-radio
-              v-for="dict in {{$field.DictType}}"
-              :key="dict.value"
-              :label="dict.value"
-            >{{ VueTag "{{" }} dict.label {{ VueTag "}}" }}</el-radio>
-          </el-radio-group>
+          <el-select v-model="queryParams.{{$field.HtmlField}}" placeholder="{{$field.ColumnComment}}" clearable>
+            <el-option v-for="dict in {{$field.DictType}}" :key="dict.value" :label="dict.label" :value="dict.value" />
+          </el-select>
         </el-form-item>
         {{else}}
+        <el-form-item label="{{$field.ColumnComment}}" prop="{{$field.HtmlField}}">
+          <el-select v-model="queryParams.{{$field.HtmlField}}" placeholder="{{$field.ColumnComment}}" clearable>
+            <el-option label="请选择字典生成" value="" />
+          </el-select>
+        </el-form-item>
+        {{end}}
+        {{else if eq $field.HtmlType "radio"}}
         <el-form-item label="{{$field.ColumnComment}}" prop="{{$field.HtmlField}}">
           <el-radio-group v-model="form.{{$field.HtmlField}}">
             <el-radio
@@ -170,22 +169,28 @@
             >{{ VueTag "{{" }} dict.label {{ VueTag "}}" }}</el-radio>
           </el-radio-group>
         </el-form-item>
-        {{end}}
-        
-        {{else if eq $field.HtmlType "radio"}}
-
         {{else if eq $field.HtmlType "checkbox"}}
-
+        <el-form-item label="{{$field.ColumnComment}}" prop="{{$field.HtmlField}}">
+          <el-checkbox-group v-model="form.{{$field.HtmlField}}">
+            <el-checkbox
+              v-for="dict in {{$field.HtmlField}}Options"
+              :key="dict.key"
+              :label="dict.key"
+            >{{ VueTag "{{" }}dict.value {{VueTag "}}"}}</el-checkbox>
+          </el-checkbox-group>
+        </el-form-item>
         {{else if eq $field.HtmlType "datetime"}}
-
-        {{else }}
-      {{else }}
-      
+        <el-form-item label="{{$field.ColumnComment}}" prop="{{$field.HtmlField}}">
+          <el-date-picker clearable style="width: 200px"
+            v-model="form.{{$field.HtmlField}}"
+            value-format="YYYY-MM-DD"
+            type="date"
+            range-separator="-"
+            placeholder="选择{{$field.ColumnComment}}"></el-date-picker>
+        </el-form-item>
+        {{end}}
       {{end}}
       {{end}}
-
-        
-        
       </el-form>
       <template #footer>
         <div class="dialog-footer">
@@ -207,8 +212,7 @@ const { {{$field.DictType}} } = proxy.useDict("{{$field.DictType}}");
 {{end}}
 {{end}}
 
-
-const configList = ref([]);
+const {{$businessName}}List = ref([]);
 const open = ref(false);
 const loading = ref(true);
 const showSearch = ref(true);
@@ -224,24 +228,28 @@ const data = reactive({
   queryParams: {
     pageNum: 1,
     pageSize: 10,
-    configName: undefined,
-    configKey: undefined,
-    configType: undefined
+    {{range $index, $field := .table.Fields}}
+    {{if and (eq $field.IsQuery "1")}}
+    {{$field.HtmlField}}: undefined{{if ne $lens $index}},{{end}}
+    {{end}}
+    {{end}}
   },
   rules: {
-    configName: [{ required: true, message: "参数名称不能为空", trigger: "blur" }],
-    configKey: [{ required: true, message: "参数键名不能为空", trigger: "blur" }],
-    configValue: [{ required: true, message: "参数键值不能为空", trigger: "blur" }]
+    {{range $index, $field := .table.Fields}}
+    {{if (eq $field.IsRequired "1")}}
+    {{$field.HtmlField}}: [{ required: true, message: "{{$field.ColumnComment}}不能为空", trigger: "blur" }]{{if ne $lens $index}},{{end}}
+    {{end}}
+    {{end}}
   }
 });
 
 const { queryParams, form, rules } = toRefs(data);
 
-/** 查询参数列表 */
+/** 查询{{.table.Description}}列表 */
 function getList() {
   loading.value = true;
-  listConfig(proxy.addDateRange(queryParams.value, dateRange.value)).then(response => {
-    configList.value = response.data.rows;
+  list{{$structName}}(proxy.addDateRange(queryParams.value, dateRange.value)).then(response => {
+    {{$businessName}}List.value = response.data.rows;
     total.value = response.data.total;
     loading.value = false;
   });
@@ -254,14 +262,17 @@ function cancel() {
 /** 表单重置 */
 function reset() {
   form.value = {
-    configId: undefined,
-    configName: undefined,
-    configKey: undefined,
-    configValue: undefined,
-    configType: "Y",
-    remark: undefined
+    {{range $index, $field := .table.Fields}}
+    {{if eq $field.HtmlType "radio"}}
+    {{$field.HtmlField}}: "0" ,
+    {{else if eq $field.HtmlType "checkbox"}}
+    {{$field.HtmlField}}: [] ,
+    {{else}}
+    {{$field.HtmlField}}: undefined,
+    {{end}}
+    {{end}}
   };
-  proxy.resetForm("configRef");
+  proxy.resetForm("{{$businessName}}Ref");
 }
 /** 搜索按钮操作 */
 function handleQuery() {
@@ -276,7 +287,11 @@ function resetQuery() {
 }
 /** 多选框选中数据 */
 function handleSelectionChange(selection) {
-  ids.value = selection.map(item => item.configId);
+  {{range $index, $field := .table.Fields}}
+  {{if eq $index 0}}
+  ids.value = selection.map(item => item.{{$field.HtmlField}});
+  {{end}}
+  {{end}}
   single.value = selection.length != 1;
   multiple.value = !selection.length;
 }
@@ -284,30 +299,39 @@ function handleSelectionChange(selection) {
 function handleAdd() {
   reset();
   open.value = true;
-  title.value = "添加参数";
+  title.value = "添加{{.table.Description}}";
 }
 /** 修改按钮操作 */
 function handleUpdate(row) {
   reset();
-  const configId = row.configId || ids.value;
-  getConfig(configId).then(response => {
+  {{range $index, $field := .table.Fields}}
+  {{if eq $index 0}}
+  const queryId = {'{{$field.HtmlField}}': row.{{$field.HtmlField}} || ids.value[0]};
+  {{end}}
+  {{end}}
+  get{{$structName}}(queryId).then(response => {
     form.value = response.data;
     open.value = true;
-    title.value = "修改参数";
+    title.value = "修改{{.table.Description}}";
   });
 }
 /** 提交按钮 */
 function submitForm() {
-  proxy.$refs["configRef"].validate(valid => {
+  {{range $index, $field := .table.Fields}}
+  {{if eq $index 0}}
+  const id = form.value.{{$field.HtmlField}};
+  {{end}}
+  {{end}}
+  proxy.$refs["{{$businessName}}Ref"].validate(valid => {
     if (valid) {
-      if (form.value.configId != undefined) {
-        updateConfig(form.value).then(response => {
+      if (id != undefined) {
+        update{{$structName}}(form.value).then(response => {
         proxy.$modal.msgSuccess("修改成功");
         open.value = false;
         getList();
         });
       } else {
-        addConfig(form.value).then(response => {
+        add{{$structName}}(form.value).then(response => {
         proxy.$modal.msgSuccess("新增成功");
         open.value = false;
         getList();
@@ -318,9 +342,13 @@ function submitForm() {
 }
 /** 删除按钮操作 */
 function handleDelete(row) {
-  const configIds = row.configId || ids.value;
-  proxy.$modal.confirm('是否确认删除参数编号为"' + configIds + '"的数据项？').then(function () {
-    return delConfig(configIds);
+  {{range $index, $field := .table.Fields}}
+  {{if eq $index 0}}
+  const queryIds = {'{{$field.HtmlField}}List': row.{{$field.HtmlField}} || ids.value};
+  {{end}}
+  {{end}}
+  proxy.$modal.confirm('是否确认删除所勾选的数据项？').then(function () {
+    return del{{$structName}}(queryIds);
   }).then(() => {
     getList();
     proxy.$modal.msgSuccess("删除成功");

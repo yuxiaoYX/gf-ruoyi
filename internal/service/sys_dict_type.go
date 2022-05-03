@@ -9,7 +9,6 @@ import (
 
 	"github.com/gogf/gf/v2/database/gdb"
 	"github.com/gogf/gf/v2/frame/g"
-	"github.com/gogf/gf/v2/text/gstr"
 	"github.com/gogf/gf/v2/util/gconv"
 )
 
@@ -85,7 +84,7 @@ func (s *sDictType) Update(ctx context.Context, in model.SysDictTypeUpdateInput)
 // 删除字典类型,并删除缓存
 func (s *sDictType) Delete(ctx context.Context, in model.SysDictTypeDeleteInput) (err error) {
 	var dictTypeList []*model.SysDictTypeOneOutput
-	if err = dao.SysDictType.Ctx(ctx).Where("dict_id IN(?)", gstr.Split(in.DictIdStr, ",")).Scan(&dictTypeList); err != nil {
+	if err = dao.SysDictType.Ctx(ctx).Where("dict_id IN(?)", in.DictIdList).Scan(&dictTypeList); err != nil {
 		return
 	}
 	for _, v := range dictTypeList {
@@ -100,7 +99,7 @@ func (s *sDictType) Delete(ctx context.Context, in model.SysDictTypeDeleteInput)
 		if _, err = dao.SysDictType.Ctx(ctx).Cache(gdb.CacheOption{
 			Duration: -1,
 			Name:     "dictId-" + gconv.String(v.DictId),
-		}).Delete("dictType_id=?", v); err != nil {
+		}).Delete("dict_id=?", v.DictId); err != nil {
 			return
 		}
 	}

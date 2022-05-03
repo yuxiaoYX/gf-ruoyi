@@ -44,8 +44,7 @@ func (s *sOperLog) GetList(ctx context.Context, in model.SysOperLogListInput) (o
 
 // 删除操作日志
 func (s *sOperLog) Delete(ctx context.Context, in model.SysOperLogDeleteInput) (err error) {
-	operIdList := gstr.Split(in.OperIdStr, ",")
-	for _, v := range operIdList {
+	for _, v := range in.OperIdList {
 		if _, err = dao.SysOperLog.Ctx(ctx).Delete("oper_id=?", v); err != nil {
 			return
 		}

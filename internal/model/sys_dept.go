@@ -46,5 +46,5 @@ type SysDeptUpdateInput struct {
 
 // 删除部门输入
 type SysDeptDeleteInput struct {
-	DeptIdStr string // 需要删除的数据主键，例：1,2,3
+	DeptIdList []int64 // 需要删除的数据主键，例：[1,2,3]
 }
