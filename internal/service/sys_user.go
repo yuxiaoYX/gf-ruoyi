@@ -112,7 +112,7 @@ func (s *sUser) Delete(ctx context.Context, in model.SysUserDeleteInput) (err er
 		return
 	}
 	// 删除用户token
-	SysUserOnline().Delete(ctx, model.SysUserOnlineDeleteInput{Ids: gconv.Uint64s(in.UserIdList)})
+	SysUserOnline().Delete(ctx, model.SysUserOnlineDeleteInput{IdList: gconv.Uint64s(in.UserIdList)})
 	return
 }
 
@@ -132,7 +132,7 @@ func (s *sUser) ChangeStatus(ctx context.Context, in model.SysUserChangeStatusIn
 	}
 
 	// 删除用户token
-	SysUserOnline().Delete(ctx, model.SysUserOnlineDeleteInput{Ids: gconv.Uint64s(in.UserId)})
+	SysUserOnline().Delete(ctx, model.SysUserOnlineDeleteInput{IdList: gconv.Uint64s(in.UserId)})
 	return
 }
 

@@ -68,11 +68,6 @@ var (
 						controller.SysGenTable,
 					)
 				})
-				group.Group("/sys", func(group *ghttp.RouterGroup) {
-					group.Bind(
-						controller.SysAa,
-					)
-				})
 			})
 			s.Run()
 			return nil

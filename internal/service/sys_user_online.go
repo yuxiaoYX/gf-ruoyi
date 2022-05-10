@@ -48,7 +48,7 @@ func (s *sUserOnline) Create(ctx context.Context, in model.SysUserOnlineCreateIn
 // 删除在线用户
 func (s *sUserOnline) Delete(ctx context.Context, in model.SysUserOnlineDeleteInput) (err error) {
 	var onlineEntity []*entity.SysUserOnline
-	err = dao.SysUserOnline.Ctx(ctx).Where("id IN(?)", in.Ids).Scan(&onlineEntity)
+	err = dao.SysUserOnline.Ctx(ctx).Where("id IN(?)", in.IdList).Scan(&onlineEntity)
 	if err != nil {
 		return err
 	}

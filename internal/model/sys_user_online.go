@@ -30,10 +30,10 @@ type SysUserOnlineCreateInput struct {
 
 // 删除在线用户
 type SysUserOnlineDeleteInput struct {
-	Ids []uint64 // 在线用户id列表
+	IdList []uint64 // 在线用户id列表
 }
 
 // 查询token是否在线输出
 type SysUserOnlineGetTokenOutput struct {
-	UserId int // 用户id
+	UserId int64 // 用户id
 }
